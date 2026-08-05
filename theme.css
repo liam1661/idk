@@ -1,0 +1,148 @@
+/* ======================================== */
+/* MUSIKBASEN DESIGN SYSTEM */
+/* ======================================== */
+
+:root {
+
+    /* ======================= */
+    /* FARVER */
+    /* ======================= */
+
+    --bg: #0B0B0F;
+    --surface: #14141A;
+    --surface-light: #1B1B23;
+
+    --text: #FFFFFF;
+    --text-secondary: #B9BCC8;
+
+    --orange: #FF8A00;
+    --orange-hover: #FF9D2F;
+
+    --purple: #8B5CF6;
+    --green: #39FF88;
+
+    --border: rgba(255,255,255,.06);
+
+    /* ======================= */
+    /* SHADOWS */
+    /* ======================= */
+
+    --shadow-small:
+        0 4px 10px rgba(0,0,0,.20);
+
+    --shadow-medium:
+        0 10px 25px rgba(0,0,0,.35);
+
+    --shadow-large:
+        0 20px 60px rgba(0,0,0,.45);
+
+    /* ======================= */
+    /* BORDER RADIUS */
+    /* ======================= */
+
+    --radius-small: 8px;
+    --radius-medium: 14px;
+    --radius-large: 22px;
+
+    /* ======================= */
+    /* SPACING */
+    /* ======================= */
+
+    --space-xs: 8px;
+    --space-s: 16px;
+    --space-m: 24px;
+    --space-l: 40px;
+    --space-xl: 70px;
+    --space-xxl: 120px;
+
+    /* ======================= */
+    /* ANIMATION */
+    /* ======================= */
+
+    --transition-fast: .2s;
+    --transition: .3s;
+    --transition-slow: .5s;
+
+}
+
+/* ======================================== */
+/* RESET */
+/* ======================================== */
+
+* {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+body {
+
+    background: var(--bg);
+
+    color: var(--text);
+
+    font-family: "Poppins", sans-serif;
+
+}
+
+/* ======================================== */
+/* STANDARD KNAP */
+/* ======================================== */
+
+.button {
+
+    background: var(--orange);
+
+    color: white;
+
+    border: none;
+
+    border-radius: var(--radius-medium);
+
+    padding: 14px 24px;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+
+}
+
+.button:hover {
+
+    background: var(--orange-hover);
+
+}
+
+/* ======================================== */
+/* STANDARD CARD */
+/* ======================================== */
+
+.card {
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-large);
+
+    box-shadow: var(--shadow-small);
+
+    transition: var(--transition);
+
+}
+
+.card:hover {
+
+    transform: translateY(-6px);
+
+    box-shadow: var(--shadow-medium);
+
+}
