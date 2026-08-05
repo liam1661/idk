@@ -7,24 +7,20 @@
 header {
 
     position: sticky;
-
     top: 0;
 
     width: 100%;
-
     height: 80px;
 
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
 
     padding: 0 var(--space-xl);
 
-    background: rgba(11,11,15,.90);
+    background: rgba(11,11,15,.88);
 
-    backdrop-filter: blur(18px);
+    backdrop-filter: blur(20px);
 
     border-bottom: 1px solid var(--border);
 
@@ -36,15 +32,12 @@ header {
 /* LOGO */
 /* ======================================== */
 
-.logo h1 {
+.logo h1{
 
-    font-size: 36px;
+    font-size:36px;
+    font-weight:800;
 
-    font-weight: 800;
-
-    color: var(--orange);
-
-    cursor: pointer;
+    color:var(--orange);
 
 }
 
@@ -52,65 +45,63 @@ header {
 /* NAVIGATION */
 /* ======================================== */
 
-nav {
+nav{
 
-    display: flex;
+    display:flex;
 
-    gap: var(--space-l);
-
-}
-
-nav a {
-
-    text-decoration: none;
-
-    color: var(--text);
-
-    font-size: 17px;
-
-    font-weight: 500;
-
-    transition: var(--transition);
+    gap:40px;
 
 }
 
-nav a:hover {
+nav a{
 
-    color: var(--orange);
+    text-decoration:none;
+
+    color:var(--text);
+
+    font-weight:500;
+
+    transition:.25s;
+
+}
+
+nav a:hover{
+
+    color:var(--orange);
 
 }
 
 /* ======================================== */
-/* HEADER IKONER */
+/* IKONER */
 /* ======================================== */
 
-.header-icons {
+.header-icons{
 
-    display: flex;
+    display:flex;
 
-    gap: var(--space-s);
-
-}
-
-.header-icons button {
-
-    background: none;
-
-    border: none;
-
-    color: var(--text);
-
-    font-size: 20px;
-
-    cursor: pointer;
-
-    transition: var(--transition);
+    gap:18px;
 
 }
 
-.header-icons button:hover {
+.header-icons button{
 
-    color: var(--orange);
+    background:none;
+
+    border:none;
+
+    color:white;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.header-icons button:hover{
+
+    color:var(--orange);
 
 }
 
@@ -118,36 +109,156 @@ nav a:hover {
 /* HERO */
 /* ======================================== */
 
-#hero {
+#hero{
 
-    min-height: 90vh;
+    min-height:92vh;
 
-    display: flex;
+    display:flex;
 
-    justify-content: center;
+    justify-content:center;
 
-    align-items: center;
+    align-items:center;
+
+    text-align:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+/* Lilla cirkel */
+
+#hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:650px;
+    height:650px;
+
+    background:radial-gradient(circle,
+        rgba(139,92,246,.22),
+        transparent 70%);
+
+    left:-150px;
+    top:-150px;
+
+    filter:blur(40px);
+
+}
+
+/* Grøn cirkel */
+
+#hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:600px;
+    height:600px;
+
+    background:radial-gradient(circle,
+        rgba(57,255,136,.16),
+        transparent 70%);
+
+    right:-150px;
+    bottom:-150px;
+
+    filter:blur(40px);
+
+}
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:900px;
+
+}
+
+.hero-tag{
+
+    display:inline-block;
+
+    padding:10px 18px;
+
+    background:rgba(255,138,0,.12);
+
+    border:1px solid rgba(255,138,0,.35);
+
+    border-radius:999px;
+
+    color:var(--orange);
+
+    margin-bottom:30px;
+
+}
+
+.hero-content h1{
+
+    font-size:72px;
+
+    line-height:1.05;
+
+    margin-bottom:30px;
+
+}
+
+.hero-content p{
+
+    max-width:700px;
+
+    margin:auto;
+
+    font-size:22px;
+
+    color:var(--text-secondary);
+
+    line-height:1.8;
+
+}
+
+.hero-buttons{
+
+    margin-top:50px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+}
+
+.secondary{
+
+    background:transparent;
+
+    border:1px solid var(--border);
+
+}
+
+.secondary:hover{
+
+    background:var(--surface);
 
 }
 
 /* ======================================== */
-/* STANDARD SEKTION */
-/* ======================================== */
 
-section {
+section{
 
-    padding: var(--space-xxl) var(--space-xl);
+    padding:var(--space-xxl) var(--space-xl);
 
 }
 
-/* ======================================== */
-/* FOOTER */
-/* ======================================== */
+footer{
 
-footer {
-
-    height: 220px;
-
-    border-top: 1px solid var(--border);
+    height:220px;
 
 }
