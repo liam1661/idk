@@ -288,3 +288,65 @@ footer{
     }
 
 }
+/* ========================= */
+/* TRENDING SECTION */
+/* ========================= */
+
+#trending {
+    padding: 80px 8%;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.section-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.section-header a {
+    color: #ff8a00;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.trending-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+.music-card {
+    background: #181818;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.music-card:hover {
+    transform: translateY(-8px);
+}
+
+.card-image {
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: linear-gradient(135deg, #ff8a00, #ffb347);
+}
+
+.card-info {
+    padding: 18px;
+}
+
+.card-info h3 {
+    margin-bottom: 6px;
+    font-size: 1.1rem;
+}
+
+.card-info p {
+    color: #b5b5b5;
+}
