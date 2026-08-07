@@ -350,3 +350,72 @@ footer{
 .card-info p {
     color: #b5b5b5;
 }
+/* ========================= */
+/* ARTISTS PAGE */
+/* ========================= */
+
+.page-title{
+    padding:60px 8% 30px;
+}
+
+.page-title h1{
+    font-size:3rem;
+    margin-bottom:10px;
+}
+
+.page-title p{
+    color:#b5b5b5;
+}
+
+.artists-grid{
+    padding:0 8% 80px;
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:30px;
+}
+
+.artist-card{
+
+    background:#181818;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    text-align:center;
+
+    transition:.3s;
+
+    cursor:pointer;
+}
+
+.artist-card:hover{
+
+    transform:translateY(-8px);
+}
+
+.artist-image{
+
+    width:100%;
+
+    aspect-ratio:1/1;
+
+    background:linear-gradient(135deg,#ff8a00,#ffb347);
+}
+
+.artist-card h3{
+
+    margin-top:18px;
+
+    font-size:1.2rem;
+}
+
+.artist-card p{
+
+    color:#b5b5b5;
+
+    padding-bottom:20px;
+}
