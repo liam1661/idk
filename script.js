@@ -21,3 +21,30 @@ if (artistsGrid && typeof artists !== "undefined") {
     });
 
 }
+const albumsGrid = document.getElementById("albums-grid");
+
+if (albumsGrid && typeof albums !== "undefined") {
+
+    albums.forEach(album => {
+
+        const albumCard = document.createElement("div");
+
+        albumCard.className = "album-card";
+
+        albumCard.innerHTML = `
+            <div class="album-image">
+                <div class="album-placeholder"></div>
+            </div>
+
+            <div class="album-info">
+                <h3>${album.title}</h3>
+                <p>${album.artist}</p>
+                <span>${album.year} • ${album.genre}</span>
+            </div>
+        `;
+
+        albumsGrid.appendChild(albumCard);
+
+    });
+
+}

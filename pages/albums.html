@@ -1,6 +1,69 @@
-<nav>
-    <a href="../index.html">Forside</a>
-    <a href="artists.html">Kunstnere</a>
-    <a href="albums.html">Albums</a>
-    <a href="playlists.html">Playlister</a>
-</nav>
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Albums – MusikBasen</title>
+
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../theme.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <script src="../data/albums.js"></script>
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">
+            <h1>MB</h1>
+        </div>
+
+        <nav>
+            <a href="../index.html">Forside</a>
+            <a href="artists.html">Kunstnere</a>
+            <a href="albums.html">Albums</a>
+            <a href="playlists.html">Playlister</a>
+        </nav>
+
+        <div class="header-icons">
+            <button>🔍</button>
+            <button>❤️</button>
+            <button>👤</button>
+        </div>
+
+    </header>
+
+    <main class="page-container">
+
+        <section class="page-intro">
+            <h1>Albums</h1>
+            <p>Udforsk albums på MusikBasen.</p>
+        </section>
+
+        <section id="albums">
+
+            <div class="section-header">
+                <h2>Alle albums</h2>
+            </div>
+
+            <div class="albums-grid" id="albums-grid"></div>
+
+        </section>
+
+    </main>
+
+    <script src="../script.js"></script>
+
+</body>
+
+</html>
