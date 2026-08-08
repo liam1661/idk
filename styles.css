@@ -486,3 +486,49 @@ footer{
     color: #999999;
     font-size: 0.85rem;
 }
+#songs {
+    padding: 0 8% 80px;
+}
+
+#songs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+#songs-grid .music-card {
+    background: #181818;
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#songs-grid .music-card:hover {
+    transform: translateY(-8px);
+}
+
+#songs-grid .card-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(135deg, #ff8a00, #ffb347);
+}
+
+#songs-grid .card-info {
+    padding: 18px;
+}
+
+#songs-grid .card-info h3 {
+    margin-bottom: 6px;
+    font-size: 1.1rem;
+}
+
+#songs-grid .card-info p {
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+#songs-grid .card-info span {
+    color: #999999;
+    font-size: 0.85rem;
+}

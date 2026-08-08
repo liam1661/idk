@@ -48,3 +48,28 @@ if (albumsGrid && typeof albums !== "undefined") {
     });
 
 }
+const songsGrid = document.getElementById("songs-grid");
+
+if (songsGrid && typeof songs !== "undefined") {
+
+    songs.forEach(song => {
+
+        const songCard = document.createElement("div");
+
+        songCard.className = "music-card";
+
+        songCard.innerHTML = `
+            <div class="card-image"></div>
+
+            <div class="card-info">
+                <h3>${song.title}</h3>
+                <p>${song.artist}</p>
+                <span>${song.album} • ${song.year}</span>
+            </div>
+        `;
+
+        songsGrid.appendChild(songCard);
+
+    });
+
+}

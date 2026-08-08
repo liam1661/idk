@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sange – MusikBasen</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <a href="../index.html" class="logo">MB</a>
+
+    <nav>
+        <a href="../index.html">Forside</a>
+        <a href="artists.html">Kunstnere</a>
+        <a href="albums.html">Albums</a>
+        <a href="songs.html" class="active">Sange</a>
+        <a href="playlists.html">Playlister</a>
+    </nav>
+
+    <div class="top-icons">
+        <span>🔎</span>
+        <span>💗</span>
+        <span>👤</span>
+    </div>
+
+</header>
+
+
+<main class="page">
+
+    <section class="page-header">
+
+        <h1>Sange</h1>
+
+        <p>
+            Find sange fra danske og internationale kunstnere.
+        </p>
+
+    </section>
+
+
+    <section id="songs">
+
+        <div class="section-header">
+
+            <h2>Alle sange</h2>
+
+        </div>
+
+        <div id="songs-grid" class="trending-grid"></div>
+
+    </section>
+
+</main>
+
+
+<script src="../data/songs.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
