@@ -73,3 +73,30 @@ if (songsGrid && typeof songs !== "undefined") {
     });
 
 }
+const playlistsGrid = document.getElementById("playlists-grid");
+
+if (playlistsGrid && typeof playlists !== "undefined") {
+
+    playlists.forEach(playlist => {
+
+        const playlistCard = document.createElement("div");
+
+        playlistCard.className = "playlist-card";
+
+        playlistCard.innerHTML = `
+            <div class="playlist-image">
+                <span>▶</span>
+            </div>
+
+            <div class="playlist-info">
+                <h3>${playlist.name}</h3>
+                <p>${playlist.description}</p>
+                <span>${playlist.songs.length} sange • ${playlist.creator}</span>
+            </div>
+        `;
+
+        playlistsGrid.appendChild(playlistCard);
+
+    });
+
+}

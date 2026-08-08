@@ -1,7 +1,91 @@
-<nav>
-    <a href="../index.html">Forside</a>
-    <a href="artists.html">Kunstnere</a>
-    <a href="albums.html">Albums</a>
-    <a href="songs.html">Sange</a>
-    <a href="playlists.html">Playlister</a>
-</nav>
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Playlister – MusikBasen</title>
+
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../theme.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        <h1>MB</h1>
+    </div>
+
+    <nav>
+
+        <a href="../index.html">Forside</a>
+
+        <a href="artists.html">Kunstnere</a>
+
+        <a href="albums.html">Albums</a>
+
+        <a href="songs.html">Sange</a>
+
+        <a href="playlists.html">Playlister</a>
+
+    </nav>
+
+    <div class="header-icons">
+
+        <button>🔍</button>
+        <button>❤️</button>
+        <button>👤</button>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <section class="page-header">
+
+        <h1>Playlister</h1>
+
+        <p>
+            Find playlister til enhver stemning.
+        </p>
+
+    </section>
+
+
+    <section id="playlists">
+
+        <div class="section-header">
+
+            <h2>MusikBasen Playlister</h2>
+
+        </div>
+
+        <div id="playlists-grid" class="playlists-grid"></div>
+
+    </section>
+
+</main>
+
+
+<script src="../data/playlists.js"></script>
+<script src="../script.js"></script>
+
+</body>
+
+</html>
