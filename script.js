@@ -21,6 +21,8 @@ if (artistsGrid && typeof artists !== "undefined") {
     });
 
 }
+
+
 const albumsGrid = document.getElementById("albums-grid");
 
 if (albumsGrid && typeof albums !== "undefined") {
@@ -48,6 +50,8 @@ if (albumsGrid && typeof albums !== "undefined") {
     });
 
 }
+
+
 const songsGrid = document.getElementById("songs-grid");
 
 if (songsGrid && typeof songs !== "undefined") {
@@ -73,6 +77,8 @@ if (songsGrid && typeof songs !== "undefined") {
     });
 
 }
+
+
 const playlistsGrid = document.getElementById("playlists-grid");
 
 if (playlistsGrid && typeof playlists !== "undefined") {
@@ -96,6 +102,147 @@ if (playlistsGrid && typeof playlists !== "undefined") {
         `;
 
         playlistsGrid.appendChild(playlistCard);
+
+    });
+
+}
+
+
+/* Search */
+
+const searchButton = document.getElementById("search-button");
+
+const searchOverlay = document.getElementById("search-overlay");
+
+const searchInput = document.getElementById("search-input");
+
+const closeSearch = document.getElementById("close-search");
+
+const searchResults = document.getElementById("search-results");
+
+
+if (
+    searchButton &&
+    searchOverlay &&
+    searchInput &&
+    closeSearch &&
+    searchResults
+) {
+
+    searchButton.addEventListener("click", () => {
+
+        searchOverlay.classList.add("active");
+
+        searchInput.focus();
+
+    });
+
+
+    closeSearch.addEventListener("click", () => {
+
+        searchOverlay.classList.remove("active");
+
+        searchInput.value = "";
+
+        searchResults.innerHTML = "";
+
+    });
+
+
+    searchInput.addEventListener("input", () => {
+
+        const query = searchInput.value.toLowerCase().trim();
+
+        searchResults.innerHTML = "";
+
+        if (!query) {
+            return;
+        }
+
+
+        if (typeof artists !== "undefined") {
+
+            artists
+                .filter(artist =>
+                    artist.name.toLowerCase().includes(query)
+                )
+                .forEach(artist => {
+
+                    const result = document.createElement("div");
+
+                    result.className = "search-result";
+
+                    result.innerHTML = `
+                        <strong>${artist.name}</strong>
+                        <span>Kunstner</span>
+                    `;
+
+                    searchResults.appendChild(result);
+
+                });
+
+        }
+
+
+        if (typeof songs !== "undefined") {
+
+            songs
+                .filter(song =>
+                    song.title.toLowerCase().includes(query) ||
+                    song.artist.toLowerCase().includes(query)
+                )
+                .forEach(song => {
+
+                    const result = document.createElement("div");
+
+                    result.className = "search-result";
+
+                    result.innerHTML = `
+                        <strong>${song.title}</strong>
+                        <span>Sang · ${song.artist}</span>
+                    `;
+
+                    searchResults.appendChild(result);
+
+                });
+
+        }
+
+
+        if (typeof albums !== "undefined") {
+
+            albums
+                .filter(album =>
+                    album.title.toLowerCase().includes(query) ||
+                    album.artist.toLowerCase().includes(query)
+                )
+                .forEach(album => {
+
+                    const result = document.createElement("div");
+
+                    result.className = "search-result";
+
+                    result.innerHTML = `
+                        <strong>${album.title}</strong>
+                        <span>Album · ${album.artist}</span>
+                    `;
+
+                    searchResults.appendChild(result);
+
+                });
+
+        }
+
+
+        if (searchResults.children.length === 0) {
+
+            searchResults.innerHTML = `
+                <p class="no-results">
+                    Ingen resultater fundet.
+                </p>
+            `;
+
+        }
 
     });
 

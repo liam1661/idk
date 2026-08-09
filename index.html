@@ -10,186 +10,123 @@
     <title>MusikBasen</title>
 
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="theme.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
 </head>
 
+
 <body>
 
-    <header>
 
-        <div class="logo">
+<header>
 
-            <h1>MB</h1>
+    <div class="logo">
 
-        </div>
-
-  <nav>
-
-    <a href="index.html">Forside</a>
-
-    <a href="pages/artists.html">Kunstnere</a>
-
-    <a href="pages/albums.html">Albums</a>
-
-    <a href="pages/songs.html">Sange</a>
-
-    <a href="pages/playlists.html">Playlister</a>
-
-</nav>
-
-
-        <div class="header-icons">
-
-            <button>🔍</button>
-
-            <button>❤️</button>
-
-            <button>👤</button>
-
-        </div>
-
-    </header>
-
-    <section id="hero">
-
-        <div class="hero-content">
-
-            <span class="hero-tag">
-
-                Danmarks største musikdatabase
-
-            </span>
-
-            <h1>
-
-                Opdag ny musik.<br>
-
-                Genoplev klassikere.
-
-            </h1>
-
-            <p>
-
-                MusikBasen samler danske og internationale kunstnere,
-                albums, sange og playlister ét sted.
-
-            </p>
-
-            <div class="hero-buttons">
-
-                <button class="button">
-
-                    Udforsk MusikBasen
-
-                </button>
-
-                <button class="button secondary">
-
-                    Se populære kunstnere
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
-
-<section id="trending">
-
-    <div class="section-header">
-        <h2>Trending lige nu</h2>
-        <a href="#">Se alle</a>
-    </div>
-
-    <div class="trending-grid">
-
-        <div class="music-card">
-            <div class="card-image"></div>
-
-            <div class="card-info">
-                <h3>Gilli</h3>
-                <p>Penge Kommer Går</p>
-            </div>
-        </div>
-
-        <div class="music-card">
-            <div class="card-image"></div>
-
-            <div class="card-info">
-                <h3>Branco</h3>
-                <p>All In</p>
-            </div>
-        </div>
-
-        <div class="music-card">
-            <div class="card-image"></div>
-
-            <div class="card-info">
-                <h3>Node</h3>
-                <p>Tro På</p>
-            </div>
-        </div>
-
-        <div class="music-card">
-            <div class="card-image"></div>
-
-            <div class="card-info">
-                <h3>Kesi</h3>
-                <p>Søvnløs</p>
-            </div>
-        </div>
+        <h1>MB</h1>
 
     </div>
 
-    <section id="artists">
 
-    <div class="artists-grid">
+    <nav>
 
-        <div class="artist-card">
+        <a href="index.html">Forside</a>
 
-            <div class="artist-image"></div>
+        <a href="pages/artists.html">Kunstnere</a>
 
-            <h3>Gilli</h3>
+        <a href="pages/albums.html">Albums</a>
 
-            <p>Rap • Danmark</p>
+        <a href="pages/songs.html">Sange</a>
 
-        </div>
+        <a href="pages/playlists.html">Playlister</a>
 
-        <div class="artist-card">
+    </nav>
 
-            <div class="artist-image"></div>
 
-            <h3>Branco</h3>
+    <div class="header-icons">
 
-            <p>Rap • Danmark</p>
+        <button id="search-button">🔍</button>
 
-        </div>
+        <button>❤️</button>
 
-        <div class="artist-card">
+        <button>👤</button>
 
-            <div class="artist-image"></div>
+    </div>
 
-            <h3>Node</h3>
+</header>
 
-            <p>Rap • Danmark</p>
 
-        </div>
+<div id="search-overlay" class="search-overlay">
 
-        <div class="artist-card">
+    <div class="search-box">
 
-            <div class="artist-image"></div>
+        <input
+            type="text"
+            id="search-input"
+            placeholder="Søg efter kunstner, sang eller album..."
+            autocomplete="off"
+        >
 
-            <h3>Kesi</h3>
+        <button id="close-search">✕</button>
 
-            <p>Rap • Danmark</p>
+    </div>
+
+
+    <div id="search-results" class="search-results"></div>
+
+</div>
+
+
+<section id="hero">
+
+    <div class="hero-content">
+
+        <span class="hero-tag">
+
+            Danmarks største musikdatabase
+
+        </span>
+
+
+        <h1>
+
+            Opdag ny musik.<br>
+
+            Genoplev klassikere.
+
+        </h1>
+
+
+        <p>
+
+            MusikBasen samler danske og internationale kunstnere,
+            albums, sange og playlister ét sted.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <button class="button">
+
+                Udforsk MusikBasen
+
+            </button>
+
+
+            <button class="button secondary">
+
+                Se populære kunstnere
+
+            </button>
 
         </div>
 
@@ -197,23 +134,119 @@
 
 </section>
 
-    <section id="albums">
 
-    </section>
+<section id="trending">
 
-    <section id="today">
+    <div class="section-header">
 
-    </section>
+        <h2>Trending lige nu</h2>
 
-    <section id="recommendation">
+        <a href="#">Se alle</a>
 
-    </section>
+    </div>
 
-    <footer>
 
-    </footer>
+    <div class="trending-grid">
 
-    <script src="script.js"></script>
+        <div class="music-card">
+
+            <div class="card-image"></div>
+
+            <div class="card-info">
+
+                <h3>Gilli</h3>
+
+                <p>Penge Kommer Går</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="music-card">
+
+            <div class="card-image"></div>
+
+            <div class="card-info">
+
+                <h3>Branco</h3>
+
+                <p>All In</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="music-card">
+
+            <div class="card-image"></div>
+
+            <div class="card-info">
+
+                <h3>Node</h3>
+
+                <p>Tro På</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="music-card">
+
+            <div class="card-image"></div>
+
+            <div class="card-info">
+
+                <h3>Kesi</h3>
+
+                <p>Søvnløs</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section id="artists">
+
+</section>
+
+
+<section id="albums">
+
+</section>
+
+
+<section id="today">
+
+</section>
+
+
+<section id="recommendation">
+
+</section>
+
+
+<footer>
+
+</footer>
+
+
+<script src="data/artists.js"></script>
+
+<script src="data/albums.js"></script>
+
+<script src="data/songs.js"></script>
+
+<script src="data/playlists.js"></script>
+
+<script src="script.js"></script>
+
 
 </body>
 
