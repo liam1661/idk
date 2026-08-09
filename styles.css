@@ -666,3 +666,176 @@ footer{
     text-align: center;
     color: #999;
 }
+/* ========================= */
+/* ARTIST PAGE */
+/* ========================= */
+
+.artist-hero {
+    min-height: 500px;
+
+    padding: 150px 8% 80px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 60px;
+
+    background:
+        radial-gradient(
+            circle at 30% 50%,
+            rgba(255, 138, 0, .18),
+            transparent 40%
+        );
+}
+
+.artist-hero-image {
+    width: 280px;
+    height: 280px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff8a00,
+            #ffb347
+        );
+}
+
+.artist-hero-info span {
+    color: var(--orange);
+
+    font-size: .8rem;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+.artist-hero-info h1 {
+    font-size: 4rem;
+
+    margin: 12px 0 20px;
+}
+
+.artist-hero-info p {
+    max-width: 650px;
+
+    color: var(--text-secondary);
+
+    line-height: 1.7;
+}
+
+.artist-meta {
+    display: flex;
+
+    gap: 25px;
+
+    margin-top: 25px;
+
+    color: #999;
+}
+
+.artist-section {
+    padding: 60px 8%;
+}
+/* ========================= */
+/* ARTIST DETAIL PAGE */
+/* ========================= */
+
+.artist-hero {
+
+    min-height: 500px;
+
+    padding: 150px 8% 80px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 60px;
+
+    background:
+        radial-gradient(
+            circle at 30% 50%,
+            rgba(255, 138, 0, .18),
+            transparent 40%
+        );
+
+}
+
+
+.artist-hero-image {
+
+    width: 280px;
+
+    height: 280px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff8a00,
+            #ffb347
+        );
+
+}
+
+
+.artist-hero-info span {
+
+    color: var(--orange);
+
+    font-size: .8rem;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+}
+
+
+.artist-hero-info h1 {
+
+    font-size: 4rem;
+
+    margin: 12px 0 20px;
+
+}
+
+
+.artist-hero-info p {
+
+    max-width: 650px;
+
+    color: var(--text-secondary);
+
+    line-height: 1.7;
+
+}
+
+
+.artist-meta {
+
+    display: flex;
+
+    gap: 25px;
+
+    margin-top: 25px;
+
+    color: #999;
+
+}
+
+
+.artist-section {
+
+    padding: 60px 8%;
+
+}

@@ -16,12 +16,18 @@ if (artistsGrid && typeof artists !== "undefined") {
             <p>${artist.genre} • ${artist.country}</p>
         `;
 
+        artistCard.addEventListener("click", () => {
+
+            window.location.href =
+                `artist.html?id=${artist.id}`;
+
+        });
+
         artistsGrid.appendChild(artistCard);
 
     });
 
 }
-
 
 const albumsGrid = document.getElementById("albums-grid");
 
@@ -245,5 +251,318 @@ if (
         }
 
     });
+
+}
+/* ========================= */
+/* ARTIST PAGE */
+/* ========================= */
+
+const artistName = document.getElementById("artist-name");
+
+if (artistName && typeof artists !== "undefined") {
+
+    const params = new URLSearchParams(window.location.search);
+
+    const artistId = Number(params.get("id"));
+
+    const artist = artists.find(
+        artist => artist.id === artistId
+    );
+
+
+    if (artist) {
+
+        document.title = `${artist.name} – MusikBasen`;
+
+
+        document.getElementById("artist-name").textContent =
+            artist.name;
+
+
+        document.getElementById("artist-description").textContent =
+            artist.description;
+
+
+        document.getElementById("artist-genre").textContent =
+            artist.genre;
+
+
+        document.getElementById("artist-country").textContent =
+            artist.country;
+
+
+        const artistAlbums =
+            document.getElementById("artist-albums");
+
+
+        const artistSongs =
+            document.getElementById("artist-songs");
+
+
+        if (artistAlbums && typeof albums !== "undefined") {
+
+            albums
+                .filter(album =>
+                    album.artist === artist.name
+                )
+                .forEach(album => {
+
+                    const card =
+                        document.createElement("div");
+
+                    card.className = "album-card";
+
+
+                    card.innerHTML = `
+
+                        <div class="album-image">
+
+                            <div class="album-placeholder"></div>
+
+                        </div>
+
+                        <div class="album-info">
+
+                            <h3>${album.title}</h3>
+
+                            <p>${album.artist}</p>
+
+                            <span>
+                                ${album.year} • ${album.genre}
+                            </span>
+
+                        </div>
+
+                    `;
+
+
+                    artistAlbums.appendChild(card);
+
+                });
+
+        }
+
+
+        if (artistSongs && typeof songs !== "undefined") {
+
+            songs
+                .filter(song =>
+                    song.artist === artist.name
+                )
+                .forEach(song => {
+
+                    const card =
+                        document.createElement("div");
+
+                    card.className = "music-card";
+
+
+                    card.innerHTML = `
+
+                        <div class="card-image"></div>
+
+                        <div class="card-info">
+
+                            <h3>${song.title}</h3>
+
+                            <p>${song.artist}</p>
+
+                            <span>
+                                ${song.album} • ${song.year}
+                            </span>
+
+                        </div>
+
+                    `;
+
+
+                    artistSongs.appendChild(card);
+
+                });
+
+        }
+
+    }
+
+}
+/* ========================= */
+/* ARTIST DETAIL PAGE */
+/* ========================= */
+
+const artistNameElement =
+    document.getElementById("artist-name");
+
+
+if (
+    artistNameElement &&
+    typeof artists !== "undefined"
+) {
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+
+    const artistId =
+        Number(params.get("id"));
+
+
+    const artist =
+        artists.find(
+            artist => artist.id === artistId
+        );
+
+
+    if (artist) {
+
+        document.title =
+            `${artist.name} | MusikBasen`;
+
+
+        document.getElementById(
+            "artist-name"
+        ).textContent =
+            artist.name;
+
+
+        document.getElementById(
+            "artist-description"
+        ).textContent =
+            artist.description;
+
+
+        document.getElementById(
+            "artist-genre"
+        ).textContent =
+            artist.genre;
+
+
+        document.getElementById(
+            "artist-country"
+        ).textContent =
+            artist.country;
+
+
+        const albumsContainer =
+            document.getElementById(
+                "artist-albums"
+            );
+
+
+        const songsContainer =
+            document.getElementById(
+                "artist-songs"
+            );
+
+
+        /* Albums */
+
+        if (
+            albumsContainer &&
+            typeof albums !== "undefined"
+        ) {
+
+            albums
+                .filter(album =>
+                    album.artist === artist.name
+                )
+                .forEach(album => {
+
+                    const card =
+                        document.createElement("div");
+
+
+                    card.className =
+                        "album-card";
+
+
+                    card.innerHTML = `
+
+                        <div class="album-image">
+
+                            <div class="album-placeholder"></div>
+
+                        </div>
+
+                        <div class="album-info">
+
+                            <h3>
+                                ${album.title}
+                            </h3>
+
+                            <p>
+                                ${album.artist}
+                            </p>
+
+                            <span>
+                                ${album.year}
+                                •
+                                ${album.genre}
+                            </span>
+
+                        </div>
+
+                    `;
+
+
+                    albumsContainer.appendChild(card);
+
+                });
+
+        }
+
+
+        /* Songs */
+
+        if (
+            songsContainer &&
+            typeof songs !== "undefined"
+        ) {
+
+            songs
+                .filter(song =>
+                    song.artist === artist.name
+                )
+                .forEach(song => {
+
+                    const card =
+                        document.createElement("div");
+
+
+                    card.className =
+                        "music-card";
+
+
+                    card.innerHTML = `
+
+                        <div class="card-image"></div>
+
+                        <div class="card-info">
+
+                            <h3>
+                                ${song.title}
+                            </h3>
+
+                            <p>
+                                ${song.artist}
+                            </p>
+
+                            <span>
+                                ${song.album}
+                                •
+                                ${song.year}
+                            </span>
+
+                        </div>
+
+                    `;
+
+
+                    songsContainer.appendChild(card);
+
+                });
+
+        }
+
+    }
 
 }

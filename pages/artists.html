@@ -7,12 +7,10 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Kunstnere | MusikBasen</title>
+    <title>Kunstner | MusikBasen</title>
 
- <link rel="stylesheet" href="../styles.css">
-<link rel="stylesheet" href="../theme.css">
-
-<script src="../data/artists.js"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../theme.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -25,7 +23,9 @@
 
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -33,20 +33,26 @@
         <h1>MB</h1>
     </div>
 
-<nav>
-    <a href="../index.html">Forside</a>
-    <a href="artists.html">Kunstnere</a>
-    <a href="albums.html">Albums</a>
-    <a href="songs.html">Sange</a>
-    <a href="playlists.html">Playlister</a>
-</nav>
+
+    <nav>
+
+        <a href="../index.html">Forside</a>
+
+        <a href="artist.html">Kunstnere</a>
+
+        <a href="albums.html">Albums</a>
+
+        <a href="songs.html">Sange</a>
+
+        <a href="playlists.html">Playlister</a>
+
+    </nav>
+
 
     <div class="header-icons">
 
         <button>🔍</button>
-
         <button>❤️</button>
-
         <button>👤</button>
 
     </div>
@@ -56,30 +62,81 @@
 
 <main>
 
-    <section class="page-title">
 
-        <h1>Kunstnere</h1>
+    <section class="artist-hero">
 
-        <p>Udforsk kunstnere på MusikBasen.</p>
+        <div class="artist-hero-image"></div>
+
+
+        <div class="artist-hero-info">
+
+            <span>KUNSTNER</span>
+
+            <h1 id="artist-name">Kunstner</h1>
+
+            <p id="artist-description">
+                Kunstnerinformation indlæses...
+            </p>
+
+
+            <div class="artist-meta">
+
+                <span id="artist-genre"></span>
+
+                <span id="artist-country"></span>
+
+            </div>
+
+        </div>
 
     </section>
 
 
-<section id="artists">
+    <section class="artist-section">
 
-    <div class="artists-grid" id="artists-grid"></div>
+        <div class="section-header">
 
-</section>
+            <h2>Albums</h2>
+
+        </div>
+
+
+        <div
+            id="artist-albums"
+            class="albums-grid"
+        ></div>
+
+    </section>
+
+
+    <section class="artist-section">
+
+        <div class="section-header">
+
+            <h2>Sange</h2>
+
+        </div>
+
+
+        <div
+            id="artist-songs"
+            class="trending-grid"
+        ></div>
+
+    </section>
+
 
 </main>
 
 
-<footer>
+<script src="../data/artists.js"></script>
 
-</footer>
+<script src="../data/albums.js"></script>
 
+<script src="../data/songs.js"></script>
 
 <script src="../script.js"></script>
+
 
 </body>
 
