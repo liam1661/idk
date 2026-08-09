@@ -1,3 +1,7 @@
+/* ========================= */
+/* ARTISTS */
+/* ========================= */
+
 const artistsGrid = document.getElementById("artists-grid");
 
 if (artistsGrid && typeof artists !== "undefined") {
@@ -19,7 +23,7 @@ if (artistsGrid && typeof artists !== "undefined") {
         artistCard.addEventListener("click", () => {
 
             window.location.href =
-                `artist.html?id=${artist.id}`;
+                `artist.html?id=${encodeURIComponent(artist.id)}`;
 
         });
 
@@ -28,6 +32,11 @@ if (artistsGrid && typeof artists !== "undefined") {
     });
 
 }
+
+
+/* ========================= */
+/* ALBUMS */
+/* ========================= */
 
 const albumsGrid = document.getElementById("albums-grid");
 
@@ -46,8 +55,12 @@ if (albumsGrid && typeof albums !== "undefined") {
 
             <div class="album-info">
                 <h3>${album.title}</h3>
+
                 <p>${album.artist}</p>
-                <span>${album.year} • ${album.genre}</span>
+
+                <span>
+                    ${album.year} • ${album.genre}
+                </span>
             </div>
         `;
 
@@ -57,6 +70,10 @@ if (albumsGrid && typeof albums !== "undefined") {
 
 }
 
+
+/* ========================= */
+/* SONGS */
+/* ========================= */
 
 const songsGrid = document.getElementById("songs-grid");
 
@@ -72,9 +89,15 @@ if (songsGrid && typeof songs !== "undefined") {
             <div class="card-image"></div>
 
             <div class="card-info">
+
                 <h3>${song.title}</h3>
+
                 <p>${song.artist}</p>
-                <span>${song.album} • ${song.year}</span>
+
+                <span>
+                    ${song.album} • ${song.year}
+                </span>
+
             </div>
         `;
 
@@ -85,15 +108,25 @@ if (songsGrid && typeof songs !== "undefined") {
 }
 
 
-const playlistsGrid = document.getElementById("playlists-grid");
+/* ========================= */
+/* PLAYLISTS */
+/* ========================= */
 
-if (playlistsGrid && typeof playlists !== "undefined") {
+const playlistsGrid =
+    document.getElementById("playlists-grid");
+
+if (
+    playlistsGrid &&
+    typeof playlists !== "undefined"
+) {
 
     playlists.forEach(playlist => {
 
-        const playlistCard = document.createElement("div");
+        const playlistCard =
+            document.createElement("div");
 
-        playlistCard.className = "playlist-card";
+        playlistCard.className =
+            "playlist-card";
 
         playlistCard.innerHTML = `
             <div class="playlist-image">
@@ -101,9 +134,17 @@ if (playlistsGrid && typeof playlists !== "undefined") {
             </div>
 
             <div class="playlist-info">
+
                 <h3>${playlist.name}</h3>
+
                 <p>${playlist.description}</p>
-                <span>${playlist.songs.length} sange • ${playlist.creator}</span>
+
+                <span>
+                    ${playlist.songs.length}
+                    sange •
+                    ${playlist.creator}
+                </span>
+
             </div>
         `;
 
@@ -114,17 +155,24 @@ if (playlistsGrid && typeof playlists !== "undefined") {
 }
 
 
-/* Search */
+/* ========================= */
+/* SEARCH */
+/* ========================= */
 
-const searchButton = document.getElementById("search-button");
+const searchButton =
+    document.getElementById("search-button");
 
-const searchOverlay = document.getElementById("search-overlay");
+const searchOverlay =
+    document.getElementById("search-overlay");
 
-const searchInput = document.getElementById("search-input");
+const searchInput =
+    document.getElementById("search-input");
 
-const closeSearch = document.getElementById("close-search");
+const closeSearch =
+    document.getElementById("close-search");
 
-const searchResults = document.getElementById("search-results");
+const searchResults =
+    document.getElementById("search-results");
 
 
 if (
@@ -135,6 +183,8 @@ if (
     searchResults
 ) {
 
+    /* Open search */
+
     searchButton.addEventListener("click", () => {
 
         searchOverlay.classList.add("active");
@@ -143,6 +193,8 @@ if (
 
     });
 
+
+    /* Close search */
 
     closeSearch.addEventListener("click", () => {
 
@@ -155,33 +207,62 @@ if (
     });
 
 
+    /* Search */
+
     searchInput.addEventListener("input", () => {
 
-        const query = searchInput.value.toLowerCase().trim();
+        const query =
+            searchInput.value
+                .toLowerCase()
+                .trim();
 
         searchResults.innerHTML = "";
+
 
         if (!query) {
             return;
         }
 
 
+        /* Artists */
+
         if (typeof artists !== "undefined") {
 
             artists
                 .filter(artist =>
-                    artist.name.toLowerCase().includes(query)
+                    artist.name
+                        .toLowerCase()
+                        .includes(query)
                 )
                 .forEach(artist => {
 
-                    const result = document.createElement("div");
+                    const result =
+                        document.createElement("div");
 
-                    result.className = "search-result";
+                    result.className =
+                        "search-result";
 
                     result.innerHTML = `
-                        <strong>${artist.name}</strong>
-                        <span>Kunstner</span>
+                        <strong>
+                            ${artist.name}
+                        </strong>
+
+                        <span>
+                            Kunstner
+                        </span>
                     `;
+
+
+                    result.addEventListener(
+                        "click",
+                        () => {
+
+                            window.location.href =
+                                `artist.html?id=${encodeURIComponent(artist.id)}`;
+
+                        }
+                    );
+
 
                     searchResults.appendChild(result);
 
@@ -189,24 +270,39 @@ if (
 
         }
 
+
+        /* Songs */
 
         if (typeof songs !== "undefined") {
 
             songs
                 .filter(song =>
-                    song.title.toLowerCase().includes(query) ||
-                    song.artist.toLowerCase().includes(query)
+                    song.title
+                        .toLowerCase()
+                        .includes(query) ||
+
+                    song.artist
+                        .toLowerCase()
+                        .includes(query)
                 )
                 .forEach(song => {
 
-                    const result = document.createElement("div");
+                    const result =
+                        document.createElement("div");
 
-                    result.className = "search-result";
+                    result.className =
+                        "search-result";
 
                     result.innerHTML = `
-                        <strong>${song.title}</strong>
-                        <span>Sang · ${song.artist}</span>
+                        <strong>
+                            ${song.title}
+                        </strong>
+
+                        <span>
+                            Sang · ${song.artist}
+                        </span>
                     `;
+
 
                     searchResults.appendChild(result);
 
@@ -214,24 +310,39 @@ if (
 
         }
 
+
+        /* Albums */
 
         if (typeof albums !== "undefined") {
 
             albums
                 .filter(album =>
-                    album.title.toLowerCase().includes(query) ||
-                    album.artist.toLowerCase().includes(query)
+                    album.title
+                        .toLowerCase()
+                        .includes(query) ||
+
+                    album.artist
+                        .toLowerCase()
+                        .includes(query)
                 )
                 .forEach(album => {
 
-                    const result = document.createElement("div");
+                    const result =
+                        document.createElement("div");
 
-                    result.className = "search-result";
+                    result.className =
+                        "search-result";
 
                     result.innerHTML = `
-                        <strong>${album.title}</strong>
-                        <span>Album · ${album.artist}</span>
+                        <strong>
+                            ${album.title}
+                        </strong>
+
+                        <span>
+                            Album · ${album.artist}
+                        </span>
                     `;
+
 
                     searchResults.appendChild(result);
 
@@ -239,6 +350,8 @@ if (
 
         }
 
+
+        /* No results */
 
         if (searchResults.children.length === 0) {
 
@@ -253,138 +366,8 @@ if (
     });
 
 }
-/* ========================= */
-/* ARTIST PAGE */
-/* ========================= */
-
-const artistName = document.getElementById("artist-name");
-
-if (artistName && typeof artists !== "undefined") {
-
-    const params = new URLSearchParams(window.location.search);
-
-    const artistId = Number(params.get("id"));
-
-    const artist = artists.find(
-        artist => artist.id === artistId
-    );
 
 
-    if (artist) {
-
-        document.title = `${artist.name} – MusikBasen`;
-
-
-        document.getElementById("artist-name").textContent =
-            artist.name;
-
-
-        document.getElementById("artist-description").textContent =
-            artist.description;
-
-
-        document.getElementById("artist-genre").textContent =
-            artist.genre;
-
-
-        document.getElementById("artist-country").textContent =
-            artist.country;
-
-
-        const artistAlbums =
-            document.getElementById("artist-albums");
-
-
-        const artistSongs =
-            document.getElementById("artist-songs");
-
-
-        if (artistAlbums && typeof albums !== "undefined") {
-
-            albums
-                .filter(album =>
-                    album.artist === artist.name
-                )
-                .forEach(album => {
-
-                    const card =
-                        document.createElement("div");
-
-                    card.className = "album-card";
-
-
-                    card.innerHTML = `
-
-                        <div class="album-image">
-
-                            <div class="album-placeholder"></div>
-
-                        </div>
-
-                        <div class="album-info">
-
-                            <h3>${album.title}</h3>
-
-                            <p>${album.artist}</p>
-
-                            <span>
-                                ${album.year} • ${album.genre}
-                            </span>
-
-                        </div>
-
-                    `;
-
-
-                    artistAlbums.appendChild(card);
-
-                });
-
-        }
-
-
-        if (artistSongs && typeof songs !== "undefined") {
-
-            songs
-                .filter(song =>
-                    song.artist === artist.name
-                )
-                .forEach(song => {
-
-                    const card =
-                        document.createElement("div");
-
-                    card.className = "music-card";
-
-
-                    card.innerHTML = `
-
-                        <div class="card-image"></div>
-
-                        <div class="card-info">
-
-                            <h3>${song.title}</h3>
-
-                            <p>${song.artist}</p>
-
-                            <span>
-                                ${song.album} • ${song.year}
-                            </span>
-
-                        </div>
-
-                    `;
-
-
-                    artistSongs.appendChild(card);
-
-                });
-
-        }
-
-    }
-
-}
 /* ========================= */
 /* ARTIST DETAIL PAGE */
 /* ========================= */
@@ -399,7 +382,9 @@ if (
 ) {
 
     const params =
-        new URLSearchParams(window.location.search);
+        new URLSearchParams(
+            window.location.search
+        );
 
 
     const artistId =
@@ -418,46 +403,63 @@ if (
             `${artist.name} | MusikBasen`;
 
 
-        document.getElementById(
-            "artist-name"
-        ).textContent =
-            artist.name;
+        /* Artist information */
+
+        const nameElement =
+            document.getElementById(
+                "artist-name"
+            );
+
+        const descriptionElement =
+            document.getElementById(
+                "artist-description"
+            );
+
+        const genreElement =
+            document.getElementById(
+                "artist-genre"
+            );
+
+        const countryElement =
+            document.getElementById(
+                "artist-country"
+            );
 
 
-        document.getElementById(
-            "artist-description"
-        ).textContent =
-            artist.description;
+        if (nameElement) {
+            nameElement.textContent =
+                artist.name;
+        }
 
 
-        document.getElementById(
-            "artist-genre"
-        ).textContent =
-            artist.genre;
+        if (descriptionElement) {
+            descriptionElement.textContent =
+                artist.description;
+        }
 
 
-        document.getElementById(
-            "artist-country"
-        ).textContent =
-            artist.country;
+        if (genreElement) {
+            genreElement.textContent =
+                artist.genre;
+        }
 
 
-        const albumsContainer =
+        if (countryElement) {
+            countryElement.textContent =
+                artist.country;
+        }
+
+
+        /* Artist albums */
+
+        const artistAlbums =
             document.getElementById(
                 "artist-albums"
             );
 
 
-        const songsContainer =
-            document.getElementById(
-                "artist-songs"
-            );
-
-
-        /* Albums */
-
         if (
-            albumsContainer &&
+            artistAlbums &&
             typeof albums !== "undefined"
         ) {
 
@@ -470,16 +472,15 @@ if (
                     const card =
                         document.createElement("div");
 
-
                     card.className =
                         "album-card";
 
 
                     card.innerHTML = `
-
                         <div class="album-image">
 
-                            <div class="album-placeholder"></div>
+                            <div class="album-placeholder">
+                            </div>
 
                         </div>
 
@@ -500,21 +501,26 @@ if (
                             </span>
 
                         </div>
-
                     `;
 
 
-                    albumsContainer.appendChild(card);
+                    artistAlbums.appendChild(card);
 
                 });
 
         }
 
 
-        /* Songs */
+        /* Artist songs */
+
+        const artistSongs =
+            document.getElementById(
+                "artist-songs"
+            );
+
 
         if (
-            songsContainer &&
+            artistSongs &&
             typeof songs !== "undefined"
         ) {
 
@@ -527,13 +533,11 @@ if (
                     const card =
                         document.createElement("div");
 
-
                     card.className =
                         "music-card";
 
 
                     card.innerHTML = `
-
                         <div class="card-image"></div>
 
                         <div class="card-info">
@@ -553,11 +557,10 @@ if (
                             </span>
 
                         </div>
-
                     `;
 
 
-                    songsContainer.appendChild(card);
+                    artistSongs.appendChild(card);
 
                 });
 
