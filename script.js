@@ -257,9 +257,8 @@ if (
                         "click",
                         () => {
 
-                            window.location.href =
-                                `artist.html?id=${encodeURIComponent(artist.id)}`;
-
+                    window.location.href =
+                         `artists.html?id=${encodeURIComponent(artist.id)}`;
                         }
                     );
 

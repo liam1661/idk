@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Kunstner | MusikBasen</title>
+    <title>Kunstnere | MusikBasen</title>
 
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="../theme.css">
@@ -36,15 +36,25 @@
 
     <nav>
 
-        <a href="../index.html">Forside</a>
+        <a href="../index.html">
+            Forside
+        </a>
 
-        <a href="artists.html">Kunstnere</a>
+        <a href="artists.html">
+            Kunstnere
+        </a>
 
-        <a href="albums.html">Albums</a>
+        <a href="albums.html">
+            Albums
+        </a>
 
-        <a href="songs.html">Sange</a>
+        <a href="songs.html">
+            Sange
+        </a>
 
-        <a href="playlists.html">Playlister</a>
+        <a href="playlists.html">
+            Playlister
+        </a>
 
     </nav>
 
@@ -60,80 +70,116 @@
 </header>
 
 
+
 <main>
 
 
-    <section class="artist-hero">
+    <!-- ========================= -->
+    <!-- KUNSTNER OVERSIGT -->
+    <!-- ========================= -->
 
-        <div class="artist-hero-image"></div>
+    <section id="artists-list-page">
 
+        <section class="page-title">
 
-        <div class="artist-hero-info">
+            <h1>Kunstnere</h1>
 
-            <span>KUNSTNER</span>
-
-            <h1 id="artist-name">Kunstner</h1>
-
-            <p id="artist-description">
-                Kunstnerinformation indlæses...
+            <p>
+                Udforsk kunstnere på MusikBasen.
             </p>
 
+        </section>
 
-            <div class="artist-meta">
 
-                <span id="artist-genre"></span>
+        <div
+            class="artists-grid"
+            id="artists-grid"
+        ></div>
 
-                <span id="artist-country"></span>
+    </section>
+
+
+
+    <!-- ========================= -->
+    <!-- KUNSTNER DETALJER -->
+    <!-- ========================= -->
+
+    <section
+        id="artist-detail-page"
+        style="display:none;"
+    >
+
+        <section class="artist-hero">
+
+            <div class="artist-hero-image"></div>
+
+
+            <div class="artist-hero-info">
+
+                <span>KUNSTNER</span>
+
+                <h1 id="artist-name">
+                    Kunstner
+                </h1>
+
+                <p id="artist-description">
+                    Kunstnerinformation indlæses...
+                </p>
+
+
+                <div class="artist-meta">
+
+                    <span id="artist-genre"></span>
+
+                    <span id="artist-country"></span>
+
+                </div>
 
             </div>
 
-        </div>
+        </section>
+
+
+
+        <section class="artists-section">
+
+            <div class="section-header">
+
+                <h2>Albums</h2>
+
+            </div>
+
+
+            <div
+                id="artist-albums"
+                class="albums-grid"
+            ></div>
+
+        </section>
+
+
+
+        <section class="artists-section">
+
+            <div class="section-header">
+
+                <h2>Sange</h2>
+
+            </div>
+
+
+            <div
+                id="artist-songs"
+                class="trending-grid"
+            ></div>
+
+        </section>
 
     </section>
-
-
-    <section class="artists-section">
-
-        <div class="section-header">
-
-            <h2>Albums</h2>
-
-        </div>
-
-
-        <div
-            id="artists-albums"
-            class="albums-grid"
-        ></div>
-
-    </section>
-
-
-    <section class="artists-section">
-
-        <div class="section-header">
-
-            <h2>Sange</h2>
-
-        </div>
-
-
-        <div
-            id="artists"
-            class="trending-grid"
-        ></div>
-
-    </section>
-
 
 </main>
 
 
-<script src="../data/artists.js"></script>
-
-<script src="../data/albums.js"></script>
-
-<script src="../data/songs.js"></script>
 
 <script src="../script.js"></script>
 
