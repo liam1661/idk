@@ -1,7 +1,37 @@
+
 /* ========================= */
 /* ARTISTS */
 /* ========================= */
-
+const artists = [
+    {
+        id: 1,
+        name: "Gilli",
+        genre: "Dansk rap",
+        country: "Danmark",
+        description: "Gilli er en dansk rapper og sanger kendt for sin melodiske rap og moderne danske lyd."
+    },
+    {
+        id: 2,
+        name: "Branco",
+        genre: "Dansk rap",
+        country: "Danmark",
+        description: "Branco er en dansk rapper kendt for sin mørke og melodiske stil."
+    },
+    {
+        id: 3,
+        name: "Kesi",
+        genre: "Dansk rap",
+        country: "Danmark",
+        description: "Kesi er en dansk rapper og sanger med en melodisk og moderne stil."
+    },
+    {
+        id: 4,
+        name: "Ude Af Kontrol",
+        genre: "Dansk rap",
+        country: "Danmark",
+        description: "Ude Af Kontrol er en dansk rapgruppe kendt for energiske og festlige tracks."
+    }
+];
 const artistsGrid = document.getElementById("artists-grid");
 
 if (artistsGrid && typeof artists !== "undefined") {
@@ -258,7 +288,7 @@ if (
                         () => {
 
                     window.location.href =
-                         `artists.html?id=${encodeURIComponent(artist.id)}`;
+                                `artists.html?id=${encodeURIComponent(artist.id)}`;
                         }
                     );
 
