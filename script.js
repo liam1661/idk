@@ -569,3 +569,199 @@ if (
     }
 
 }
+/* ========================= */
+/* FAVORITES */
+/* ========================= */
+
+function getFavorites() {
+
+    return JSON.parse(
+        localStorage.getItem("musikbasen-favorites")
+    ) || [];
+
+}
+
+
+function saveFavorites(favorites) {
+
+    localStorage.setItem(
+        "musikbasen-favorites",
+        JSON.stringify(favorites)
+    );
+
+}
+
+
+function toggleFavorite(type, id) {
+
+    const favorites = getFavorites();
+
+    const favoriteId = `${type}-${id}`;
+
+    const existingIndex =
+        favorites.indexOf(favoriteId);
+
+
+    if (existingIndex !== -1) {
+
+        favorites.splice(existingIndex, 1);
+
+    } else {
+
+        favorites.push(favoriteId);
+
+    }
+
+
+    saveFavorites(favorites);
+
+    updateFavoriteButtons();
+
+    renderFavorites();
+
+}
+
+
+function isFavorite(type, id) {
+
+    const favorites = getFavorites();
+
+    return favorites.includes(
+        `${type}-${id}`
+    );
+
+}
+
+
+/* ========================= */
+/* FAVORITE BUTTONS */
+/* ========================= */
+
+function updateFavoriteButtons() {
+
+    document
+        .querySelectorAll("[data-favorite-type]")
+        .forEach(button => {
+
+            const type =
+                button.dataset.favoriteType;
+
+            const id =
+                button.dataset.favoriteId;
+
+
+            if (isFavorite(type, id)) {
+
+                button.classList.add("is-favorite");
+
+                button.textContent = "❤️";
+
+            } else {
+
+                button.classList.remove("is-favorite");
+
+                button.textContent = "♡";
+
+            }
+
+        });
+
+}
+
+
+/* ========================= */
+/* FAVORITES PAGE */
+/* ========================= */
+
+function renderFavorites() {
+
+    const favoritesGrid =
+        document.getElementById(
+            "favorites-grid"
+        );
+
+
+    if (!favoritesGrid) {
+        return;
+    }
+
+
+    const favorites =
+        getFavorites();
+
+
+    if (favorites.length === 0) {
+
+        favoritesGrid.innerHTML = `
+
+            <div class="empty-favorites">
+
+                <h3>
+                    Ingen favoritter endnu
+                </h3>
+
+                <p>
+                    Tryk på ♡ på en sang,
+                    et album eller en kunstner
+                    for at gemme den her.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    favoritesGrid.innerHTML = "";
+
+
+    favorites.forEach(favorite => {
+
+        const [type, id] =
+            favorite.split("-");
+
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "music-card";
+
+
+        card.innerHTML = `
+
+            <div class="card-image"></div>
+
+            <div class="card-info">
+
+                <span>
+                    ${type}
+                </span>
+
+                <h3>
+                    Favorit #${id}
+                </h3>
+
+            </div>
+
+        `;
+
+
+        favoritesGrid.appendChild(card);
+
+    });
+
+}
+
+
+/* ========================= */
+/* START FAVORITES */
+/* ========================= */
+
+renderFavorites();
+
+updateFavoriteButtons();
