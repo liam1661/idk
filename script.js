@@ -39,6 +39,7 @@ const artists = [
         country: "Danmark",
         description: "Sivas er kendt for hans mørke og rå stemme."
     }
+    
 ];
 const artistsGrid = document.getElementById("artists-grid");
 
