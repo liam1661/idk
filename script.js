@@ -39,6 +39,12 @@ const artists = [
         country: "Danmark",
         description: "Sivas er kendt for hans mørke og rå stemme."
     }
+   id: 5,
+        name: "lars er sej",
+        genre: "Dansk idiot",
+        country: "rusland",
+        description: "lars er kendt for at være idiot
+    ."
     
 ];
 const artistsGrid = document.getElementById("artists-grid");
