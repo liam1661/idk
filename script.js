@@ -32,19 +32,20 @@ const artists = [
         description: "Ude Af Kontrol er en dansk rapgruppe kendt for energiske og festlige tracks."
 
     }
-    {
-        id: 5,
-        name: "Sivas",
-        genre: "Dansk rap",
-        country: "Danmark",
-        description: "Sivas er kendt for hans mørke og rå stemme."
-    }
-   id: 6,
-        name: "lars er sej",
-        genre: "Dansk idiot",
-        country: "Dum dansker",
-        description: "lars er kendt for at være idiot."
-    
+ {
+    id: 5,
+    name: "Sivas",
+    genre: "Dansk rap",
+    country: "Danmark",
+    description: "Sivas er kendt for sin mørke og rå stemme."
+},
+{
+    id: 6,
+    name: "Benny Jamz",
+    genre: "Dansk rap",
+    country: "Danmark/Jamaika",
+    description: "Benny er kendt for sin gode stemme."
+}
 ];
 const artistsGrid = document.getElementById("artists-grid");
 
