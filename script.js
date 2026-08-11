@@ -63,6 +63,42 @@ if (artistsGrid && typeof artists !== "undefined") {
 
 }
 
+const artistDetailPage = document.getElementById("artist-detail-page");
+const artistsListPage = document.getElementById("artists-list-page");
+
+const urlParams = new URLSearchParams(window.location.search);
+const selectedArtistId = Number(urlParams.get("id"));
+
+if (
+    artistDetailPage &&
+    artistsListPage &&
+    selectedArtistId
+) {
+
+    const selectedArtist = artists.find(
+        artist => artist.id === selectedArtistId
+    );
+
+    if (selectedArtist) {
+
+        artistsListPage.style.display = "none";
+        artistDetailPage.style.display = "block";
+
+        document.getElementById("artist-name").textContent =
+            selectedArtist.name;
+
+        document.getElementById("artist-description").textContent =
+            selectedArtist.description;
+
+        document.getElementById("artist-genre").textContent =
+            selectedArtist.genre;
+
+        document.getElementById("artist-country").textContent =
+            selectedArtist.country;
+
+    }
+
+}
 
 /* ========================= */
 /* ALBUMS */
