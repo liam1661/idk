@@ -2,7 +2,7 @@
 /* ========================= */
 /* ARTISTS */
 /* ========================= */
-const artists = [
+cconst artists = [
     {
         id: 1,
         name: "Gilli",
@@ -27,25 +27,24 @@ const artists = [
     {
         id: 4,
         name: "Ude Af Kontrol",
-        genre: "Dansk techno",
+        genre: "Dansk rap",
         country: "Danmark",
         description: "Ude Af Kontrol er en dansk rapgruppe kendt for energiske og festlige tracks."
-
+    },
+    {
+        id: 5,
+        name: "Sivas",
+        genre: "Dansk rap",
+        country: "Danmark",
+        description: "Sivas er kendt for sin mørke og rå stemme."
+    },
+    {
+        id: 6,
+        name: "Benny Jamz",
+        genre: "Dansk rap",
+        country: "Danmark/Jamaika",
+        description: "Benny er kendt for sin gode stemme."
     }
- {
-    id: 5,
-    name: "Sivas",
-    genre: "Dansk rap",
-    country: "Danmark",
-    description: "Sivas er kendt for sin mørke og rå stemme."
-},
-{
-    id: 6,
-    name: "Benny Jamz",
-    genre: "Dansk rap",
-    country: "Danmark/Jamaika",
-    description: "Benny er kendt for sin gode stemme."
-}
 ];
 const artistsGrid = document.getElementById("artists-grid");
 
