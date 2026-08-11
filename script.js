@@ -27,9 +27,17 @@ const artists = [
     {
         id: 4,
         name: "Ude Af Kontrol",
-        genre: "Dansk rap",
+        genre: "Dansk techno",
         country: "Danmark",
         description: "Ude Af Kontrol er en dansk rapgruppe kendt for energiske og festlige tracks."
+
+    }
+    {
+        id: 5,
+        name: "Sivas",
+        genre: "Dansk rap",
+        country: "Danmark",
+        description: "Sivas er kendt for hans mørke og rå stemme."
     }
 ];
 const artistsGrid = document.getElementById("artists-grid");
