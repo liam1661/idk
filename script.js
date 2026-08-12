@@ -109,6 +109,70 @@ if (
 
         document.getElementById("artist-country").textContent =
             selectedArtist.country;
+                
+            const artistAlbums = document.getElementById("artist-albums");
+            const artistSongs = document.getElementById("artist-songs");
+
+    if (artistAlbums && typeof albums !== "undefined") {
+
+        const matchingAlbums = albums.filter(
+            album => album.artist === selectedArtist.name
+        );
+
+        artistAlbums.innerHTML = "";
+
+        matchingAlbums.forEach(album => {
+
+            const albumCard = document.createElement("div");
+
+            albumCard.className = "album-card";
+
+            albumCard.innerHTML = `
+                <div class="album-image">
+                    <div class="album-placeholder"></div>
+                </div>
+
+                <div class="album-info">
+                    <h3>${album.title}</h3>
+                    <p>${album.artist}</p>
+                    <span>${album.year} • ${album.genre}</span>
+                </div>
+            `;
+
+            artistAlbums.appendChild(albumCard);
+
+        });
+    }
+
+
+    if (artistSongs && typeof songs !== "undefined") {
+
+        const matchingSongs = songs.filter(
+            song => song.artist === selectedArtist.name
+        );
+
+        artistSongs.innerHTML = "";
+
+        matchingSongs.forEach(song => {
+
+            const songCard = document.createElement("div");
+
+            songCard.className = "music-card";
+
+            songCard.innerHTML = `
+                <div class="card-image"></div>
+
+                <div class="card-info">
+                    <h3>${song.title}</h3>
+                    <p>${song.artist}</p>
+                    <span>${song.album} • ${song.year}</span>
+                </div>
+            `;
+
+            artistSongs.appendChild(songCard);
+
+        });
+    }
 
     }
 
