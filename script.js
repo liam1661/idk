@@ -2,7 +2,7 @@
 /* ========================= */
 /* ARTISTS */
 /* ========================= */
-cconst artists = [
+const artists = [
     {
         id: 1,
         name: "Gilli",
