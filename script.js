@@ -121,7 +121,7 @@ if (
 
         artistAlbums.innerHTML = "";
 
-                matchingAlbums.forEach(album => {
+        matchingAlbums.forEach(album => {
 
             const albumCard = document.createElement("div");
 
@@ -143,39 +143,6 @@ if (
 
         });
     }
-
-
-    if (artistSongs && typeof songs !== "undefined") {
-
-        const matchingSongs = songs.filter(
-            song => song.artist === selectedArtist.name
-        );
-
-        artistSongs.innerHTML = "";
-
-        matchingSongs.forEach(song => {
-
-            const songCard = document.createElement("div");
-
-            songCard.className = "music-card";
-
-            songCard.innerHTML = `
-                <div class="card-image"></div>
-
-                <div class="card-info">
-                    <h3>${song.title}</h3>
-                    <p>${song.artist}</p>
-                    <span>${song.album} • ${song.year}</span>
-                </div>
-            `;
-
-            artistSongs.appendChild(songCard);
-
-        });
-
-    }
-
-}
 
 
     if (artistSongs && typeof songs !== "undefined") {
@@ -544,6 +511,207 @@ if (
 }
 
 
+/* ========================= */
+/* ARTIST DETAIL PAGE */
+/* ========================= */
+
+const artistNameElement =
+    document.getElementById("artist-name");
+
+
+if (
+    artistNameElement &&
+    typeof artists !== "undefined"
+) {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const artistId =
+        Number(params.get("id"));
+
+
+    const artist =
+        artists.find(
+            artist => artist.id === artistId
+        );
+
+
+    if (artist) {
+
+        document.title =
+            `${artist.name} | MusikBasen`;
+
+
+        /* Artist information */
+
+        const nameElement =
+            document.getElementById(
+                "artist-name"
+            );
+
+        const descriptionElement =
+            document.getElementById(
+                "artist-description"
+            );
+
+        const genreElement =
+            document.getElementById(
+                "artist-genre"
+            );
+
+        const countryElement =
+            document.getElementById(
+                "artist-country"
+            );
+
+
+        if (nameElement) {
+            nameElement.textContent =
+                artist.name;
+        }
+
+
+        if (descriptionElement) {
+            descriptionElement.textContent =
+                artist.description;
+        }
+
+
+        if (genreElement) {
+            genreElement.textContent =
+                artist.genre;
+        }
+
+
+        if (countryElement) {
+            countryElement.textContent =
+                artist.country;
+        }
+
+
+        /* Artist albums */
+
+        const artistAlbums =
+            document.getElementById(
+                "artist-albums"
+            );
+
+
+        if (
+            artistAlbums &&
+            typeof albums !== "undefined"
+        ) {
+
+            albums
+                .filter(album =>
+                    album.artist === artist.name
+                )
+                .forEach(album => {
+
+                    const card =
+                        document.createElement("div");
+
+                    card.className =
+                        "album-card";
+
+
+                    card.innerHTML = `
+                        <div class="album-image">
+
+                            <div class="album-placeholder">
+                            </div>
+
+                        </div>
+
+                        <div class="album-info">
+
+                            <h3>
+                                ${album.title}
+                            </h3>
+
+                            <p>
+                                ${album.artist}
+                            </p>
+
+                            <span>
+                                ${album.year}
+                                •
+                                ${album.genre}
+                            </span>
+
+                        </div>
+                    `;
+
+
+                    artistAlbums.appendChild(card);
+
+                });
+
+        }
+
+
+        /* Artist songs */
+
+        const artistSongs =
+            document.getElementById(
+                "artist-songs"
+            );
+
+
+        if (
+            artistSongs &&
+            typeof songs !== "undefined"
+        ) {
+
+            songs
+                .filter(song =>
+                    song.artist === artist.name
+                )
+                .forEach(song => {
+
+                    const card =
+                        document.createElement("div");
+
+                    card.className =
+                        "music-card";
+
+
+                    card.innerHTML = `
+                        <div class="card-image"></div>
+
+                        <div class="card-info">
+
+                            <h3>
+                                ${song.title}
+                            </h3>
+
+                            <p>
+                                ${song.artist}
+                            </p>
+
+                            <span>
+                                ${song.album}
+                                •
+                                ${song.year}
+                            </span>
+
+                        </div>
+                    `;
+
+
+                    artistSongs.appendChild(card);
+
+                });
+
+        }
+
+    }
+
+}
 /* ========================= */
 /* FAVORITES */
 /* ========================= */
