@@ -908,3 +908,61 @@ function renderFavorites() {
 renderFavorites();
 
 updateFavoriteButtons();
+
+// =========================
+// MUSIC PLAYER
+// =========================
+
+const musicPlayer = document.getElementById("music-player");
+const playerPlay = document.getElementById("player-play");
+const playerProgress = document.getElementById("player-progress-bar");
+const playerVolume = document.getElementById("player-volume-bar");
+
+let currentAudio = null;
+let isPlaying = false;
+
+
+// PLAY / PAUSE
+
+if (playerPlay) {
+
+    playerPlay.addEventListener("click", () => {
+
+        if (!currentAudio) {
+            return;
+        }
+
+        if (isPlaying) {
+
+            currentAudio.pause();
+            isPlaying = false;
+
+            playerPlay.textContent = "▶";
+
+        } else {
+
+            currentAudio.play();
+            isPlaying = true;
+
+            playerPlay.textContent = "⏸";
+
+        }
+
+    });
+
+}
+
+
+// VOLUME
+
+if (playerVolume) {
+
+    playerVolume.addEventListener("input", () => {
+
+        if (currentAudio) {
+            currentAudio.volume = playerVolume.value;
+        }
+
+    });
+
+}
