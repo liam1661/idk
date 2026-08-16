@@ -971,3 +971,44 @@ if (playerVolume) {
     });
 
 }
+// =========================
+// PLAYLIST DETAIL
+// =========================
+
+const playlistDetail =
+    document.getElementById("playlist-detail");
+
+const playlistList =
+    document.getElementById("playlists");
+
+if (
+    playlistDetail &&
+    playlistList &&
+    typeof playlists !== "undefined"
+) {
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+    const playlistId =
+        Number(params.get("id"));
+
+    const selectedPlaylist =
+        playlists.find(
+            playlist => playlist.id === playlistId
+        );
+
+    if (selectedPlaylist) {
+
+        playlistList.style.display = "none";
+        playlistDetail.style.display = "block";
+
+        document.getElementById("playlist-name").textContent =
+            selectedPlaylist.name;
+
+        document.getElementById("playlist-description").textContent =
+            selectedPlaylist.description;
+
+    }
+
+}
