@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profil – MusikBasen</title>
+
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../theme.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        <h1>MB</h1>
+    </div>
+
+    <nav>
+
+        <a href="../index.html">Forside</a>
+
+        <a href="artists.html">Kunstnere</a>
+
+        <a href="albums.html">Albums</a>
+
+        <a href="songs.html">Sange</a>
+
+        <a href="playlists.html">Playlister</a>
+
+    </nav>
+
+    <div class="header-icons">
+
+        <button>🔍</button>
+        <button>❤️</button>
+        <button>👤</button>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <section class="profile-header">
+
+        <div class="profile-avatar">
+            👤
+        </div>
+
+        <div class="profile-info">
+
+            <span>PROFIL</span>
+
+            <h1>Liam</h1>
+
+            <p>MusikBasen bruger</p>
+
+        </div>
+
+    </section>
+
+
+    <section class="profile-stats">
+
+        <div class="profile-stat">
+
+            <strong>0</strong>
+
+            <span>Afspilninger</span>
+
+        </div>
+
+        <div class="profile-stat">
+
+            <strong>0</strong>
+
+            <span>Favoritter</span>
+
+        </div>
+
+        <div class="profile-stat">
+
+            <strong>0</strong>
+
+            <span>Playlister</span>
+
+        </div>
+
+    </section>
+
+
+    <section class="profile-section">
+
+        <div class="section-header">
+
+            <h2>Mine playlister</h2>
+
+        </div>
+
+        <div class="playlists-grid" id="profile-playlists"></div>
+
+    </section>
+
+
+    <section class="profile-section">
+
+        <div class="section-header">
+
+            <h2>Senest afspillet</h2>
+
+        </div>
+
+        <div class="trending-grid" id="recently-played"></div>
+
+    </section>
+
+</main>
+
+
+<script src="../data/playlists.js"></script>
+<script src="../script.js"></script>
+
+</body>
+
+</html>
