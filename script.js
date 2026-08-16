@@ -1008,6 +1008,50 @@ if (
 
         document.getElementById("playlist-description").textContent =
             selectedPlaylist.description;
+            const playlistSongs =
+    
+            document.getElementById("playlist-songs");
+
+if (
+    playlistSongs &&
+    typeof songs !== "undefined"
+) {
+
+    playlistSongs.innerHTML = "";
+
+    const matchingSongs =
+        songs.filter(song =>
+            selectedPlaylist.songs.includes(song.id)
+        );
+
+    matchingSongs.forEach(song => {
+
+        const songCard =
+            document.createElement("div");
+
+        songCard.className = "music-card";
+
+        songCard.innerHTML = `
+            <div class="card-image"></div>
+
+            <div class="card-info">
+
+                <h3>${song.title}</h3>
+
+                <p>${song.artist}</p>
+
+                <span>
+                    ${song.album} • ${song.year}
+                </span>
+
+            </div>
+        `;
+
+        playlistSongs.appendChild(songCard);
+
+    });
+
+}
 
     }
 
