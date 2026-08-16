@@ -250,8 +250,6 @@ if (songsGrid && typeof songs !== "undefined") {
     });
 
 }
-
-
 /* ========================= */
 /* PLAYLISTS */
 /* ========================= */
@@ -291,6 +289,13 @@ if (
 
             </div>
         `;
+
+        playlistCard.addEventListener("click", () => {
+
+            window.location.href =
+                `playlists.html?id=${playlist.id}`;
+
+        });
 
         playlistsGrid.appendChild(playlistCard);
 
@@ -962,36 +967,6 @@ if (playerVolume) {
         if (currentAudio) {
             currentAudio.volume = playerVolume.value;
         }
-
-    });
-
-}
-// =========================
-// TRENDING
-// =========================
-
-const trendingGrid = document.getElementById("trending-grid");
-
-if (trendingGrid && typeof songs !== "undefined") {
-
-    trendingGrid.innerHTML = "";
-
-    songs.slice(0, 4).forEach(song => {
-
-        const songCard = document.createElement("div");
-
-        songCard.className = "music-card";
-
-        songCard.innerHTML = `
-            <div class="card-image"></div>
-
-            <div class="card-info">
-                <h3>${song.artist}</h3>
-                <p>${song.title}</p>
-            </div>
-        `;
-
-        trendingGrid.appendChild(songCard);
 
     });
 
