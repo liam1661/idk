@@ -1131,3 +1131,64 @@ footer{
 .profile-section {
     margin-bottom: 45px;
 }
+/* ========================= */
+/* RANKINGS */
+/* ========================= */
+
+.rankings-section {
+    margin-bottom: 50px;
+}
+
+.rankings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ranking-item {
+    display: grid;
+    grid-template-columns: 55px 1fr auto;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 15px 20px;
+
+    background: #151515;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    transition: 0.2s;
+}
+
+.ranking-item:hover {
+    transform: translateX(4px);
+    border-color: var(--orange);
+}
+
+.ranking-number {
+    color: var(--orange);
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.ranking-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.ranking-info strong {
+    color: white;
+    font-size: 0.95rem;
+}
+
+.ranking-info span {
+    color: #888;
+    font-size: 0.8rem;
+}
+
+.ranking-value {
+    color: #aaa;
+    font-size: 0.8rem;
+}
