@@ -1056,3 +1056,44 @@ if (
     }
 
 }
+// =========================
+// PROFILE PLAYLISTS
+// =========================
+
+const profilePlaylists =
+    document.getElementById("profile-playlists");
+
+if (
+    profilePlaylists &&
+    typeof playlists !== "undefined"
+) {
+
+    playlists.forEach(playlist => {
+
+        const playlistCard =
+            document.createElement("div");
+
+        playlistCard.className =
+            "playlist-card";
+
+        playlistCard.innerHTML = `
+            <div class="playlist-image">
+                <span>▶</span>
+            </div>
+
+            <div class="playlist-info">
+                <h3>${playlist.name}</h3>
+
+                <p>${playlist.description}</p>
+
+                <span>
+                    ${playlist.songs.length} sange
+                </span>
+            </div>
+        `;
+
+        profilePlaylists.appendChild(playlistCard);
+
+    });
+
+}
