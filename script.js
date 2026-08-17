@@ -1097,3 +1097,91 @@ if (
     });
 
 }
+// =========================
+// RANKINGS
+// =========================
+
+const topArtists =
+    document.getElementById("top-artists");
+
+const topSongs =
+    document.getElementById("top-songs");
+
+
+if (topArtists) {
+
+    const artistRanking = [
+        { name: "Gilli", value: "1,2 mio. streams" },
+        { name: "Branco", value: "980.000 streams" },
+        { name: "Kesi", value: "870.000 streams" },
+        { name: "Ude Af Kontrol", value: "760.000 streams" },
+        { name: "Sivas", value: "690.000 streams" },
+        { name: "Benny Jamz", value: "610.000 streams" }
+    ];
+
+    artistRanking.forEach((artist, index) => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "ranking-item";
+
+        item.innerHTML = `
+            <div class="ranking-number">
+                #${index + 1}
+            </div>
+
+            <div class="ranking-info">
+                <strong>${artist.name}</strong>
+                <span>Kunstner</span>
+            </div>
+
+            <div class="ranking-value">
+                ${artist.value}
+            </div>
+        `;
+
+        topArtists.appendChild(item);
+
+    });
+
+}
+
+
+if (topSongs) {
+
+    const songRanking = [
+        { title: "Penge Kommer Går", artist: "Gilli", value: "420.000 streams" },
+        { title: "All In", artist: "Branco", value: "390.000 streams" },
+        { title: "Søvnløs", artist: "Kesi", value: "350.000 streams" },
+        { title: "Tro På", artist: "Node", value: "320.000 streams" },
+        { title: "Knokler Hårdt", artist: "Gilli", value: "290.000 streams" }
+    ];
+
+    songRanking.forEach((song, index) => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "ranking-item";
+
+        item.innerHTML = `
+            <div class="ranking-number">
+                #${index + 1}
+            </div>
+
+            <div class="ranking-info">
+                <strong>${song.title}</strong>
+                <span>${song.artist}</span>
+            </div>
+
+            <div class="ranking-value">
+                ${song.value}
+            </div>
+        `;
+
+        topSongs.appendChild(item);
+
+    });
+
+}
