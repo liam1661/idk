@@ -1128,8 +1128,16 @@ if (topArtists) {
 
         item.innerHTML = `
             <div class="ranking-number">
-                #${index + 1}
-            </div>
+    ${
+        index === 0
+            ? "🥇"
+            : index === 1
+            ? "🥈"
+            : index === 2
+            ? "🥉"
+            : `#${index + 1}`
+    }
+</div>
 
             <div class="ranking-info">
                 <strong>${artist.name}</strong>
@@ -1164,11 +1172,18 @@ if (topSongs) {
             document.createElement("div");
 
         item.className = "ranking-item";
-
-        item.innerHTML = `
-            <div class="ranking-number">
-                #${index + 1}
-            </div>
+item.innerHTML = `
+    <div class="ranking-number">
+        ${
+            index === 0
+                ? "🥇"
+                : index === 1
+                ? "🥈"
+                : index === 2
+                ? "🥉"
+                : `#${index + 1}`
+        }
+    </div>
 
             <div class="ranking-info">
                 <strong>${song.title}</strong>
