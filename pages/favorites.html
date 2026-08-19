@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="da">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Favoritter – MusikBasen</title>
@@ -16,6 +19,7 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet"
     >
+
 </head>
 
 <body>
@@ -27,21 +31,20 @@
     </div>
 
     <nav>
+
         <a href="../index.html">Forside</a>
         <a href="artists.html">Kunstnere</a>
         <a href="albums.html">Albums</a>
         <a href="songs.html">Sange</a>
         <a href="playlists.html">Playlister</a>
+        <a href="rankings.html">Rankings</a>
+
     </nav>
 
     <div class="header-icons">
 
-        <button>🔍</button>
-
-        <button class="favorite-header">
-            ❤️
-        </button>
-
+        <button id="search-button">🔍</button>
+        <button id="favorites-button">❤️</button>
         <button>👤</button>
 
     </div>
@@ -56,36 +59,44 @@
         <h1>Favoritter</h1>
 
         <p>
-            Dine gemte sange, albums og kunstnere.
+            Dine gemte sange, kunstnere og albums.
         </p>
 
     </section>
 
 
-    <section id="favorites">
+    <section class="profile-section">
 
         <div class="section-header">
-
-            <h2>Dine favoritter</h2>
-
+            <h2>Mine favoritter</h2>
         </div>
 
-        <div id="favorites-grid" class="trending-grid">
+        <div
+            class="trending-grid"
+            id="favorites-grid"
+        ></div>
 
-            <div class="empty-favorites">
-                <h3>Ingen favoritter endnu</h3>
+        <div
+            id="favorites-empty"
+            class="favorites-empty"
+        >
+            <div>❤️</div>
 
-                <p>
-                    Tryk på ❤️ på en sang, et album eller en kunstner
-                    for at gemme den her.
-                </p>
-            </div>
+            <h3>Ingen favoritter endnu</h3>
 
+            <p>
+                Gem sange, kunstnere eller albums,
+                så finder du dem her.
+            </p>
         </div>
 
     </section>
 
 </main>
 
+
+<script src="../script.js"></script>
+
 </body>
+
 </html>
