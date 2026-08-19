@@ -1200,3 +1200,19 @@ item.innerHTML = `
     });
 
 }
+// =========================
+// FAVORITES BUTTON
+// =========================
+
+const favoritesButton =
+    document.getElementById("favorites-button");
+
+if (favoritesButton) {
+
+    favoritesButton.addEventListener("click", () => {
+
+        window.location.href = "pages/favorites.html";
+
+    });
+
+}
