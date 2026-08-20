@@ -3,7 +3,7 @@
 /* ARTISTS */
 /* ========================= */
 const artists = [
-    {
+    
         id: 1,
         name: "Gilli",
         genre: "Dansk rap",
