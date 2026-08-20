@@ -229,22 +229,66 @@ if (songsGrid && typeof songs !== "undefined") {
 
         songCard.className = "music-card";
 
-        songCard.innerHTML = `
-            <div class="card-image"></div>
+      songCard.innerHTML = `
+    <div class="card-image"></div>
 
-            <div class="card-info">
+    <div class="card-info">
 
-                <h3>${song.title}</h3>
+        <h3>${song.title}</h3>
 
-                <p>${song.artist}</p>
+        <p>${song.artist}</p>
 
-                <span>
-                    ${song.album} • ${song.year}
-                </span>
+        <span>
+            ${song.album} • ${song.year}
+        </span>
+
+    </div>
+
+    <button
+        class="favorite-song-button"
+        data-song-id="${song.id}"
+    >
+        ♡
+    </button>
+`;
 
             </div>
         `;
+const favoriteButton =
+    songCard.querySelector(".favorite-song-button");
 
+favoriteButton.addEventListener("click", (event) => {
+
+    event.stopPropagation();
+
+    let favorites =
+        JSON.parse(
+            localStorage.getItem("favorites")
+        ) || [];
+
+    if (favorites.includes(song.id)) {
+
+        favorites =
+            favorites.filter(
+                id => id !== song.id
+            );
+
+        favoriteButton.textContent = "♡";
+
+    } else {
+
+        favorites.push(song.id);
+
+        favoriteButton.textContent = "♥";
+
+    }
+
+    localStorage.setItem(
+        "favorites",
+        JSON.stringify(favorites)
+    );
+
+});
         songsGrid.appendChild(songCard);
 
     });
