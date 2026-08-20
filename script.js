@@ -256,6 +256,16 @@ if (songsGrid && typeof songs !== "undefined") {
         `;
 const favoriteButton =
     songCard.querySelector(".favorite-song-button");
+    let savedFavorites =
+    JSON.parse(
+        localStorage.getItem("favorites")
+    ) || [];
+
+if (savedFavorites.includes(song.id)) {
+
+    favoriteButton.textContent = "♥";
+
+}
 
 favoriteButton.addEventListener("click", (event) => {
 
