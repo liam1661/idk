@@ -252,7 +252,6 @@ if (songsGrid && typeof songs !== "undefined") {
     </button>
 `;
 
-        `;
 const favoriteButton =
     songCard.querySelector(".favorite-song-button");
     let savedFavorites =
