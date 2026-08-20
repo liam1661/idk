@@ -349,12 +349,11 @@ if (
 
         });
 
-        playlistsGrid.appendChild(playlistCard);
+                playlistsGrid.appendChild(playlistCard);
 
     });
 
 }
-
 
 /* ========================= */
 /* SEARCH */
