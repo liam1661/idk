@@ -1328,6 +1328,18 @@ if (playerPlay) {
         playerPlay.textContent =
             isPlaying ? "⏸" : "▶";
 
+const playerVolume =
+    document.getElementById("player-volume-bar");
+
+let currentVolume = 1;
+
+if (playerVolume) {
+
+    playerVolume.addEventListener("input", () => {
+
+        currentVolume =
+            Number(playerVolume.value);
+
     });
 
 }
