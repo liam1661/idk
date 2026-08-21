@@ -295,6 +295,11 @@ favoriteButton.addEventListener("click", (event) => {
         "favorites",
         JSON.stringify(favorites)
     );
+    songCard.addEventListener("click", () => {
+
+    selectSong(song);
+
+});
 
 });
         songsGrid.appendChild(songCard);
@@ -1230,5 +1235,31 @@ if (favoritesButton) {
         window.location.href = "pages/favorites.html";
 
     });
+
+}
+// =========================
+// MUSIC PLAYER
+// =========================
+
+const musicPlayer =
+    document.getElementById("music-player");
+
+const playerTitle =
+    document.getElementById("player-title");
+
+const playerArtist =
+    document.getElementById("player-artist");
+
+function selectSong(song) {
+
+    if (!musicPlayer) return;
+
+    musicPlayer.style.display = "flex";
+
+    playerTitle.textContent =
+        song.title;
+
+    playerArtist.textContent =
+        song.artist;
 
 }
