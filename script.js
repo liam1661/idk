@@ -832,38 +832,28 @@ function isFavorite(type, id) {
 }
 
 
-/* ========================= */
-/* FAVORITE BUTTONS */
-/* ========================= */
+// =========================
+// FAVORITES BUTTON
+// =========================
 
-function updateFavoriteButtons() {
+const favoritesButton =
+    document.getElementById("favorites-button");
 
-    document
-        .querySelectorAll("[data-favorite-type]")
-        .forEach(button => {
+if (favoritesButton) {
 
-            const type =
-                button.dataset.favoriteType;
+    favoritesButton.addEventListener("click", () => {
 
-            const id =
-                button.dataset.favoriteId;
+        if (window.location.pathname.includes("/pages/")) {
 
+            window.location.href = "favorites.html";
 
-            if (isFavorite(type, id)) {
+        } else {
 
-                button.classList.add("is-favorite");
+            window.location.href = "pages/favorites.html";
 
-                button.textContent = "❤️";
+        }
 
-            } else {
-
-                button.classList.remove("is-favorite");
-
-                button.textContent = "♡";
-
-            }
-
-        });
+    });
 
 }
 
