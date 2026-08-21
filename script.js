@@ -832,31 +832,6 @@ function isFavorite(type, id) {
 }
 
 
-// =========================
-// FAVORITES BUTTON
-// =========================
-
-const favoritesButton =
-    document.getElementById("favorites-button");
-
-if (favoritesButton) {
-
-    favoritesButton.addEventListener("click", () => {
-
-        if (window.location.pathname.includes("/pages/")) {
-
-            window.location.href = "favorites.html";
-
-        } else {
-
-            window.location.href = "pages/favorites.html";
-
-        }
-
-    });
-
-}
-
 
 /* ========================= */
 /* FAVORITES PAGE */
@@ -1237,6 +1212,22 @@ item.innerHTML = `
         `;
 
         topSongs.appendChild(item);
+
+    });
+
+}
+// =========================
+// FAVORITES BUTTON
+// =========================
+
+const favoritesButton =
+    document.getElementById("favorites-button");
+
+if (favoritesButton) {
+
+    favoritesButton.addEventListener("click", () => {
+
+        window.location.href = "pages/favorites.html";
 
     });
 
