@@ -1312,6 +1312,22 @@ if (playerNext) {
             songs[currentSongIndex]
         );
 
+const playerPlay =
+    document.getElementById("player-play");
+
+let isPlaying = false;
+
+if (playerPlay) {
+
+    playerPlay.addEventListener("click", () => {
+
+        if (currentSongIndex === -1) return;
+
+        isPlaying = !isPlaying;
+
+        playerPlay.textContent =
+            isPlaying ? "⏸" : "▶";
+
     });
 
 }
