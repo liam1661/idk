@@ -1241,18 +1241,16 @@ if (favoritesButton) {
 // MUSIC PLAYER
 // =========================
 
-const musicPlayer =
-    document.getElementById("music-player");
-
-const playerTitle =
-    document.getElementById("player-title");
-
-const playerArtist =
-    document.getElementById("player-artist");
+let currentSongIndex = -1;
 
 function selectSong(song) {
 
     if (!musicPlayer) return;
+
+    currentSongIndex =
+        songs.findIndex(
+            item => item.id === song.id
+        );
 
     musicPlayer.style.display = "flex";
 
@@ -1261,5 +1259,59 @@ function selectSong(song) {
 
     playerArtist.textContent =
         song.artist;
+
+}
+
+const playerPrev =
+    document.getElementById("player-prev");
+
+const playerNext =
+    document.getElementById("player-next");
+
+if (playerPrev) {
+
+    playerPrev.addEventListener("click", () => {
+
+        if (currentSongIndex <= 0) {
+
+            currentSongIndex =
+                songs.length - 1;
+
+        } else {
+
+            currentSongIndex--;
+
+        }
+
+        selectSong(
+            songs[currentSongIndex]
+        );
+
+    });
+
+}
+
+if (playerNext) {
+
+    playerNext.addEventListener("click", () => {
+
+        if (
+            currentSongIndex >=
+            songs.length - 1
+        ) {
+
+            currentSongIndex = 0;
+
+        } else {
+
+            currentSongIndex++;
+
+        }
+
+        selectSong(
+            songs[currentSongIndex]
+        );
+
+    });
 
 }
