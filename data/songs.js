@@ -7,7 +7,7 @@ const songs = [
         album: "Penge Kommer Går",
         year: 2017,
         genre: "Rap",
-        country: "Danmark"
+        country: "Danmark",
         audio: ""
     },
     {
@@ -18,7 +18,7 @@ const songs = [
         album: "BABA BUSINESS",
         year: 2019,
         genre: "Rap",
-        country: "Danmark"
+        country: "Danmark",
         audio: ""
     },
     {
@@ -29,7 +29,7 @@ const songs = [
         album: "Noahs Ark",
         year: 2020,
         genre: "Rap",
-        country: "Danmark"
+        country: "Danmark",
         audio: ""
     },
     {
@@ -37,10 +37,10 @@ const songs = [
         title: "Søvnløs",
         artist: "Kesi",
         artistId: 4,
-        album: "BO4L",
+        album: "BO4L", 
         year: 2020,
         genre: "Rap",
-        country: "Danmark"
+        country: "Danmark",
         audio: ""
     }
 ];
