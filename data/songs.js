@@ -8,6 +8,7 @@ const songs = [
         year: 2017,
         genre: "Rap",
         country: "Danmark"
+        audio: ""
     },
     {
         id: 2,
@@ -18,6 +19,7 @@ const songs = [
         year: 2019,
         genre: "Rap",
         country: "Danmark"
+        audio: ""
     },
     {
         id: 3,
@@ -28,6 +30,7 @@ const songs = [
         year: 2020,
         genre: "Rap",
         country: "Danmark"
+        audio: ""
     },
     {
         id: 4,
@@ -38,5 +41,6 @@ const songs = [
         year: 2020,
         genre: "Rap",
         country: "Danmark"
+        audio: ""
     }
 ];
