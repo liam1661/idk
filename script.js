@@ -1343,3 +1343,15 @@ if (playerVolume) {
     });
 
 }
+const playerProgressBar =
+    document.getElementById("player-progress-bar");
+
+if (playerProgressBar) {
+
+    playerProgressBar.addEventListener("input", () => {
+
+        // Klar til rigtig lyd senere
+
+    });
+
+}
