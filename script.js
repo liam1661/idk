@@ -1314,23 +1314,7 @@ if (playerNext) {
 
     });
 
-}
-let isPlaying = false;
 
-if (playerPlay) {
-
-    playerPlay.addEventListener("click", () => {
-
-        if (currentSongIndex === -1) return;
-
-        isPlaying = !isPlaying;
-
-        playerPlay.textContent =
-            isPlaying ? "⏸" : "▶";
-
-    });
-
-}
 
 const playerVolume =
     document.getElementById("player-volume-bar");
