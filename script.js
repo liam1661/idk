@@ -1300,17 +1300,21 @@ if (playerNext) {
             songs.length - 1
         ) {
 
-         selectSong(
+            currentSongIndex = 0;
+
+        } else {
+
+            currentSongIndex++;
+
+        }
+
+        selectSong(
             songs[currentSongIndex]
         );
 
     });
 
 }
-
-const playerPlay =
-    document.getElementById("player-play");
-
 let isPlaying = false;
 
 if (playerPlay) {
