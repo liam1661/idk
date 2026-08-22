@@ -194,9 +194,11 @@ if (albumsGrid && typeof albums !== "undefined") {
 
         albumCard.innerHTML = `
             <div class="album-image">
-                <div class="album-placeholder"></div>
-            </div>
-
+    <img
+        src="../${album.cover}"
+        alt="${album.title} – ${album.artist}"
+    >
+</div>
             <div class="album-info">
                 <h3>${album.title}</h3>
 
