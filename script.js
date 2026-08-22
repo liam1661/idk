@@ -1300,17 +1300,13 @@ if (playerNext) {
             songs.length - 1
         ) {
 
-            currentSongIndex = 0;
-
-        } else {
-
-            currentSongIndex++;
-
-        }
-
-        selectSong(
+         selectSong(
             songs[currentSongIndex]
         );
+
+    });
+
+}
 
 const playerPlay =
     document.getElementById("player-play");
@@ -1327,6 +1323,10 @@ if (playerPlay) {
 
         playerPlay.textContent =
             isPlaying ? "⏸" : "▶";
+
+    });
+
+}
 
 const playerVolume =
     document.getElementById("player-volume-bar");
