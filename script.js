@@ -1285,7 +1285,7 @@ if (playerPrev) {
 
         }
 
-        selectSong(
+                selectSong(
             songs[currentSongIndex]
         );
 
