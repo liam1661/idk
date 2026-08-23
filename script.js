@@ -1293,8 +1293,8 @@ if (playerPrev) {
 
 }
 
-const playerVolume =
-if (playerNext) 
+
+    if (playerNext) {
 
     playerNext.addEventListener("click", () => {
 
@@ -1318,9 +1318,6 @@ if (playerNext)
     });
 
 
-
-const playerVolume =
-    document.getElementById("player-volume-bar");
 
 let currentVolume = 1;
 
