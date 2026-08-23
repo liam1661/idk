@@ -1285,7 +1285,7 @@ if (playerPrev) {
 
         }
 
-                selectSong(
+          selectSong(
             songs[currentSongIndex]
         );
 
@@ -1293,6 +1293,7 @@ if (playerPrev) {
 
 }
 
+const playerVolume =
 if (playerNext) {
 
     playerNext.addEventListener("click", () => {
