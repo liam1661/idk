@@ -1294,7 +1294,7 @@ if (playerPrev) {
 }
 
 const playerVolume =
-if (playerNext) {
+if (playerNext) 
 
     playerNext.addEventListener("click", () => {
 
