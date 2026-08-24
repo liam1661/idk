@@ -1317,7 +1317,7 @@ if (playerPrev) {
 
     });
 
-
+}
 
 let currentVolume = 1;
 
