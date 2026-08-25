@@ -892,7 +892,6 @@ function renderFavorites() {
 
 renderFavorites();
 
-updateFavoriteButtons();
 
 // =========================
 // MUSIC PLAYER
