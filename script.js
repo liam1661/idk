@@ -1306,3 +1306,92 @@ if (playerProgressBar) {
     });
 
 }
+/* ========================= */
+/* ALBUM DETAIL PAGE */
+/* ========================= */
+
+const albumDetailPage =
+    document.getElementById("album-detail-page");
+
+if (
+    albumDetailPage &&
+    typeof albums !== "undefined"
+) {
+
+    const albumParams =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    const selectedAlbumId =
+        Number(albumParams.get("id"));
+
+    const selectedAlbum =
+        albums.find(
+            album => album.id === selectedAlbumId
+        );
+
+    if (selectedAlbum) {
+
+        const albumImage =
+            document.getElementById(
+                "album-detail-image"
+            );
+
+        const albumTitle =
+            document.getElementById(
+                "album-detail-title"
+            );
+
+        const albumArtist =
+            document.getElementById(
+                "album-detail-artist"
+            );
+
+        const albumMeta =
+            document.getElementById(
+                "album-detail-meta"
+            );
+
+
+        if (albumImage) {
+
+            albumImage.src =
+                "../" + selectedAlbum.cover;
+
+            albumImage.alt =
+                selectedAlbum.title +
+                " – " +
+                selectedAlbum.artist;
+
+        }
+
+
+        if (albumTitle) {
+
+            albumTitle.textContent =
+                selectedAlbum.title;
+
+        }
+
+
+        if (albumArtist) {
+
+            albumArtist.textContent =
+                selectedAlbum.artist;
+
+        }
+
+
+        if (albumMeta) {
+
+            albumMeta.textContent =
+                selectedAlbum.year +
+                " • " +
+                selectedAlbum.genre;
+
+        }
+
+    }
+
+}
