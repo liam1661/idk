@@ -349,6 +349,64 @@ footer{
 
 .card-info p {
     color: #b5b5b5;
+    /* ========================= */
+/* ALBUM TRACKLIST */
+/* ========================= */
+
+#album-songs {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+#album-songs .music-card {
+    display: flex;
+
+    align-items: center;
+
+    background: #181818;
+
+    border-radius: 12px;
+
+    overflow: visible;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+#album-songs .music-card:hover {
+    background: #242424;
+
+    transform: translateX(5px);
+}
+
+#album-songs .card-image {
+    display: none;
+}
+
+#album-songs .card-info {
+    padding: 14px 18px;
+
+    flex: 1;
+}
+
+#album-songs .card-info h3 {
+    margin-bottom: 3px;
+
+    font-size: 1rem;
+}
+
+#album-songs .card-info p {
+    margin-bottom: 3px;
+}
+
+#album-songs .card-info span {
+    color: #777;
+
+    font-size: 0.8rem;
 }
 /* ========================= */
 /* ARTISTS PAGE */

@@ -113,6 +113,9 @@ if (
         matchingSongs.forEach(song => {
 
             const songCard = document.createElement("div");
+            
+            songCard.dataset.trackNumber =
+                matchingSongs.indexOf(song) + 1;
 
             songCard.className = "music-card";
 
