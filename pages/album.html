@@ -1,0 +1,115 @@
+```html
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Album – MusikBasen</title>
+
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../theme.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <script src="../data/albums.js"></script>
+    <script src="../data/songs.js"></script>
+
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">
+            <h1>MB</h1>
+        </div>
+
+        <nav>
+            <a href="../index.html">Forside</a>
+            <a href="artists.html">Kunstnere</a>
+            <a href="albums.html">Albums</a>
+            <a href="songs.html">Sange</a>
+            <a href="playlists.html">Playlister</a>
+        </nav>
+
+        <div class="header-icons">
+            <button>🔍</button>
+            <button>❤️</button>
+            <button>👤</button>
+        </div>
+
+    </header>
+
+    <main class="page-container">
+
+        <section id="album-detail-page">
+
+            <div class="album-detail-header">
+
+                <div class="album-detail-cover">
+                    <img
+                        id="album-detail-image"
+                        src=""
+                        alt=""
+                    >
+                </div>
+
+                <div class="album-detail-info">
+
+                    <span class="album-detail-label">
+                        ALBUM
+                    </span>
+
+                    <h1 id="album-detail-title">
+                        Indlæser...
+                    </h1>
+
+                    <h2 id="album-detail-artist"></h2>
+
+                    <p id="album-detail-meta"></p>
+
+                </div>
+
+            </div>
+
+
+            <section class="album-songs-section">
+
+                <div class="section-header">
+                    <h2>Sange</h2>
+                </div>
+
+                <div
+                    id="album-songs"
+                    class="trending-grid"
+                ></div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+    <script src="../script.js"></script>
+
+</body>
+
+</html>
+```
