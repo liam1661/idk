@@ -1389,6 +1389,61 @@ if (
                 selectedAlbum.year +
                 " • " +
                 selectedAlbum.genre;
+                        const albumSongs =
+            document.getElementById("album-songs");
+
+        if (
+            albumSongs &&
+            typeof songs !== "undefined"
+        ) {
+
+            const matchingSongs =
+                songs.filter(
+                    song =>
+                        song.album ===
+                        selectedAlbum.title
+                );
+
+            albumSongs.innerHTML = "";
+
+            matchingSongs.forEach(song => {
+
+                const songCard =
+                    document.createElement("div");
+
+                songCard.className =
+                    "music-card";
+
+                songCard.innerHTML = `
+                    <div class="card-image"></div>
+
+                    <div class="card-info">
+
+                        <h3>${song.title}</h3>
+
+                        <p>${song.artist}</p>
+
+                        <span>
+                            ${song.year} • ${song.genre}
+                        </span>
+
+                    </div>
+                `;
+
+                songCard.addEventListener(
+                    "click",
+                    () => {
+
+                        selectSong(song);
+
+                    }
+                );
+
+                albumSongs.appendChild(songCard);
+
+            });
+
+        }
 
         }
 
