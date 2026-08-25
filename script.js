@@ -167,6 +167,13 @@ if (albumsGrid && typeof albums !== "undefined") {
             </div>
         `;
 
+            albumCard.addEventListener("click", () => {
+
+            window.location.href =
+                `album.html?id=${album.id}`;
+
+        });
+
         albumsGrid.appendChild(albumCard);
 
     });
