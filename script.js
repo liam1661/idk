@@ -272,7 +272,8 @@ songCard.addEventListener("click", () => {
 
 songsGrid.appendChild(songCard);
 
-});==================== */
+});
+/* ==================== */
 /* PLAYLISTS */
 /* ========================= */
 
