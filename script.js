@@ -1376,8 +1376,26 @@ if (
 
         
 
+    if (albumArtist) {
+
     albumArtist.textContent =
         selectedAlbum.artist;
+
+    const selectedArtist =
+        artists.find(
+            artist =>
+                artist.name ===
+                selectedAlbum.artist
+        );
+
+    if (selectedArtist) {
+
+        albumArtist.href =
+            `artist.html?id=${selectedArtist.id}`;
+
+    }
+
+}
 
     const selectedArtist =
         artists.find(
