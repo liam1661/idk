@@ -259,23 +259,20 @@ favoriteButton.addEventListener("click", (event) => {
 
     }
 
-    localStorage.setItem(
-        "favorites",
-        JSON.stringify(favorites)
-    );
-    songCard.addEventListener("click", () => {
+  localStorage.setItem(
+    "favorites",
+    JSON.stringify(favorites)
+);
+
+songCard.addEventListener("click", () => {
 
     selectSong(song);
 
 });
 
-});
-        songsGrid.appendChild(songCard);
+songsGrid.appendChild(songCard);
 
-    });
-
-}
-/* ========================= */
+});==================== */
 /* PLAYLISTS */
 /* ========================= */
 
