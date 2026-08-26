@@ -1517,5 +1517,3 @@ favoriteButton.addEventListener(
         }
 
     }
-
-}
