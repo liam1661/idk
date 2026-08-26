@@ -349,6 +349,7 @@ footer{
 
 .card-info p {
     color: #b5b5b5;
+    }
     /* ========================= */
 /* ALBUM TRACKLIST */
 /* ========================= */
@@ -372,9 +373,7 @@ footer{
 
     overflow: visible;
 
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 #album-songs .music-card:hover {
@@ -1385,4 +1384,17 @@ footer{
     transform: scale(1.1);
 
     color: var(--orange);
+}
+#album-songs .music-card::before {
+    content: attr(data-track-number);
+
+    width: 45px;
+
+    text-align: center;
+
+    color: #777;
+
+    font-size: 0.9rem;
+
+    flex-shrink: 0;
 }

@@ -188,15 +188,14 @@ if (albumsGrid && typeof albums !== "undefined") {
 /* SONGS */
 /* ========================= */
 
-const songsGrid = document.getElementById("songs-grid");
+const songCard =
+    document.createElement("div");
 
-if (songsGrid && typeof songs !== "undefined") {
+songCard.className =
+    "music-card";
 
-    songs.forEach(song => {
-
-        const songCard = document.createElement("div");
-
-        songCard.className = "music-card";
+songCard.dataset.trackNumber =
+    matchingSongs.indexOf(song) + 1;
 
       songCard.innerHTML = `
     <div class="card-image"></div>
