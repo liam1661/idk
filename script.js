@@ -9,17 +9,27 @@ if (artistsGrid && typeof artists !== "undefined") {
 
     artists.forEach(artist => {
 
-        const artistCard = document.createElement("div");
+        const artistCard = 
+        document.createElement("div");
 
         artistCard.className = "artist-card";
 
         artistCard.innerHTML = `
-            <div class="artist-image"></div>
+    <div class="artist-image">
+        ${
+            artist.image
+                ? `<img
+                    src="../${artist.image}"
+                    alt="${artist.name}"
+                >`
+                : ""
+        }
+    </div>
 
-            <h3>${artist.name}</h3>
+    <h3>${artist.name}</h3>
 
-            <p>${artist.genre} • ${artist.country}</p>
-        `;
+    <p>${artist.genre} • ${artist.country}</p>
+`;
 
         artistCard.addEventListener("click", () => {
 
@@ -69,6 +79,20 @@ if (
             
             const artistHeroImage =
     document.querySelector(".artist-hero-image");
+
+if (
+    artistHeroImage &&
+    selectedArtist.image
+) {
+
+    artistHeroImage.innerHTML = `
+        <img
+            src="../${selectedArtist.image}"
+            alt="${selectedArtist.name}"
+        >
+    `;
+
+}
 
 if (
     artistHeroImage &&
