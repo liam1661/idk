@@ -66,6 +66,23 @@ if (
 
         document.getElementById("artist-country").textContent =
             selectedArtist.country;
+            
+            const artistHeroImage =
+    document.querySelector(".artist-hero-image");
+
+if (
+    artistHeroImage &&
+    selectedArtist.image
+) {
+
+    artistHeroImage.innerHTML = `
+        <img
+            src="../${selectedArtist.image}"
+            alt="${selectedArtist.name}"
+        >
+    `;
+
+}
                 
             const artistAlbums = document.getElementById("artist-albums");
             const artistSongs = document.getElementById("artist-songs");
