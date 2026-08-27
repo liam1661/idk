@@ -1,10 +1,15 @@
 const artists = [
     {
-        id: 1,
-        name: "Gilli",
-        genre: "Rap",
-        country: "Danmark"
-    },
+    id: 1,
+
+    name: "Gilli",
+
+    genre: "Rap",
+
+    country: "Danmark",
+
+    image: "assets/images/artists/gilli.jpg"
+},
     {
         id: 2,
         name: "Branco",
