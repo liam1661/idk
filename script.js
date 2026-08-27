@@ -95,7 +95,12 @@ if (
                     <span>${album.year} • ${album.genre}</span>
                 </div>
             `;
+albumCard.addEventListener("click", () => {
 
+    window.location.href =
+        `album.html?id=${album.id}`;
+
+});
             artistAlbums.appendChild(albumCard);
 
         });
@@ -128,7 +133,11 @@ if (
                     <span>${song.album} • ${song.year}</span>
                 </div>
             `;
+songCard.addEventListener("click", () => {
 
+    selectSong(song);
+
+});
             artistSongs.appendChild(songCard);
 
         });
