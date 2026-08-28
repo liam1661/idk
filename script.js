@@ -87,17 +87,31 @@ if (
             const artistHeroImage =
     document.querySelector(".artist-hero-image");
 
-if (
-    artistHeroImage &&
-    selectedArtist.image
-) {
+if (artistHeroImage) {
 
-    artistHeroImage.innerHTML = `
-        <img
-            src="../${selectedArtist.image}"
-            alt="${selectedArtist.name}"
-        >
-    `;
+    artistHeroImage.style.setProperty(
+        "--artist-hue",
+        (selectedArtist.id * 47) % 360
+    );
+
+    if (selectedArtist.image) {
+
+        artistHeroImage.innerHTML = `
+            <img
+                src="../${selectedArtist.image}"
+                alt="${selectedArtist.name}"
+            >
+        `;
+
+    } else {
+
+        artistHeroImage.innerHTML = `
+            <span class="artist-placeholder-name">
+                ${selectedArtist.name}
+            </span>
+        `;
+
+    }
 
 }
 
@@ -137,10 +151,13 @@ if (
     popularSongs.forEach(song => {
 
         const popularSongCard =
-            document.createElement("div");
+    document.createElement("div");
 
-        popularSongCard.className =
-            "music-card";
+popularSongCard.className =
+    "music-card";
+
+popularSongCard.dataset.trackNumber =
+    popularSongs.indexOf(song) + 1;
 
         popularSongCard.innerHTML = `
             <div class="card-image"></div>

@@ -1614,3 +1614,18 @@ footer{
 
     display: block;
 }
+/* ========================= */
+/* ARTIST HERO PLACEHOLDER */
+/* ========================= */
+
+.artist-hero-image .artist-placeholder-name {
+    font-size: 1.8rem;
+
+    font-weight: 800;
+
+    padding: 25px;
+
+    text-align: center;
+
+    line-height: 1.2;
+}
