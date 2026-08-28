@@ -14,15 +14,23 @@ if (artistsGrid && typeof artists !== "undefined") {
 
         artistCard.className = "artist-card";
 
-        artistCard.innerHTML = `
-    <div class="artist-image">
+       artistCard.innerHTML = `
+    <div
+        class="artist-image"
+        style="
+            --artist-hue:
+            ${(artist.id * 47) % 360};
+        "
+    >
         ${
             artist.image
                 ? `<img
                     src="../${artist.image}"
                     alt="${artist.name}"
                 >`
-                : ""
+                : `<span class="artist-placeholder-name">
+                    ${artist.name}
+                   </span>`
         }
     </div>
 
@@ -30,7 +38,6 @@ if (artistsGrid && typeof artists !== "undefined") {
 
     <p>${artist.genre} • ${artist.country}</p>
 `;
-
         artistCard.addEventListener("click", () => {
 
             window.location.href = 
