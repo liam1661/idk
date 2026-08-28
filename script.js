@@ -110,6 +110,61 @@ if (
                 
             const artistAlbums = document.getElementById("artist-albums");
             const artistSongs = document.getElementById("artist-songs");
+            const artistPopularSongs = document.getElementById("artist-popular-songs");
+            if (
+    artistPopularSongs &&
+    typeof songs !== "undefined"
+) {
+
+    const popularSongs =
+        songs
+            .filter(
+                song =>
+                    song.artist ===
+                    selectedArtist.name
+            )
+            .slice(0, 5);
+
+    artistPopularSongs.innerHTML = "";
+
+    popularSongs.forEach(song => {
+
+        const popularSongCard =
+            document.createElement("div");
+
+        popularSongCard.className =
+            "music-card";
+
+        popularSongCard.innerHTML = `
+            <div class="card-image"></div>
+
+            <div class="card-info">
+                <h3>${song.title}</h3>
+
+                <p>${song.artist}</p>
+
+                <span>
+                    ${song.album} • ${song.year}
+                </span>
+            </div>
+        `;
+
+        popularSongCard.addEventListener(
+            "click",
+            () => {
+
+                selectSong(song);
+
+            }
+        );
+
+        artistPopularSongs.appendChild(
+            popularSongCard
+        );
+
+    });
+
+}
 
     if (artistAlbums && typeof albums !== "undefined") {
 
