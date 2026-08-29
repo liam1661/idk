@@ -1314,6 +1314,116 @@ item.innerHTML = `
         `;
 
         topSongs.appendChild(item);
+        if (
+    topArtists &&
+    typeof artists !== "undefined"
+) {
+
+    topArtists.innerHTML = "";
+
+    artists
+        .slice(0, 10)
+        .forEach((artist, index) => {
+
+            const rankingItem =
+                document.createElement("div");
+
+            rankingItem.className =
+                "ranking-item";
+
+            rankingItem.innerHTML = `
+                <div class="ranking-position">
+                    ${index + 1}
+                </div>
+
+                <div class="ranking-artist-image">
+                    ${
+                        artist.image
+                            ? `<img
+                                src="../${artist.image}"
+                                alt="${artist.name}"
+                            >`
+                            : ""
+                    }
+                </div>
+
+                <div class="ranking-info">
+                    <h3>${artist.name}</h3>
+
+                    <p>
+                        ${artist.genre} •
+                        ${artist.country}
+                    </p>
+                </div>
+            `;
+
+            rankingItem.addEventListener(
+                "click",
+                () => {
+
+                    window.location.href =
+                        `artists.html?id=${artist.id}`;
+
+                }
+            );
+
+            topArtists.appendChild(
+                rankingItem
+            );
+
+        });
+
+}
+
+
+if (
+    topSongs &&
+    typeof songs !== "undefined"
+) {
+
+    topSongs.innerHTML = "";
+
+    songs
+        .slice(0, 10)
+        .forEach((song, index) => {
+
+            const rankingItem =
+                document.createElement("div");
+
+            rankingItem.className =
+                "ranking-item";
+
+            rankingItem.innerHTML = `
+                <div class="ranking-position">
+                    ${index + 1}
+                </div>
+
+                <div class="ranking-info">
+                    <h3>${song.title}</h3>
+
+                    <p>
+                        ${song.artist} •
+                        ${song.album}
+                    </p>
+                </div>
+            `;
+
+            rankingItem.addEventListener(
+                "click",
+                () => {
+
+                    selectSong(song);
+
+                }
+            );
+
+            topSongs.appendChild(
+                rankingItem
+            );
+
+        });
+
+}
 
     });
 
