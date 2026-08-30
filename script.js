@@ -1348,11 +1348,63 @@ if (
                 rankingItem
             );
 
+        const topSongs =
+    document.getElementById("top-songs");
+
+if (
+    topSongs &&
+    typeof songs !== "undefined"
+) {
+
+    topSongs.innerHTML = "";
+
+    songs
+        .slice(0, 10)
+        .forEach((song, index) => {
+
+            const rankingItem =
+                document.createElement("div");
+
+            rankingItem.className =
+                "ranking-item";
+
+            rankingItem.innerHTML = `
+                <div class="ranking-position">
+                    ${
+                        index === 0
+                            ? "🥇"
+                            : index === 1
+                            ? "🥈"
+                            : index === 2
+                            ? "🥉"
+                            : index + 1
+                    }
+                </div>
+
+                <div class="ranking-info">
+                    <h3>${song.title}</h3>
+
+                    <p>
+                        ${song.artist} •
+                        ${song.album}
+                    </p>
+                </div>
+            `;
+
+            rankingItem.addEventListener(
+                "click",
+                () => {
+
+                    selectSong(song);
+
+                }
+            );
+
+            topSongs.appendChild(
+                rankingItem
+            );
+
         });
-
-}
-
-    });
 
 }
 // =========================
