@@ -1333,8 +1333,16 @@ item.innerHTML = `
 
             rankingItem.innerHTML = `
                 <div class="ranking-position">
-                    ${index + 1}
-                </div>
+    ${
+        index === 0
+            ? "🥇"
+            : index === 1
+            ? "🥈"
+            : index === 2
+            ? "🥉"
+            : index + 1
+    }
+</div>
 
                 <div class="ranking-artist-image">
                     ${
@@ -1395,8 +1403,16 @@ if (
 
             rankingItem.innerHTML = `
                 <div class="ranking-position">
-                    ${index + 1}
-                </div>
+    ${
+        index === 0
+            ? "🥇"
+            : index === 1
+            ? "🥈"
+            : index === 2
+            ? "🥉"
+            : index + 1
+    }
+</div>
 
                 <div class="ranking-info">
                     <h3>${song.title}</h3>
