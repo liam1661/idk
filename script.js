@@ -370,6 +370,115 @@ if (
 }
 
 /* ========================= */
+/* PLAYLIST DETAIL */
+/* ========================= */
+
+const playlistDetail =
+    document.getElementById("playlist-detail");
+
+const playlistList =
+    document.getElementById("playlists");
+
+const playlistParams =
+    new URLSearchParams(window.location.search);
+
+const selectedPlaylistId =
+    Number(playlistParams.get("id"));
+
+if (
+    playlistDetail &&
+    playlistList &&
+    selectedPlaylistId &&
+    typeof playlists !== "undefined" &&
+    typeof songs !== "undefined"
+) {
+
+    const selectedPlaylist =
+        playlists.find(
+            playlist =>
+                playlist.id === selectedPlaylistId
+        );
+
+    if (selectedPlaylist) {
+
+        playlistList.style.display = "none";
+
+        playlistDetail.style.display = "block";
+
+        document.getElementById(
+            "playlist-name"
+        ).textContent =
+            selectedPlaylist.name;
+
+        document.getElementById(
+            "playlist-description"
+        ).textContent =
+            selectedPlaylist.description;
+
+        const playlistSongs =
+            document.getElementById(
+                "playlist-songs"
+            );
+
+        if (playlistSongs) {
+
+            playlistSongs.innerHTML = "";
+
+            selectedPlaylist.songs.forEach(
+                songId => {
+
+                    const song =
+                        songs.find(
+                            song =>
+                                song.id === songId
+                        );
+
+                    if (!song) return;
+
+                    const songCard =
+                        document.createElement("div");
+
+                    songCard.className =
+                        "music-card";
+
+                    songCard.innerHTML = `
+                        <div class="card-info">
+
+                            <h3>${song.title}</h3>
+
+                            <p>${song.artist}</p>
+
+                            <span>
+                                ${song.album} •
+                                ${song.year}
+                            </span>
+
+                        </div>
+                    `;
+
+                    songCard.addEventListener(
+                        "click",
+                        () => {
+
+                            selectSong(song);
+
+                        }
+                    );
+
+                    playlistSongs.appendChild(
+                        songCard
+                    );
+
+                }
+            );
+
+        }
+
+    }
+
+}
+
+/* ========================= */
 /* SEARCH */
 /* ========================= */
 
