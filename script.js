@@ -1715,29 +1715,11 @@ if (
     if (selectedArtist) {
 
         albumArtist.href =
-            `artist.html?id=${selectedArtist.id}`;
+            `artists.html?id=${selectedArtist.id}`;
 
     }
 
 }
-
-    const selectedArtist =
-        artists.find(
-            artist =>
-                artist.name ===
-                selectedAlbum.artist
-        );
-
-    if (selectedArtist) {
-
-        albumArtist.href =
-            `artist.html?id=${selectedArtist.id}`;
-
-    }
-
-}
-
-        if (albumMeta) {
 
             albumMeta.textContent =
                 selectedAlbum.year +
