@@ -1902,3 +1902,69 @@ footer{
     object-fit: cover;
     display: block;
 }
+/* ========================= */
+/* PLAYLIST CARDS */
+/* ========================= */
+
+.playlists-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(220px, 1fr)
+    );
+    gap: 24px;
+}
+
+.playlist-card {
+    background: #181818;
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.playlist-card:hover {
+    background: #242424;
+    transform: translateY(-6px);
+}
+
+.playlist-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(
+        135deg,
+        #ff7a00,
+        #ffb347
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.playlist-image span {
+    font-size: 3rem;
+    color: #ffffff;
+}
+
+.playlist-info {
+    padding: 18px;
+}
+
+.playlist-info h3 {
+    margin-bottom: 7px;
+    font-size: 1.1rem;
+}
+
+.playlist-info p {
+    color: #b5b5b5;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.playlist-info span {
+    color: #777777;
+    font-size: 0.8rem;
+}
