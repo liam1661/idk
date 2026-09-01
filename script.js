@@ -1113,12 +1113,6 @@ if (playerVolume) {
 // PLAYLIST DETAIL
 // =========================
 
-const playlistDetail =
-    document.getElementById("playlist-detail");
-
-const playlistList =
-    document.getElementById("playlists");
-
 if (
     playlistDetail &&
     playlistList &&
