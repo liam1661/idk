@@ -1840,7 +1840,6 @@ favoriteButton.addEventListener(
 
             });
 
-        }
 
         }
 
