@@ -153,7 +153,7 @@ if (
         const popularSongCard =
     document.createElement("div");
 
-popularSongCard.className =
+songCard.className =
     "music-card";
 
 popularSongCard.dataset.trackNumber =
@@ -425,7 +425,7 @@ if (
             playlistSongs.innerHTML = "";
 
             selectedPlaylist.songs.forEach(
-                songId => {
+    (songId, index) => {
 
                     const song =
                         songs.find(
@@ -436,10 +436,13 @@ if (
                     if (!song) return;
 
                     const songCard =
-                        document.createElement("div");
+    document.createElement("div");
 
-                    songCard.className =
-                        "music-card";
+songCard.className =
+    "playlist-song";
+
+songCard.dataset.trackNumber =
+    index + 1;
 
                     songCard.innerHTML = `
                         <div class="card-info">
@@ -1161,7 +1164,8 @@ if (
         const songCard =
             document.createElement("div");
 
-        songCard.className = "music-card";
+        songCard.className =
+    "playlist-song";
 
         songCard.innerHTML = `
             <div class="card-image"></div>
@@ -1401,13 +1405,13 @@ item.innerHTML = `
 if (
     topSongs &&
     typeof songs !== "undefined"
-) {
+) 
 
     topSongs.innerHTML = "";
 
     songs
         .slice(0, 10)
-        .forEach((song, index) => {
+        .forEach(song, index) => 
 
             const rankingItem =
                 document.createElement("div");

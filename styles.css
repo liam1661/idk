@@ -1968,3 +1968,30 @@ footer{
     color: #777777;
     font-size: 0.8rem;
 }
+/* ========================= */
+/* PLAYLIST DETAIL */
+/* ========================= */
+
+#playlist-detail {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#playlist-detail .page-header {
+    padding: 60px 0 40px;
+    border-bottom: 1px solid #242424;
+}
+
+#playlist-detail .page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+#playlist-detail .page-header p {
+    color: #999999;
+    font-size: 1rem;
+}
+
+#playlist-songs {
+    margin-top: 35px;
+}
