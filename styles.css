@@ -2104,3 +2104,113 @@ footer{
         #059669
     );
 }
+/* ========================= */
+/* PLAYLIST HERO */
+/* ========================= */
+
+.playlist-hero {
+    display: flex;
+
+    align-items: end;
+
+    gap: 35px;
+
+    padding: 50px 0;
+
+    border-bottom: 1px solid #242424;
+}
+
+.playlist-detail-image {
+    width: 230px;
+
+    aspect-ratio: 1 / 1;
+
+    flex-shrink: 0;
+
+    border-radius: 18px;
+
+    background: linear-gradient(
+        135deg,
+        #ff7a00,
+        #ffb347
+    );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+.playlist-detail-image span {
+    font-size: 5rem;
+
+    color: white;
+}
+
+.playlist-detail-info {
+    padding-bottom: 5px;
+}
+
+.playlist-label {
+    color: #999;
+
+    font-size: 0.75rem;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+.playlist-detail-info h1 {
+    font-size: 3rem;
+
+    margin: 10px 0;
+}
+
+.playlist-detail-info > p {
+    color: #aaa;
+
+    margin-bottom: 18px;
+}
+
+.playlist-meta {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #777;
+
+    font-size: 0.9rem;
+}
+
+.playlist-songs-section {
+    margin-top: 40px;
+}
+/* ========================= */
+/* PLAYLIST DETAIL COLORS */
+/* ========================= */
+
+.playlist-detail-image.night {
+    background: linear-gradient(135deg, #111827, #4c1d95);
+}
+
+.playlist-detail-image.street {
+    background: linear-gradient(135deg, #3f0d0d, #b91c1c);
+}
+
+.playlist-detail-image.midnight {
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+}
+
+.playlist-detail-image.summer {
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+}
+
+.playlist-detail-image.flex {
+    background: linear-gradient(135deg, #064e3b, #059669);
+}

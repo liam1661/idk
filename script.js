@@ -400,6 +400,17 @@ if (
         );
 
     if (selectedPlaylist) {
+        const playlistDetailImage =
+    document.getElementById(
+        "playlist-detail-image"
+    );
+
+if (playlistDetailImage) {
+
+    playlistDetailImage.className =
+        `playlist-detail-image ${selectedPlaylist.color}`;
+
+}
 
         playlistList.style.display = "none";
 
@@ -1143,6 +1154,29 @@ if (
 
         document.getElementById("playlist-description").textContent =
             selectedPlaylist.description;
+            const playlistCreator =
+    document.getElementById(
+        "playlist-creator"
+    );
+
+const playlistSongCount =
+    document.getElementById(
+        "playlist-song-count"
+    );
+
+if (playlistCreator) {
+
+    playlistCreator.textContent =
+        selectedPlaylist.creator;
+
+}
+
+if (playlistSongCount) {
+
+    playlistSongCount.textContent =
+        `${selectedPlaylist.songs.length} sange`;
+
+}
             const playlistSongs =
     
             document.getElementById("playlist-songs");
