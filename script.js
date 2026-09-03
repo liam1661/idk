@@ -1411,7 +1411,7 @@ item.innerHTML = `
                     <h3>${artist.name}</h3>
 
                     <p>
-                        ${artist.genre} •
+                        ${artist.genre} 
                         ${artist.country}
                     </p>
                 </div>
