@@ -4,6 +4,7 @@ const playlists = [
         name: "Mørk & Nattekørsel",
         description: "Mørke og melodiske tracks til natten.",
         creator: "MusikBasen",
+        color: "night",
         songs: [1, 3, 4]
     },
     {
@@ -11,6 +12,7 @@ const playlists = [
         name: "Rå Gaderap",
         description: "Dansk gaderap med rå energi.",
         creator: "MusikBasen",
+        color: "street"
         songs: [1, 2, 3]
     },
     {
@@ -18,6 +20,7 @@ const playlists = [
         name: "Efter Midnat",
         description: "Musik til de sene timer.",
         creator: "MusikBasen",
+        color: "midnight"
         songs: [1, 4]
     },
     {
@@ -25,6 +28,7 @@ const playlists = [
         name: "Fest & Sommer",
         description: "Danske tracks til fest og sommer.",
         creator: "MusikBasen",
+        color: "summer"
         songs: [1, 2, 4]
     },
     {
@@ -32,6 +36,7 @@ const playlists = [
         name: "Flex & Livsstil",
         description: "Rap, attitude og livsstil.",
         creator: "MusikBasen",
+        color: "flex"
         songs: [1, 2]
     }
 ];

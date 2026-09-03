@@ -337,7 +337,7 @@ if (
             "playlist-card";
 
         playlistCard.innerHTML = `
-            <div class="playlist-image">
+            <div class="playlist-image ${playlist.color}">
                 <span>▶</span>
             </div>
 
