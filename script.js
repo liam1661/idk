@@ -437,6 +437,37 @@ if (playlistDetailImage) {
 
             selectedPlaylist.songs.forEach(
     (songId, index) => {
+    
+    const playPlaylistButton =
+    document.getElementById(
+        "play-playlist-button"
+    );
+
+if (playPlaylistButton) {
+
+    playPlaylistButton.addEventListener(
+        "click",
+        () => {
+
+            const firstSongId =
+                selectedPlaylist.songs[0];
+
+            const firstSong =
+                songs.find(
+                    song =>
+                        song.id === firstSongId
+                );
+
+            if (firstSong) {
+
+                selectSong(firstSong);
+
+            }
+
+        }
+    );
+
+}
 
                     const song =
                         songs.find(

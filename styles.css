@@ -2214,3 +2214,42 @@ footer{
 .playlist-detail-image.flex {
     background: linear-gradient(135deg, #064e3b, #059669);
 }
+/* ========================= */
+/* PLAY PLAYLIST BUTTON */
+/* ========================= */
+
+.play-playlist-button {
+    margin-top: 22px;
+
+    padding: 13px 22px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #ff7a00;
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 0.95rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.play-playlist-button:hover {
+    background: #ff8c1a;
+
+    transform: translateY(-2px);
+}
+
+.play-playlist-button:active {
+    transform: translateY(0);
+}

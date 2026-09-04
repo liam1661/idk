@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../theme.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
@@ -22,6 +23,7 @@
 
 </head>
 
+
 <body>
 
 <header>
@@ -29,6 +31,7 @@
     <div class="logo">
         <h1>MB</h1>
     </div>
+
 
     <nav>
 
@@ -42,13 +45,22 @@
 
         <a href="playlists.html">Playlister</a>
 
+        <a href="rankings.html">Rankings</a>
+
     </nav>
+
 
     <div class="header-icons">
 
         <button>🔍</button>
+
         <button>❤️</button>
-        <button>👤</button>
+
+        <button
+            onclick="window.location.href='profile.html'"
+        >
+            👤
+        </button>
 
     </div>
 
@@ -57,48 +69,22 @@
 
 <main>
 
-    <section class="profile-header">
+    <section class="profile-hero">
 
         <div class="profile-avatar">
             👤
         </div>
 
+
         <div class="profile-info">
 
             <span>PROFIL</span>
 
-            <h1>Liam</h1>
+            <h1>MusikBasen Bruger</h1>
 
-            <p>MusikBasen bruger</p>
-
-        </div>
-
-    </section>
-
-
-    <section class="profile-stats">
-
-        <div class="profile-stat">
-
-            <strong>0</strong>
-
-            <span>Afspilninger</span>
-
-        </div>
-
-        <div class="profile-stat">
-
-            <strong>0</strong>
-
-            <span>Favoritter</span>
-
-        </div>
-
-        <div class="profile-stat">
-
-            <strong>0</strong>
-
-            <span>Playlister</span>
+            <p>
+                Din musik. Dine favoritter. Din statistik.
+            </p>
 
         </div>
 
@@ -109,11 +95,15 @@
 
         <div class="section-header">
 
-            <h2>Mine playlister</h2>
+            <h2>Favoritsange</h2>
 
         </div>
 
-        <div class="playlists-grid" id="profile-playlists"></div>
+
+        <div
+            id="profile-favorites"
+            class="trending-grid"
+        ></div>
 
     </section>
 
@@ -122,17 +112,22 @@
 
         <div class="section-header">
 
-            <h2>Senest afspillet</h2>
+            <h2>Dine playlister</h2>
 
         </div>
 
-        <div class="trending-grid" id="recently-played"></div>
+
+        <div
+            id="profile-playlists"
+            class="playlists-grid"
+        ></div>
 
     </section>
 
 </main>
 
 
+<script src="../data/songs.js"></script>
 <script src="../data/playlists.js"></script>
 <script src="../script.js"></script>
 
