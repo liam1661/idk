@@ -1910,3 +1910,83 @@ favoriteButton.addEventListener(
         }
 
     }
+    /* ========================= */
+/* PROFILE FAVORITES */
+/* ========================= */
+
+const profileFavorites =
+    document.getElementById(
+        "profile-favorites"
+    );
+
+if (
+    profileFavorites &&
+    typeof songs !== "undefined"
+) {
+
+    const favorites =
+        JSON.parse(
+            localStorage.getItem("favorites")
+        ) || [];
+
+    profileFavorites.innerHTML = "";
+
+    const favoriteSongs =
+        songs.filter(
+            song =>
+                favorites.includes(song.id)
+        );
+
+    if (favoriteSongs.length === 0) {
+
+        profileFavorites.innerHTML = `
+            <p class="empty-message">
+                Du har ingen favoritsange endnu.
+            </p>
+        `;
+
+    } else {
+
+        favoriteSongs.forEach(song => {
+
+            const songCard =
+                document.createElement("div");
+
+            songCard.className =
+                "music-card";
+
+            songCard.innerHTML = `
+                <div class="card-image"></div>
+
+                <div class="card-info">
+
+                    <h3>${song.title}</h3>
+
+                    <p>${song.artist}</p>
+
+                    <span>
+                        ${song.album} •
+                        ${song.year}
+                    </span>
+
+                </div>
+            `;
+
+            songCard.addEventListener(
+                "click",
+                () => {
+
+                    selectSong(song);
+
+                }
+            );
+
+            profileFavorites.appendChild(
+                songCard
+            );
+
+        });
+
+    }
+
+}
