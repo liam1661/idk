@@ -1357,7 +1357,7 @@ if (topArtists) {
 }
 
 
-if (topSongs) {
+if (topSongs) 
 
     const songRanking = [
         { title: "Penge Kommer Går", artist: "Gilli", value: "420.000 streams" },
@@ -1470,13 +1470,13 @@ item.innerHTML = `
 if (
     topSongs &&
     typeof songs !== "undefined"
-) 
+)  
 
     topSongs.innerHTML = "";
 
     songs
         .slice(0, 10)
-        .forEach(song, index) => 
+        .forEach (song, index) => { 
 
             const rankingItem =
                 document.createElement("div");
