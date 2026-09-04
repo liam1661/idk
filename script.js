@@ -1990,3 +1990,26 @@ if (
     }
 
 }
+/* ========================= */
+/* PLAY HISTORY */
+/* ========================= */
+
+let playHistory =
+    JSON.parse(
+        localStorage.getItem("playHistory")
+    ) || [];
+
+playHistory =
+    playHistory.filter(
+        id => id !== song.id
+    );
+
+playHistory.unshift(song.id);
+
+playHistory =
+    playHistory.slice(0, 20);
+
+localStorage.setItem(
+    "playHistory",
+    JSON.stringify(playHistory)
+);
