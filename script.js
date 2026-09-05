@@ -1357,38 +1357,69 @@ if (topArtists) {
 }
 
 
-if (topSongs) 
+/* ========================= */
+/* TOP SONGS RANKING */
+/* ========================= */
+
+if (topSongs) {
 
     const songRanking = [
-        { title: "Penge Kommer Går", artist: "Gilli", value: "420.000 streams" },
-        { title: "All In", artist: "Branco", value: "390.000 streams" },
-        { title: "Søvnløs", artist: "Kesi", value: "350.000 streams" },
-        { title: "Tro På", artist: "Node", value: "320.000 streams" },
-        { title: "Knokler Hårdt", artist: "Gilli", value: "290.000 streams" }
+        {
+            title: "Penge Kommer Går",
+            artist: "Gilli",
+            value: "420.000 streams"
+        },
+        {
+            title: "All In",
+            artist: "Branco",
+            value: "390.000 streams"
+        },
+        {
+            title: "Søvnløs",
+            artist: "Kesi",
+            value: "350.000 streams"
+        },
+        {
+            title: "Tro På",
+            artist: "Node",
+            value: "320.000 streams"
+        },
+        {
+            title: "Knokler Hårdt",
+            artist: "Gilli",
+            value: "290.000 streams"
+        }
     ];
+
+    topSongs.innerHTML = "";
 
     songRanking.forEach((song, index) => {
 
         const item =
             document.createElement("div");
 
-        item.className = "ranking-item";
-item.innerHTML = `
-    <div class="ranking-number">
-        ${
-            index === 0
-                ? "🥇"
-                : index === 1
-                ? "🥈"
-                : index === 2
-                ? "🥉"
-                : `#${index + 1}`
-        }
-    </div>
+        item.className =
+            "ranking-item";
+
+        item.innerHTML = `
+            <div class="ranking-number">
+                ${
+                    index === 0
+                        ? "🥇"
+                        : index === 1
+                        ? "🥈"
+                        : index === 2
+                        ? "🥉"
+                        : `#${index + 1}`
+                }
+            </div>
 
             <div class="ranking-info">
-                <strong>${song.title}</strong>
-                <span>${song.artist}</span>
+
+                <h3>${song.title}</h3>
+
+                <p>${song.artist}</p>
+
             </div>
 
             <div class="ranking-value">
@@ -1397,6 +1428,10 @@ item.innerHTML = `
         `;
 
         topSongs.appendChild(item);
+
+    });
+
+}
         if (
     topArtists &&
     typeof artists !== "undefined"
@@ -2013,3 +2048,87 @@ localStorage.setItem(
     "playHistory",
     JSON.stringify(playHistory)
 );
+/* ========================= */
+/* PROFILE PLAY HISTORY */
+/* ========================= */
+
+const profileHistory =
+    document.getElementById(
+        "profile-history"
+    );
+
+if (
+    profileHistory &&
+    typeof songs !== "undefined"
+) {
+
+    const playHistory =
+        JSON.parse(
+            localStorage.getItem("playHistory")
+        ) || [];
+
+    profileHistory.innerHTML = "";
+
+    const historySongs =
+        playHistory
+            .map(songId =>
+                songs.find(
+                    song =>
+                        song.id === songId
+                )
+            )
+            .filter(song => song);
+
+    if (historySongs.length === 0) {
+
+        profileHistory.innerHTML = `
+            <p class="empty-message">
+                Du har ikke afspillet nogen sange endnu.
+            </p>
+        `;
+
+    } else {
+
+        historySongs.forEach(song => {
+
+            const songCard =
+                document.createElement("div");
+
+            songCard.className =
+                "music-card";
+
+            songCard.innerHTML = `
+                <div class="card-image"></div>
+
+                <div class="card-info">
+
+                    <h3>${song.title}</h3>
+
+                    <p>${song.artist}</p>
+
+                    <span>
+                        ${song.album} •
+                        ${song.year}
+                    </span>
+
+                </div>
+            `;
+
+            songCard.addEventListener(
+                "click",
+                () => {
+
+                    selectSong(song);
+
+                }
+            );
+
+            profileHistory.appendChild(
+                songCard
+            );
+
+        });
+
+    }
+
+}
