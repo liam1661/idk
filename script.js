@@ -1886,7 +1886,10 @@ favoriteButton.addEventListener(
 
                 albumSongs.appendChild(songCard);
 
-                    }
+                           });
+
+
+        }
 
     }
 
