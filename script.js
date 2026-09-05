@@ -1886,13 +1886,13 @@ favoriteButton.addEventListener(
 
                 albumSongs.appendChild(songCard);
 
-            });
-
-
-        }
+                    }
 
     }
-    /* ========================= */
+
+}
+
+/* ========================= */
 /* PROFILE FAVORITES */
 /* ========================= */
 
