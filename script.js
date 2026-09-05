@@ -1305,10 +1305,6 @@ if (
 const topArtists =
     document.getElementById("top-artists");
 
-const topSongs =
-    document.getElementById("top-songs");
-
-
 if (topArtists) {
 
     const artistRanking = [
