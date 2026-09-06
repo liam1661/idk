@@ -1896,3 +1896,68 @@ if (
     }
 
 }
+/* ========================= */
+/* PROFILE STATISTICS */
+/* ========================= */
+
+const statFavorites =
+    document.getElementById(
+        "stat-favorites"
+    );
+
+const statPlayed =
+    document.getElementById(
+        "stat-played"
+    );
+
+const statArtists =
+    document.getElementById(
+        "stat-artists"
+    );
+
+if (
+    statFavorites &&
+    statPlayed &&
+    statArtists &&
+    typeof songs !== "undefined"
+) {
+
+    const favorites =
+        JSON.parse(
+            localStorage.getItem("favorites")
+        ) || [];
+
+    const playHistory =
+        JSON.parse(
+            localStorage.getItem("playHistory")
+        ) || [];
+
+    const playedSongs =
+        playHistory
+            .map(songId =>
+                songs.find(
+                    song =>
+                        song.id === songId
+                )
+            )
+            .filter(song => song);
+
+    const uniqueArtists =
+        [
+            ...new Set(
+                playedSongs.map(
+                    song => song.artist
+                )
+            )
+        ];
+
+    statFavorites.textContent =
+        favorites.length;
+
+    statPlayed.textContent =
+        playHistory.length;
+
+    statArtists.textContent =
+        uniqueArtists.length;
+
+}

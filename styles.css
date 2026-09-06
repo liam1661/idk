@@ -2253,3 +2253,94 @@ footer{
 .play-playlist-button:active {
     transform: translateY(0);
 }
+/* ========================= */
+/* PROFILE STATISTICS */
+/* ========================= */
+
+.profile-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+
+    margin-bottom: 45px;
+}
+
+
+.profile-stat-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 22px;
+
+    background: #161616;
+
+    border: 1px solid #242424;
+
+    border-radius: 14px;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.profile-stat-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #ff7a00;
+}
+
+
+.profile-stat-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    background: #242424;
+
+    border-radius: 12px;
+
+    font-size: 1.4rem;
+}
+
+
+.profile-stat-card strong {
+    display: block;
+
+    font-size: 1.5rem;
+
+    font-weight: 700;
+
+    color: white;
+}
+
+
+.profile-stat-card p {
+    margin: 3px 0 0;
+
+    color: #999;
+
+    font-size: 0.85rem;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .profile-stats {
+        grid-template-columns:
+            1fr;
+    }
+
+}
