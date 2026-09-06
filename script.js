@@ -1997,12 +1997,7 @@ playHistory =
 localStorage.setItem(
     "playHistory",
     JSON.stringify(playHistory)
-    
-        });
-
-    }
-
-}
+);
 /* ========================= */
 /* PROFILE PLAY HISTORY */
 /* ========================= */
