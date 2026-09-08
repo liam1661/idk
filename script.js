@@ -1962,3 +1962,71 @@ if (
          }
 
 }
+/* ========================= */
+/* CREATE USER PLAYLIST */
+/* ========================= */
+
+const createPlaylistButton =
+    document.getElementById(
+        "create-playlist-button"
+    );
+
+if (createPlaylistButton) {
+
+    createPlaylistButton.addEventListener(
+        "click",
+        () => {
+
+            const playlistName =
+                prompt(
+                    "Hvad skal din playlist hedde?"
+                );
+
+            if (
+                !playlistName ||
+                playlistName.trim() === ""
+            ) {
+                return;
+            }
+
+            const userPlaylists =
+                JSON.parse(
+                    localStorage.getItem(
+                        "userPlaylists"
+                    )
+                ) || [];
+
+            const newPlaylist = {
+
+                id: Date.now(),
+
+                name:
+                    playlistName.trim(),
+
+                description:
+                    "Din egen playlist",
+
+                creator:
+                    "Dig",
+
+                songs: []
+
+            };
+
+            userPlaylists.push(
+                newPlaylist
+            );
+
+            localStorage.setItem(
+                "userPlaylists",
+                JSON.stringify(
+                    userPlaylists
+                )
+            );
+
+            window.location.reload();
+
+        }
+    );
+
+}
