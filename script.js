@@ -1959,5 +1959,6 @@ if (
 
     statArtists.textContent =
         uniqueArtists.length;
+         }
 
 }
