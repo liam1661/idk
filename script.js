@@ -2034,11 +2034,6 @@ if (createPlaylistButton) {
 /* PROFILE USER PLAYLISTS */
 /* ========================= */
 
-const profilePlaylists =
-    document.getElementById(
-        "profile-playlists"
-    );
-
 if (profilePlaylists) {
 
     const userPlaylists =
