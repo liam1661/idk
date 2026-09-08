@@ -1961,7 +1961,7 @@ if (
         uniqueArtists.length;
          }
 
-}
+ }
 /* ========================= */
 /* CREATE USER PLAYLIST */
 /* ========================= */
@@ -2030,3 +2030,75 @@ if (createPlaylistButton) {
     );
 
 }
+/* ========================= */
+/* PROFILE USER PLAYLISTS */
+/* ========================= */
+
+const profilePlaylists =
+    document.getElementById(
+        "profile-playlists"
+    );
+
+if (profilePlaylists) {
+
+    const userPlaylists =
+        JSON.parse(
+            localStorage.getItem(
+                "userPlaylists"
+            )
+        ) || [];
+
+    profilePlaylists.innerHTML = "";
+
+    if (userPlaylists.length === 0) {
+
+        profilePlaylists.innerHTML = `
+            <p class="empty-message">
+                Du har ikke oprettet nogen playlister endnu.
+            </p>
+        `;
+
+    } else {
+
+        userPlaylists.forEach(playlist => {
+
+            const playlistCard =
+                document.createElement("div");
+
+            playlistCard.className =
+                "playlist-card";
+
+            playlistCard.innerHTML = `
+                <div class="playlist-image">
+                    <span>▶</span>
+                </div>
+
+                <div class="playlist-info">
+
+                    <h3>${playlist.name}</h3>
+
+                    <p>${playlist.description}</p>
+
+                    <span>
+                        ${playlist.songs.length}
+                        sange • ${playlist.creator}
+                    </span>
+
+                </div>
+            `;
+            playlistCard.addEventListener(
+    "click",
+    () => {
+
+        window.location.href =
+            `playlist.html?id=${playlist.id}&user=true`;
+
+    }
+);
+            profilePlaylists.appendChild(
+                playlistCard
+            );
+
+        });
+
+    }
