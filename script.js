@@ -2097,3 +2097,74 @@ if (profilePlaylists) {
         });
 
     }
+
+}
+/* ========================= */
+/* USER PLAYLIST DETAIL */
+/* ========================= */
+
+const userPlaylistDetail =
+    document.getElementById(
+        "playlist-detail"
+    );
+
+if (userPlaylistDetail) {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    const isUserPlaylist =
+        params.get("user") === "true";
+
+    if (isUserPlaylist) {
+
+        const playlistId =
+            Number(params.get("id"));
+
+        const userPlaylists =
+            JSON.parse(
+                localStorage.getItem(
+                    "userPlaylists"
+                )
+            ) || [];
+
+        const selectedPlaylist =
+            userPlaylists.find(
+                playlist =>
+                    playlist.id === playlistId
+            );
+
+        if (selectedPlaylist) {
+
+            const playlistList =
+                document.getElementById(
+                    "playlists"
+                );
+
+            if (playlistList) {
+
+                playlistList.style.display =
+                    "none";
+
+            }
+
+            userPlaylistDetail.style.display =
+                "block";
+
+            document.getElementById(
+                "playlist-name"
+            ).textContent =
+                selectedPlaylist.name;
+
+            document.getElementById(
+                "playlist-description"
+            ).textContent =
+                selectedPlaylist.description;
+
+        }
+
+    }
+
+}
