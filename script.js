@@ -1,521 +1,569 @@
+/* =========================================================
+   MUSIKBASEN
+   DEL 1/4
+   GRUNDLAG + MUSIC PLAYER + FAVORITTER
+========================================================= */
 
-/* ========================= */
-/* ARTISTS */
-/* ========================= */
 
-const artistsGrid = document.getElementById("artists-grid");
+/* =========================================================
+   GRUNDLÆGGENDE HJÆLPEFUNKTIONER
+========================================================= */
 
-if (artistsGrid && typeof artists !== "undefined") {
+const MB = {
 
-    artists.forEach(artist => {
+    currentSong: null,
 
-        const artistCard = 
-        document.createElement("div");
+    currentSongIndex: -1,
 
-        artistCard.className = "artist-card";
+    currentAudio: null,
 
-       artistCard.innerHTML = `
-    <div
-        class="artist-image"
-        style="
-            --artist-hue:
-            ${(artist.id * 47) % 360};
-        "
-    >
-        ${
-            artist.image
-                ? `<img
-                    src="../${artist.image}"
-                    alt="${artist.name}"
-                >`
-                : `<span class="artist-placeholder-name">
-                    ${artist.name}
-                   </span>`
-        }
-    </div>
+    isPlaying: false
 
-    <h3>${artist.name}</h3>
+};
 
-    <p>${artist.genre} • ${artist.country}</p>
-`;
-        artistCard.addEventListener("click", () => {
 
-            window.location.href = 
-            `artists.html?id=${artist.id}`;
+/* ---------------------------------------------------------
+   FIND UD AF OM VI ER I /pages/
+--------------------------------------------------------- */
 
-        });
+function isInsidePages() {
 
-        artistsGrid.appendChild(artistCard);
-
-    });
+    return window.location.pathname.includes(
+        "/pages/"
+    );
 
 }
 
-const artistDetailPage = document.getElementById("artist-detail-page");
-const artistsListPage = document.getElementById("artists-list-page");
 
-const urlParams = new URLSearchParams(window.location.search);
-const selectedArtistId = Number(urlParams.get("id"));
+/* ---------------------------------------------------------
+   LINK TIL ANDRE SIDER
+--------------------------------------------------------- */
 
-if (
-    artistDetailPage &&
-    artistsListPage &&
-    selectedArtistId
-) {
+function pageUrl(fileName) {
 
-    const selectedArtist = artists.find(
-        artist => artist.id === selectedArtistId
+    if (isInsidePages()) {
+
+        return fileName;
+
+    }
+
+    return `pages/${fileName}`;
+
+}
+
+
+/* ---------------------------------------------------------
+   BILLEDE / ASSET PATH
+--------------------------------------------------------- */
+
+function assetPath(path) {
+
+    if (!path) {
+
+        return "";
+
+    }
+
+    if (
+        path.startsWith("http://") ||
+        path.startsWith("https://") ||
+        path.startsWith("data:")
+    ) {
+
+        return path;
+
+    }
+
+    const cleanPath =
+        path.replace(/^(\.\.\/)+/, "");
+
+    if (isInsidePages()) {
+
+        return `../${cleanPath}`;
+
+    }
+
+    return cleanPath;
+
+}
+
+
+/* ---------------------------------------------------------
+   HTML-SIKKER TEKST
+--------------------------------------------------------- */
+
+function escapeHtml(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+    return String(value)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================================================
+   FAVORITTER
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   HENT FAVORITSANGE
+--------------------------------------------------------- */
+
+function getFavorites() {
+
+    const favorites =
+        JSON.parse(
+            localStorage.getItem("favorites")
+        ) || [];
+
+
+    /*
+       Migrerer gamle favoritter fra det gamle system,
+       så eksisterende favoritter ikke nødvendigvis forsvinder.
+    */
+
+    const oldFavorites =
+        JSON.parse(
+            localStorage.getItem(
+                "musikbasen-favorites"
+            )
+        ) || [];
+
+
+    oldFavorites.forEach(favorite => {
+
+        if (
+            typeof favorite === "string" &&
+            favorite.startsWith("song-")
+        ) {
+
+            const songId =
+                Number(
+                    favorite.replace(
+                        "song-",
+                        ""
+                    )
+                );
+
+            if (
+                !favorites.includes(songId)
+            ) {
+
+                favorites.push(songId);
+
+            }
+
+        }
+
+    });
+
+
+    localStorage.setItem(
+        "favorites",
+        JSON.stringify(favorites)
     );
 
-    if (selectedArtist) {
 
-        artistsListPage.style.display = "none";
-        artistDetailPage.style.display = "block";
+    return favorites;
 
-        document.getElementById("artist-name").textContent =
-            selectedArtist.name;
+}
 
-        document.getElementById("artist-description").textContent =
-            selectedArtist.description;
 
-        document.getElementById("artist-genre").textContent =
-            selectedArtist.genre;
+/* ---------------------------------------------------------
+   GEM FAVORITSANGE
+--------------------------------------------------------- */
 
-        document.getElementById("artist-country").textContent =
-            selectedArtist.country;
-            
-            const artistHeroImage =
-    document.querySelector(".artist-hero-image");
+function saveFavorites(favorites) {
 
-if (artistHeroImage) {
-
-    artistHeroImage.style.setProperty(
-        "--artist-hue",
-        (selectedArtist.id * 47) % 360
+    localStorage.setItem(
+        "favorites",
+        JSON.stringify(favorites)
     );
 
-    if (selectedArtist.image) {
+}
 
-        artistHeroImage.innerHTML = `
-            <img
-                src="../${selectedArtist.image}"
-                alt="${selectedArtist.name}"
-            >
-        `;
+
+/* ---------------------------------------------------------
+   ER SANG FAVORIT?
+--------------------------------------------------------- */
+
+function isFavorite(songId) {
+
+    return getFavorites().includes(
+        songId
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   SKIFT FAVORIT
+--------------------------------------------------------- */
+
+function toggleFavorite(songId) {
+
+    let favorites =
+        getFavorites();
+
+
+    if (
+        favorites.includes(songId)
+    ) {
+
+        favorites =
+            favorites.filter(
+                id => id !== songId
+            );
 
     } else {
 
-        artistHeroImage.innerHTML = `
-            <span class="artist-placeholder-name">
-                ${selectedArtist.name}
-            </span>
-        `;
+        favorites.push(songId);
 
     }
 
+
+    saveFavorites(favorites);
+
+
+    updateFavoriteButtons();
+
 }
 
-if (
-    artistHeroImage &&
-    selectedArtist.image
-) {
 
-    artistHeroImage.innerHTML = `
-        <img
-            src="../${selectedArtist.image}"
-            alt="${selectedArtist.name}"
+/* ---------------------------------------------------------
+   OPDATER ALLE FAVORITKNAPPER
+--------------------------------------------------------- */
+
+function updateFavoriteButtons() {
+
+    document
+        .querySelectorAll(
+            ".favorite-song-button"
+        )
+        .forEach(button => {
+
+            const songId =
+                Number(
+                    button.dataset.songId
+                );
+
+
+            if (
+                isFavorite(songId)
+            ) {
+
+                button.textContent = "♥";
+
+                button.classList.add(
+                    "active"
+                );
+
+            } else {
+
+                button.textContent = "♡";
+
+                button.classList.remove(
+                    "active"
+                );
+
+            }
+
+        });
+
+}
+
+
+/* =========================================================
+   PLAY HISTORY
+========================================================= */
+
+function addToPlayHistory(songId) {
+
+    let playHistory =
+        JSON.parse(
+            localStorage.getItem(
+                "playHistory"
+            )
+        ) || [];
+
+
+    /*
+       Fjern sangen først hvis den allerede findes.
+       Derefter sættes den øverst.
+    */
+
+    playHistory =
+        playHistory.filter(
+            id => id !== songId
+        );
+
+
+    playHistory.unshift(
+        songId
+    );
+
+
+    /*
+       Maks 20 sange i historikken
+    */
+
+    playHistory =
+        playHistory.slice(
+            0,
+            20
+        );
+
+
+    localStorage.setItem(
+        "playHistory",
+        JSON.stringify(playHistory)
+    );
+
+}
+
+
+/* =========================================================
+   SONG CARD BUILDER
+========================================================= */
+
+function createSongCard(song) {
+
+    const songCard =
+        document.createElement("div");
+
+
+    songCard.className =
+        "music-card";
+
+
+    const cover =
+        song.cover ||
+        song.image ||
+        "";
+
+
+    songCard.innerHTML = `
+
+        <div class="card-image">
+
+            ${
+                cover
+                    ? `
+                        <img
+                            src="${assetPath(cover)}"
+                            alt="${escapeHtml(song.title)}"
+                        >
+                    `
+                    : ""
+            }
+
+        </div>
+
+
+        <div class="card-info">
+
+            <h3>
+                ${escapeHtml(song.title)}
+            </h3>
+
+            <p>
+                ${escapeHtml(song.artist)}
+            </p>
+
+            <span>
+                ${escapeHtml(song.album || "Single")}
+                •
+                ${escapeHtml(song.year || "")}
+            </span>
+
+        </div>
+
+
+        <button
+            class="favorite-song-button"
+            data-song-id="${song.id}"
+            aria-label="Tilføj til favoritter"
         >
+            ♡
+        </button>
+
     `;
 
-}
-                
-            const artistAlbums = document.getElementById("artist-albums");
-            const artistSongs = document.getElementById("artist-songs");
-            const artistPopularSongs = document.getElementById("artist-popular-songs");
-            if (
-    artistPopularSongs &&
-    typeof songs !== "undefined"
-) {
 
-    const popularSongs =
-        songs
-            .filter(
-                song =>
-                    song.artist ===
-                    selectedArtist.name
-            )
-            .slice(0, 5);
+    const favoriteButton =
+        songCard.querySelector(
+            ".favorite-song-button"
+        );
 
-    artistPopularSongs.innerHTML = "";
 
-    popularSongs.forEach(song => {
+    if (
+        favoriteButton
+    ) {
 
-        const popularSongCard =
-    document.createElement("div");
+        if (
+            isFavorite(song.id)
+        ) {
 
-songCard.className =
-    "music-card";
+            favoriteButton.textContent =
+                "♥";
 
-popularSongCard.dataset.trackNumber =
-    popularSongs.indexOf(song) + 1;
+            favoriteButton.classList.add(
+                "active"
+            );
 
-        popularSongCard.innerHTML = `
-            <div class="card-image"></div>
+        }
 
-            <div class="card-info">
-                <h3>${song.title}</h3>
 
-                <p>${song.artist}</p>
-
-                <span>
-                    ${song.album} • ${song.year}
-                </span>
-            </div>
-        `;
-
-        popularSongCard.addEventListener(
+        favoriteButton.addEventListener(
             "click",
-            () => {
+            event => {
 
-                selectSong(song);
+                event.stopPropagation();
+
+                toggleFavorite(
+                    song.id
+                );
 
             }
         );
 
-        artistPopularSongs.appendChild(
-            popularSongCard
-        );
-
-    });
-
-}
-
-    if (artistAlbums && typeof albums !== "undefined") {
-
-        const matchingAlbums = albums.filter(
-            album => album.artist === selectedArtist.name
-        );
-
-        artistAlbums.innerHTML = "";
-
-        matchingAlbums.forEach(album => {
-
-            const albumCard = document.createElement("div");
-
-            albumCard.className = "album-card";
-
-            albumCard.innerHTML = `
-                <div class="album-image">
-    <img
-        src="../${album.cover}"
-        alt="${album.title} – ${album.artist}"
-    >
-</div>
-
-                <div class="album-info">
-                    <h3>${album.title}</h3>
-                    <p>${album.artist}</p>
-                    <span>${album.year} • ${album.genre}</span>
-                </div>
-            `;
-albumCard.addEventListener("click", () => {
-
-    window.location.href =
-        `album.html?id=${album.id}`;
-
-});
-            artistAlbums.appendChild(albumCard);
-
-        });
     }
 
 
-    if (artistSongs && typeof songs !== "undefined") {
-
-        const matchingSongs = songs.filter(
-            song => song.artist === selectedArtist.name
-        );
-
-        artistSongs.innerHTML = "";
-
-        matchingSongs.forEach(song => {
-
-            const songCard = document.createElement("div");
-            
-            songCard.dataset.trackNumber =
-                matchingSongs.indexOf(song) + 1;
-
-            songCard.className = "music-card";
-
-            songCard.innerHTML = `
-                <div class="card-image"></div>
-
-                <div class="card-info">
-                    <h3>${song.title}</h3>
-                    <p>${song.artist}</p>
-                    <span>${song.album} • ${song.year}</span>
-                </div>
-            `;
-songCard.addEventListener("click", () => {
-
-    selectSong(song);
-
-});
-            artistSongs.appendChild(songCard);
-
-        });
-    }
-
-    }
-
-}
-
-/* ========================= */
-/* ALBUMS */
-/* ========================= */
-
-const albumsGrid = document.getElementById("albums-grid");
-
-if (albumsGrid && typeof albums !== "undefined") {
-
-    albums.forEach(album => {
-
-        const albumCard = document.createElement("div");
-
-        albumCard.className = "album-card";
-
-        albumCard.innerHTML = `
-            <div class="album-image">
-    <img
-        src="../${album.cover}"
-        alt="${album.title} – ${album.artist}"
-    >
-</div>
-            <div class="album-info">
-                <h3>${album.title}</h3>
-
-                <p>${album.artist}</p>
-
-                <span>
-                    ${album.year} • ${album.genre}
-                </span>
-            </div>
-        `;
-
-            albumCard.addEventListener("click", () => {
-
-            window.location.href =
-                `album.html?id=${album.id}`;
-
-        });
-
-        albumsGrid.appendChild(albumCard);
-
-    });
-
-}
-
-
-/* ==================== */
-/* PLAYLISTS */
-/* ========================= */
-
-const playlistsGrid =
-    document.getElementById("playlists-grid");
-
-if (
-    playlistsGrid &&
-    typeof playlists !== "undefined"
-) {
-
-    playlists.forEach(playlist => {
-
-        const playlistCard =
-            document.createElement("div");
-
-        playlistCard.className =
-            "playlist-card";
-
-        playlistCard.innerHTML = `
-            <div class="playlist-image ${playlist.color}">
-                <span>▶</span>
-            </div>
-
-            <div class="playlist-info">
-
-                <h3>${playlist.name}</h3>
-
-                <p>${playlist.description}</p>
-
-                <span>
-                    ${playlist.songs.length}
-                    sange •
-                    ${playlist.creator}
-                </span>
-
-            </div>
-        `;
-
-        playlistCard.addEventListener("click", () => {
-
-            window.location.href =
-                `playlists.html?id=${playlist.id}`;
-
-        });
-
-                playlistsGrid.appendChild(playlistCard);
-
-    });
-
-}
-
-/* ========================= */
-/* PLAYLIST DETAIL */
-/* ========================= */
-
-const playlistDetail =
-    document.getElementById("playlist-detail");
-
-const playlistList =
-    document.getElementById("playlists");
-
-const playlistParams =
-    new URLSearchParams(window.location.search);
-
-const selectedPlaylistId =
-    Number(playlistParams.get("id"));
-
-if (
-    playlistDetail &&
-    playlistList &&
-    selectedPlaylistId &&
-    typeof playlists !== "undefined" &&
-    typeof songs !== "undefined"
-) {
-
-    const selectedPlaylist =
-        playlists.find(
-            playlist =>
-                playlist.id === selectedPlaylistId
-        );
-
-    if (selectedPlaylist) {
-        const playlistDetailImage =
-    document.getElementById(
-        "playlist-detail-image"
-    );
-
-if (playlistDetailImage) {
-
-    playlistDetailImage.className =
-        `playlist-detail-image ${selectedPlaylist.color}`;
-
-}
-
-        playlistList.style.display = "none";
-
-        playlistDetail.style.display = "block";
-
-        document.getElementById(
-            "playlist-name"
-        ).textContent =
-            selectedPlaylist.name;
-
-        document.getElementById(
-            "playlist-description"
-        ).textContent =
-            selectedPlaylist.description;
-
-        const playlistSongs =
-            document.getElementById(
-                "playlist-songs"
-            );
-
-        if (playlistSongs) {
-
-            playlistSongs.innerHTML = "";
-
-            selectedPlaylist.songs.forEach(
-    (songId, index) => {
-    
-    const playPlaylistButton =
-    document.getElementById(
-        "play-playlist-button"
-    );
-
-if (playPlaylistButton) {
-
-    playPlaylistButton.addEventListener(
+    songCard.addEventListener(
         "click",
         () => {
 
-            const firstSongId =
-                selectedPlaylist.songs[0];
-
-            const firstSong =
-                songs.find(
-                    song =>
-                        song.id === firstSongId
-                );
-
-            if (firstSong) {
-
-                selectSong(firstSong);
-
-            }
+            selectSong(song);
 
         }
     );
 
+
+    return songCard;
+
 }
 
-                    const song =
-                        songs.find(
-                            song =>
-                                song.id === songId
-                        );
 
-                    if (!song) return;
+/* =========================================================
+   MUSIC PLAYER
+========================================================= */
 
-                    const songCard =
-    document.createElement("div");
 
-songCard.className =
-    "playlist-song";
+/* ---------------------------------------------------------
+   FIND SANGENS POSITION I DATABASE
+--------------------------------------------------------- */
 
-songCard.dataset.trackNumber =
-    index + 1;
+function getSongIndex(song) {
 
-                    songCard.innerHTML = `
-                        <div class="card-info">
+    if (
+        typeof songs === "undefined"
+    ) {
 
-                            <h3>${song.title}</h3>
+        return -1;
 
-                            <p>${song.artist}</p>
+    }
 
-                            <span>
-                                ${song.album} •
-                                ${song.year}
-                            </span>
 
-                        </div>
-                    `;
+    return songs.findIndex(
+        databaseSong =>
+            databaseSong.id === song.id
+    );
 
-                    songCard.addEventListener(
-                        "click",
-                        () => {
+}
 
-                            selectSong(song);
 
-                        }
-                    );
+/* ---------------------------------------------------------
+   OPDATER PLAYERENS INFORMATION
+--------------------------------------------------------- */
 
-                    playlistSongs.appendChild(
-                        songCard
-                    );
+function updatePlayerInfo(song) {
 
-                }
-            );
+    const playerTitle =
+        document.getElementById(
+            "player-title"
+        ) ||
+        document.querySelector(
+            "[data-player-title]"
+        );
+
+
+    const playerArtist =
+        document.getElementById(
+            "player-artist"
+        ) ||
+        document.querySelector(
+            "[data-player-artist]"
+        );
+
+
+    const playerImage =
+        document.getElementById(
+            "player-image"
+        ) ||
+        document.querySelector(
+            "[data-player-image]"
+        );
+
+
+    if (
+        playerTitle
+    ) {
+
+        playerTitle.textContent =
+            song.title;
+
+    }
+
+
+    if (
+        playerArtist
+    ) {
+
+        playerArtist.textContent =
+            song.artist;
+
+    }
+
+
+    const cover =
+        song.cover ||
+        song.image ||
+        "";
+
+
+    if (
+        playerImage &&
+        cover
+    ) {
+
+        if (
+            playerImage.tagName === "IMG"
+        ) {
+
+            playerImage.src =
+                assetPath(cover);
+
+            playerImage.alt =
+                song.title;
 
         }
 
@@ -523,228 +571,703 @@ songCard.dataset.trackNumber =
 
 }
 
-/* ========================= */
-/* SEARCH */
-/* ========================= */
 
-const searchButton =
-    document.getElementById("search-button");
+/* ---------------------------------------------------------
+   VÆLG EN SANG
+--------------------------------------------------------- */
 
-const searchOverlay =
-    document.getElementById("search-overlay");
+function selectSong(song) {
 
-const searchInput =
-    document.getElementById("search-input");
+    if (!song) {
 
-const closeSearch =
-    document.getElementById("close-search");
+        return;
 
-const searchResults =
-    document.getElementById("search-results");
+    }
+
+
+    MB.currentSong =
+        song;
+
+
+    MB.currentSongIndex =
+        getSongIndex(song);
+
+
+    addToPlayHistory(
+        song.id
+    );
+
+
+    updatePlayerInfo(song);
+
+
+    const musicPlayer =
+        document.getElementById(
+            "music-player"
+        );
+
+
+    if (
+        musicPlayer
+    ) {
+
+        musicPlayer.classList.add(
+            "active"
+        );
+
+    }
+
+
+    /*
+       Hvis du senere får rigtige lydfiler,
+       kan sangobjektet bruge:
+
+       audio
+       audioUrl
+       previewUrl
+    */
+
+    const audioSource =
+        song.audio ||
+        song.audioUrl ||
+        song.previewUrl ||
+        null;
+
+
+    if (
+        audioSource
+    ) {
+
+        if (
+            MB.currentAudio
+        ) {
+
+            MB.currentAudio.pause();
+
+        }
+
+
+        MB.currentAudio =
+            new Audio(
+                assetPath(audioSource)
+            );
+
+
+        MB.currentAudio.volume =
+            Number(
+                document.getElementById(
+                    "player-volume-bar"
+                )?.value || 1
+            );
+
+
+        MB.currentAudio.addEventListener(
+            "ended",
+            () => {
+
+                playNextSong();
+
+            }
+        );
+
+
+        MB.currentAudio.addEventListener(
+            "timeupdate",
+            updatePlayerProgress
+        );
+
+
+        MB.currentAudio.play()
+            .then(() => {
+
+                MB.isPlaying =
+                    true;
+
+                updatePlayButton();
+
+            })
+            .catch(() => {
+
+                MB.isPlaying =
+                    false;
+
+                updatePlayButton();
+
+            });
+
+    } else {
+
+        /*
+           Ingen rigtig lydfil endnu.
+           Sangen vælges stadig og gemmes i historikken.
+        */
+
+        MB.isPlaying =
+            false;
+
+        updatePlayButton();
+
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   OPDATER PLAY/PAUSE-KNAP
+--------------------------------------------------------- */
+
+function updatePlayButton() {
+
+    const playerPlay =
+        document.getElementById(
+            "player-play"
+        );
+
+
+    if (!playerPlay) {
+
+        return;
+
+    }
+
+
+    playerPlay.textContent =
+        MB.isPlaying
+            ? "⏸"
+            : "▶";
+
+}
+
+
+/* ---------------------------------------------------------
+   PLAY / PAUSE
+--------------------------------------------------------- */
+
+function togglePlayerPlayback() {
+
+    if (
+        !MB.currentSong
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        !MB.currentAudio
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        MB.isPlaying
+    ) {
+
+        MB.currentAudio.pause();
+
+        MB.isPlaying =
+            false;
+
+    } else {
+
+        MB.currentAudio.play();
+
+        MB.isPlaying =
+            true;
+
+    }
+
+
+    updatePlayButton();
+
+}
+
+
+/* ---------------------------------------------------------
+   NÆSTE SANG
+--------------------------------------------------------- */
+
+function playNextSong() {
+
+    if (
+        typeof songs === "undefined" ||
+        songs.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        MB.currentSongIndex === -1
+    ) {
+
+        selectSong(
+            songs[0]
+        );
+
+        return;
+
+    }
+
+
+    MB.currentSongIndex =
+        (
+            MB.currentSongIndex + 1
+        ) % songs.length;
+
+
+    selectSong(
+        songs[
+            MB.currentSongIndex
+        ]
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   FORRIGE SANG
+--------------------------------------------------------- */
+
+function playPreviousSong() {
+
+    if (
+        typeof songs === "undefined" ||
+        songs.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        MB.currentSongIndex === -1
+    ) {
+
+        selectSong(
+            songs[0]
+        );
+
+        return;
+
+    }
+
+
+    MB.currentSongIndex--;
+
+
+    if (
+        MB.currentSongIndex < 0
+    ) {
+
+        MB.currentSongIndex =
+            songs.length - 1;
+
+    }
+
+
+    selectSong(
+        songs[
+            MB.currentSongIndex
+        ]
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   PLAYER PROGRESS
+--------------------------------------------------------- */
+
+function updatePlayerProgress() {
+
+    const progressBar =
+        document.getElementById(
+            "player-progress-bar"
+        );
+
+
+    if (
+        !progressBar ||
+        !MB.currentAudio ||
+        !MB.currentAudio.duration
+    ) {
+
+        return;
+
+    }
+
+
+    progressBar.value =
+        (
+            MB.currentAudio.currentTime /
+            MB.currentAudio.duration
+        ) * 100;
+
+}
+
+
+/* ---------------------------------------------------------
+   START PLAYER CONTROLS
+--------------------------------------------------------- */
+
+function initializeMusicPlayer() {
+
+    const playerPlay =
+        document.getElementById(
+            "player-play"
+        );
+
+    const playerNext =
+        document.getElementById(
+            "player-next"
+        );
+
+    const playerPrev =
+        document.getElementById(
+            "player-prev"
+        );
+
+    const playerVolume =
+        document.getElementById(
+            "player-volume-bar"
+        );
+
+    const playerProgress =
+        document.getElementById(
+            "player-progress-bar"
+        );
+
+
+    if (playerPlay) {
+
+        playerPlay.addEventListener(
+            "click",
+            togglePlayerPlayback
+        );
+
+    }
+
+
+    if (playerNext) {
+
+        playerNext.addEventListener(
+            "click",
+            playNextSong
+        );
+
+    }
+
+
+    if (playerPrev) {
+
+        playerPrev.addEventListener(
+            "click",
+            playPreviousSong
+        );
+
+    }
+
+
+    if (playerVolume) {
+
+        playerVolume.addEventListener(
+            "input",
+            () => {
+
+                if (
+                    MB.currentAudio
+                ) {
+
+                    MB.currentAudio.volume =
+                        Number(
+                            playerVolume.value
+                        );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    if (playerProgress) {
+
+        playerProgress.addEventListener(
+            "input",
+            () => {
+
+                if (
+                    MB.currentAudio &&
+                    MB.currentAudio.duration
+                ) {
+
+                    MB.currentAudio.currentTime =
+                        (
+                            Number(
+                                playerProgress.value
+                            ) / 100
+                        ) *
+                        MB.currentAudio.duration;
+
+                }
+
+            }
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   START PLAYER
+========================================================= */
+
+initializeMusicPlayer();
+/* =========================================================
+   MUSIKBASEN
+   DEL 2/4
+   SANGE + KUNSTNERE + ALBUMS + SØGNING
+========================================================= */
+
+
+/* =========================================================
+   SONGS PAGE
+========================================================= */
+
+const songsGrid =
+    document.getElementById(
+        "songs-grid"
+    );
 
 
 if (
-    searchButton &&
-    searchOverlay &&
-    searchInput &&
-    closeSearch &&
-    searchResults
+    songsGrid &&
+    typeof songs !== "undefined"
 ) {
 
-    /* Open search */
+    songsGrid.innerHTML = "";
 
-    searchButton.addEventListener("click", () => {
 
-        searchOverlay.classList.add("active");
+    songs.forEach(song => {
 
-        searchInput.focus();
+        const songCard =
+            createSongCard(song);
 
-    });
 
-
-    /* Close search */
-
-    closeSearch.addEventListener("click", () => {
-
-        searchOverlay.classList.remove("active");
-
-        searchInput.value = "";
-
-        searchResults.innerHTML = "";
-
-    });
-
-
-    /* Search */
-
-    searchInput.addEventListener("input", () => {
-
-        const query =
-            searchInput.value
-                .toLowerCase()
-                .trim();
-
-        searchResults.innerHTML = "";
-
-
-        if (!query) {
-            return;
-        }
-
-
-        /* Artists */
-
-        if (typeof artists !== "undefined") {
-
-            artists
-                .filter(artist =>
-                    artist.name
-                        .toLowerCase()
-                        .includes(query)
-                )
-                .forEach(artist => {
-
-                    const result =
-                        document.createElement("div");
-
-                    result.className =
-                        "search-result";
-
-                    result.innerHTML = `
-                        <strong>
-                            ${artist.name}
-                        </strong>
-
-                        <span>
-                            Kunstner
-                        </span>
-                    `;
-
-
-                    result.addEventListener(
-                        "click",
-                        () => {
-
-                    window.location.href =
-                                `artists.html?id=${encodeURIComponent(artist.id)}`;
-                        }
-                    );
-
-
-                    searchResults.appendChild(result);
-
-                });
-
-        }
-
-
-        /* Songs */
-
-        if (typeof songs !== "undefined") {
-
-            songs
-                .filter(song =>
-                    song.title
-                        .toLowerCase()
-                        .includes(query) ||
-
-                    song.artist
-                        .toLowerCase()
-                        .includes(query)
-                )
-                .forEach(song => {
-
-                    const result =
-                        document.createElement("div");
-
-                    result.className =
-                        "search-result";
-
-                    result.innerHTML = `
-                        <strong>
-                            ${song.title}
-                        </strong>
-
-                        <span>
-                            Sang · ${song.artist}
-                        </span>
-                    `;
-
-
-                    searchResults.appendChild(result);
-
-                });
-
-        }
-
-
-        /* Albums */
-
-        if (typeof albums !== "undefined") {
-
-            albums
-                .filter(album =>
-                    album.title
-                        .toLowerCase()
-                        .includes(query) ||
-
-                    album.artist
-                        .toLowerCase()
-                        .includes(query)
-                )
-                .forEach(album => {
-
-                    const result =
-                        document.createElement("div");
-
-                    result.className =
-                        "search-result";
-
-                    result.innerHTML = `
-                        <strong>
-                            ${album.title}
-                        </strong>
-
-                        <span>
-                            Album · ${album.artist}
-                        </span>
-                    `;
-
-
-                    searchResults.appendChild(result);
-
-                });
-
-        }
-
-
-        /* No results */
-
-        if (searchResults.children.length === 0) {
-
-            searchResults.innerHTML = `
-                <p class="no-results">
-                    Ingen resultater fundet.
-                </p>
-            `;
-
-        }
+        songsGrid.appendChild(
+            songCard
+        );
 
     });
 
 }
 
 
-/* ========================= */
-/* ARTIST DETAIL PAGE */
-/* ========================= */
+/* =========================================================
+   ARTISTS PAGE
+========================================================= */
 
-const artistNameElement =
-    document.getElementById("artist-name");
+const artistsGrid =
+    document.getElementById(
+        "artists-grid"
+    );
 
 
 if (
-    artistNameElement &&
+    artistsGrid &&
+    typeof artists !== "undefined"
+) {
+
+    artistsGrid.innerHTML = "";
+
+
+    artists.forEach(artist => {
+
+        const artistCard =
+            document.createElement("div");
+
+
+        artistCard.className =
+            "artist-card";
+
+
+        const artistImage =
+            artist.image || "";
+
+
+        artistCard.innerHTML = `
+
+            <div class="artist-image">
+
+                ${
+                    artistImage
+                        ? `
+                            <img
+                                src="${assetPath(artistImage)}"
+                                alt="${escapeHtml(artist.name)}"
+                            >
+                        `
+                        : ""
+                }
+
+            </div>
+
+
+            <div class="artist-info">
+
+                <h3>
+                    ${escapeHtml(artist.name)}
+                </h3>
+
+                <p>
+                    ${escapeHtml(artist.genre || "")}
+                </p>
+
+                ${
+                    artist.listeners
+                        ? `
+                            <span>
+                                ${escapeHtml(artist.listeners)}
+                                månedlige lyttere
+                            </span>
+                        `
+                        : ""
+                }
+
+            </div>
+
+        `;
+
+
+        artistCard.addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    `artist.html?id=${artist.id}`;
+
+            }
+        );
+
+
+        artistsGrid.appendChild(
+            artistCard
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   ALBUMS PAGE
+========================================================= */
+
+const albumsGrid =
+    document.getElementById(
+        "albums-grid"
+    );
+
+
+if (
+    albumsGrid &&
+    typeof albums !== "undefined"
+) {
+
+    albumsGrid.innerHTML = "";
+
+
+    albums.forEach(album => {
+
+        const albumCard =
+            document.createElement("div");
+
+
+        albumCard.className =
+            "album-card";
+
+
+        albumCard.innerHTML = `
+
+            <div class="album-image">
+
+                ${
+                    album.cover
+                        ? `
+                            <img
+                                src="${assetPath(album.cover)}"
+                                alt="${escapeHtml(album.title)}"
+                            >
+                        `
+                        : ""
+                }
+
+            </div>
+
+
+            <div class="album-info">
+
+                <h3>
+                    ${escapeHtml(album.title)}
+                </h3>
+
+                <p>
+                    ${escapeHtml(album.artist)}
+                </p>
+
+                <span>
+                    ${escapeHtml(album.year || "")}
+                    •
+                    ${escapeHtml(album.genre || "")}
+                </span>
+
+            </div>
+
+        `;
+
+
+        albumCard.addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    `album.html?id=${album.id}`;
+
+            }
+        );
+
+
+        albumsGrid.appendChild(
+            albumCard
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   ARTIST DETAIL PAGE
+========================================================= */
+
+const artistDetailPage =
+    document.getElementById(
+        "artist-detail-page"
+    );
+
+
+if (
+    artistDetailPage &&
     typeof artists !== "undefined"
 ) {
 
@@ -755,130 +1278,93 @@ if (
 
 
     const artistId =
-        Number(params.get("id"));
-
-
-    const artist =
-        artists.find(
-            artist => artist.id === artistId
+        Number(
+            params.get("id")
         );
 
 
-    if (artist) {
+    const selectedArtist =
+        artists.find(
+            artist =>
+                artist.id === artistId
+        );
 
-        document.title =
-            `${artist.name} | MusikBasen`;
 
+    if (
+        selectedArtist
+    ) {
 
-        /* Artist information */
-
-        const nameElement =
+        const artistImage =
             document.getElementById(
-                "artist-name"
+                "artist-detail-image"
             );
 
-        const descriptionElement =
+        const artistName =
             document.getElementById(
-                "artist-description"
+                "artist-detail-name"
             );
 
-        const genreElement =
+        const artistGenre =
             document.getElementById(
-                "artist-genre"
+                "artist-detail-genre"
             );
 
-        const countryElement =
+        const artistListeners =
             document.getElementById(
-                "artist-country"
-            );
-
-
-        if (nameElement) {
-            nameElement.textContent =
-                artist.name;
-        }
-
-
-        if (descriptionElement) {
-            descriptionElement.textContent =
-                artist.description;
-        }
-
-
-        if (genreElement) {
-            genreElement.textContent =
-                artist.genre;
-        }
-
-
-        if (countryElement) {
-            countryElement.textContent =
-                artist.country;
-        }
-
-
-        /* Artist albums */
-
-        const artistAlbums =
-            document.getElementById(
-                "artist-albums"
+                "artist-detail-listeners"
             );
 
 
         if (
-            artistAlbums &&
-            typeof albums !== "undefined"
+            artistImage &&
+            selectedArtist.image
         ) {
 
-            albums
-                .filter(album =>
-                    album.artist === artist.name
-                )
-                .forEach(album => {
+            artistImage.src =
+                assetPath(
+                    selectedArtist.image
+                );
 
-                    const card =
-                        document.createElement("div");
-
-                    card.className =
-                        "album-card";
-
-
-                    card.innerHTML = `
-                        <div class="album-image">
-
-                            <div class="album-placeholder">
-                            </div>
-
-                        </div>
-
-                        <div class="album-info">
-
-                            <h3>
-                                ${album.title}
-                            </h3>
-
-                            <p>
-                                ${album.artist}
-                            </p>
-
-                            <span>
-                                ${album.year}
-                                •
-                                ${album.genre}
-                            </span>
-
-                        </div>
-                    `;
-
-
-                    artistAlbums.appendChild(card);
-
-                });
+            artistImage.alt =
+                selectedArtist.name;
 
         }
 
 
-        /* Artist songs */
+        if (
+            artistName
+        ) {
+
+            artistName.textContent =
+                selectedArtist.name;
+
+        }
+
+
+        if (
+            artistGenre
+        ) {
+
+            artistGenre.textContent =
+                selectedArtist.genre || "";
+
+        }
+
+
+        if (
+            artistListeners
+        ) {
+
+            artistListeners.textContent =
+                selectedArtist.listeners ||
+                "";
+
+        }
+
+
+        /*
+           ARTIST SONGS
+        */
 
         const artistSongs =
             document.getElementById(
@@ -891,659 +1377,158 @@ if (
             typeof songs !== "undefined"
         ) {
 
-            songs
-                .filter(song =>
-                    song.artist === artist.name
-                )
-                .forEach(song => {
-
-                    const card =
-                        document.createElement("div");
-
-                    card.className =
-                        "music-card";
+            artistSongs.innerHTML = "";
 
 
-                    card.innerHTML = `
-                        <div class="card-image"></div>
-
-                        <div class="card-info">
-
-                            <h3>
-                                ${song.title}
-                            </h3>
-
-                            <p>
-                                ${song.artist}
-                            </p>
-
-                            <span>
-                                ${song.album}
-                                •
-                                ${song.year}
-                            </span>
-
-                        </div>
-                    `;
+            const matchingSongs =
+                songs.filter(
+                    song =>
+                        song.artist ===
+                        selectedArtist.name
+                );
 
 
-                    artistSongs.appendChild(card);
+            matchingSongs.forEach(song => {
 
-                });
+                artistSongs.appendChild(
+                    createSongCard(song)
+                );
+
+            });
 
         }
 
-    }
 
-}
-/* ========================= */
-/* FAVORITES */
-/* ========================= */
+        /*
+           ARTIST ALBUMS
+        */
 
-function getFavorites() {
-
-    return JSON.parse(
-        localStorage.getItem("musikbasen-favorites")
-    ) || [];
-
-}
-
-
-function saveFavorites(favorites) {
-
-    localStorage.setItem(
-        "musikbasen-favorites",
-        JSON.stringify(favorites)
-    );
-
-}
-
-
-function toggleFavorite(type, id) {
-
-    const favorites = getFavorites();
-
-    const favoriteId = `${type}-${id}`;
-
-    const existingIndex =
-        favorites.indexOf(favoriteId);
-
-
-    if (existingIndex !== -1) {
-
-        favorites.splice(existingIndex, 1);
-
-    } else {
-
-        favorites.push(favoriteId);
-
-    }
-
-
-    saveFavorites(favorites);
-
-    updateFavoriteButtons();
-
-    renderFavorites();
-
-}
-
-
-function isFavorite(type, id) {
-
-    const favorites = getFavorites();
-
-    return favorites.includes(
-        `${type}-${id}`
-    );
-
-}
-
-
-
-/* ========================= */
-/* FAVORITES PAGE */
-/* ========================= */
-
-function renderFavorites() {
-
-    const favoritesGrid =
-        document.getElementById(
-            "favorites-grid"
-        );
-
-
-    if (!favoritesGrid) {
-        return;
-    }
-
-
-    const favorites =
-        getFavorites();
-
-
-    if (favorites.length === 0) {
-
-        favoritesGrid.innerHTML = `
-
-            <div class="empty-favorites">
-
-                <h3>
-                    Ingen favoritter endnu
-                </h3>
-
-                <p>
-                    Tryk på ♡ på en sang,
-                    et album eller en kunstner
-                    for at gemme den her.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    favoritesGrid.innerHTML = "";
-
-
-    favorites.forEach(favorite => {
-
-        const [type, id] =
-            favorite.split("-");
-
-
-        const card =
-            document.createElement("div");
-
-
-        card.className =
-            "music-card";
-
-
-        card.innerHTML = `
-
-            <div class="card-image"></div>
-
-            <div class="card-info">
-
-                <span>
-                    ${type}
-                </span>
-
-                <h3>
-                    Favorit #${id}
-                </h3>
-
-            </div>
-
-        `;
-
-
-        favoritesGrid.appendChild(card);
-
-    });
-
-}
-
-
-/* ========================= */
-/* START FAVORITES */
-/* ========================= */
-
-renderFavorites();
-
-
-// =========================
-// MUSIC PLAYER
-// =========================
-
-const musicPlayer = document.getElementById("music-player");
-const playerPlay = document.getElementById("player-play");
-const playerProgress = document.getElementById("player-progress-bar");
-const playerVolume = document.getElementById("player-volume-bar");
-
-let currentAudio = null;
-let isPlaying = false;
-
-
-// PLAY / PAUSE
-
-if (playerPlay) {
-
-    playerPlay.addEventListener("click", () => {
-
-        if (!currentAudio) {
-            return;
-        }
-
-        if (isPlaying) {
-
-            currentAudio.pause();
-            isPlaying = false;
-
-            playerPlay.textContent = "▶";
-
-        } else {
-
-            currentAudio.play();
-            isPlaying = true;
-
-            playerPlay.textContent = "⏸";
-
-        }
-
-    });
-
-}
-
-
-// VOLUME
-
-if (playerVolume) {
-
-    playerVolume.addEventListener("input", () => {
-
-        if (currentAudio) {
-            currentAudio.volume = playerVolume.value;
-        }
-
-    });
-
-}
-// =========================
-// PLAYLIST DETAIL
-// =========================
-
-if (
-    playlistDetail &&
-    playlistList &&
-    typeof playlists !== "undefined"
-) {
-
-    const params =
-        new URLSearchParams(window.location.search);
-
-    const playlistId =
-        Number(params.get("id"));
-
-    const selectedPlaylist =
-        playlists.find(
-            playlist => playlist.id === playlistId
-        );
-
-    if (selectedPlaylist) {
-
-        playlistList.style.display = "none";
-        playlistDetail.style.display = "block";
-
-        document.getElementById("playlist-name").textContent =
-            selectedPlaylist.name;
-
-        document.getElementById("playlist-description").textContent =
-            selectedPlaylist.description;
-            const playlistCreator =
-    document.getElementById(
-        "playlist-creator"
-    );
-
-const playlistSongCount =
-    document.getElementById(
-        "playlist-song-count"
-    );
-
-if (playlistCreator) {
-
-    playlistCreator.textContent =
-        selectedPlaylist.creator;
-
-}
-
-if (playlistSongCount) {
-
-    playlistSongCount.textContent =
-        `${selectedPlaylist.songs.length} sange`;
-
-}
-            const playlistSongs =
-    
-            document.getElementById("playlist-songs");
-
-if (
-    playlistSongs &&
-    typeof songs !== "undefined"
-) {
-
-    playlistSongs.innerHTML = "";
-
-    const matchingSongs =
-        songs.filter(song =>
-            selectedPlaylist.songs.includes(song.id)
-        );
-
-    matchingSongs.forEach(song => {
-
-        const songCard =
-            document.createElement("div");
-
-        songCard.className =
-    "playlist-song";
-
-        songCard.innerHTML = `
-            <div class="card-image"></div>
-
-            <div class="card-info">
-
-                <h3>${song.title}</h3>
-
-                <p>${song.artist}</p>
-
-                <span>
-                    ${song.album} • ${song.year}
-                </span>
-
-            </div>
-        `;
-
-        playlistSongs.appendChild(songCard);
-
-    });
-
-}
-
-    }
-
-}
-// =========================
-// PROFILE PLAYLISTS
-// =========================
-
-const profilePlaylists =
-    document.getElementById("profile-playlists");
-
-if (
-    profilePlaylists &&
-    typeof playlists !== "undefined"
-) {
-
-    playlists.forEach(playlist => {
-
-        const playlistCard =
-            document.createElement("div");
-
-        playlistCard.className =
-            "playlist-card";
-
-        playlistCard.innerHTML = `
-            <div class="playlist-image">
-                <span>▶</span>
-            </div>
-
-            <div class="playlist-info">
-                <h3>${playlist.name}</h3>
-
-                <p>${playlist.description}</p>
-
-                <span>
-                    ${playlist.songs.length} sange
-                </span>
-            </div>
-        `;
-
-        profilePlaylists.appendChild(playlistCard);
-
-    });
-
-}
-// =========================
-// RANKINGS
-// =========================
-
-const topArtists =
-    document.getElementById("top-artists");
-
-if (topArtists) {
-
-    const artistRanking = [
-        { name: "Gilli", value: "1,2 mio. streams" },
-        { name: "Branco", value: "980.000 streams" },
-        { name: "Kesi", value: "870.000 streams" },
-        { name: "Ude Af Kontrol", value: "760.000 streams" },
-        { name: "Sivas", value: "690.000 streams" },
-        { name: "Benny Jamz", value: "610.000 streams" }
-    ];
-
-    artistRanking.forEach((artist, index) => {
-
-        const item =
-            document.createElement("div");
-
-        item.className = "ranking-item";
-
-        item.innerHTML = `
-            <div class="ranking-number">
-    ${
-        index === 0
-            ? "🥇"
-            : index === 1
-            ? "🥈"
-            : index === 2
-            ? "🥉"
-            : `#${index + 1}`
-    }
-</div>
-
-            <div class="ranking-info">
-                <strong>${artist.name}</strong>
-                <span>Kunstner</span>
-            </div>
-
-            <div class="ranking-value">
-                ${artist.value}
-            </div>
-        `;
-
-        topArtists.appendChild(item);
-
-    });
-
-}
-/* ========================= */
-/* TOP SONGS */
-/* ========================= */
-
-const topSongs =
-    document.getElementById("top-songs");
-
-if (
-    topSongs &&
-    typeof songs !== "undefined"
-) {
-
-    topSongs.innerHTML = "";
-
-    songs
-        .slice(0, 10)
-        .forEach((song, index) => {
-
-            const rankingItem =
-                document.createElement("div");
-
-            rankingItem.className =
-                "ranking-item";
-
-            rankingItem.innerHTML = `
-                <div class="ranking-position">
-                    ${
-                        index === 0
-                            ? "🥇"
-                            : index === 1
-                            ? "🥈"
-                            : index === 2
-                            ? "🥉"
-                            : index + 1
-                    }
-                </div>
-
-                <div class="ranking-info">
-
-                    <h3>${song.title}</h3>
-
-                    <p>
-                        ${song.artist} • ${song.album}
-                    </p>
-
-                </div>
-            `;
-
-            rankingItem.addEventListener(
-                "click",
-                () => {
-
-                    selectSong(song);
-
-                }
+        const artistAlbums =
+            document.getElementById(
+                "artist-albums"
             );
 
-            topSongs.appendChild(
-                rankingItem
-            );
-
-        });
-
-}
-// =========================
-// FAVORITES BUTTON
-// =========================
-
-const favoritesButton =
-    document.getElementById("favorites-button");
-
-if (favoritesButton) {
-
-    favoritesButton.addEventListener("click", () => {
-
-        window.location.href = "pages/favorites.html";
-
-    });
-
-}
-// =========================
-// MUSIC PLAYER
-// =========================
-
-let currentSongIndex = -1;
-
-function selectSong(song) {
-
-const playerPrev =
-    document.getElementById("player-prev");
-
-const playerNext =
-    document.getElementById("player-next");
-
-if (playerPrev) {
-
-    playerPrev.addEventListener("click", () => {
-
-        if (currentSongIndex <= 0) {
-
-            currentSongIndex =
-                songs.length - 1;
-
-        } else {
-
-            currentSongIndex--;
-
-        }
-
-          selectSong(
-            songs[currentSongIndex]
-        );
-
-    });
-
-}
-
-
-    if (playerNext) {
-
-    playerNext.addEventListener("click", () => {
 
         if (
-            currentSongIndex >=
-            songs.length - 1
+            artistAlbums &&
+            typeof albums !== "undefined"
         ) {
 
-            currentSongIndex = 0;
+            artistAlbums.innerHTML = "";
 
-        } else {
 
-            currentSongIndex++;
+            const matchingAlbums =
+                albums.filter(
+                    album =>
+                        album.artist ===
+                        selectedArtist.name
+                );
+
+
+            matchingAlbums.forEach(album => {
+
+                const albumCard =
+                    document.createElement("div");
+
+
+                albumCard.className =
+                    "album-card";
+
+
+                albumCard.innerHTML = `
+
+                    <div class="album-image">
+
+                        ${
+                            album.cover
+                                ? `
+                                    <img
+                                        src="${assetPath(album.cover)}"
+                                        alt="${escapeHtml(album.title)}"
+                                    >
+                                `
+                                : ""
+                        }
+
+                    </div>
+
+
+                    <div class="album-info">
+
+                        <h3>
+                            ${escapeHtml(album.title)}
+                        </h3>
+
+                        <p>
+                            ${escapeHtml(album.year || "")}
+                        </p>
+
+                    </div>
+
+                `;
+
+
+                albumCard.addEventListener(
+                    "click",
+                    () => {
+
+                        window.location.href =
+                            `album.html?id=${album.id}`;
+
+                    }
+                );
+
+
+                artistAlbums.appendChild(
+                    albumCard
+                );
+
+            });
 
         }
 
-        selectSong(
-            songs[currentSongIndex]
-        );
-
-    });
+    }
 
 }
 
-let currentVolume = 1;
 
-if (playerVolume) {
-
-    playerVolume.addEventListener("input", () => {
-
-        currentVolume =
-            Number(playerVolume.value);
-
-    });
-
-}
-const playerProgressBar =
-    document.getElementById("player-progress-bar");
-
-if (playerProgressBar) {
-
-    playerProgressBar.addEventListener("input", () => {
-
-        // Klar til rigtig lyd senere
-
-    });
-
-}
-/* ========================= */
-/* ALBUM DETAIL PAGE */
-/* ========================= */
+/* =========================================================
+   ALBUM DETAIL PAGE
+========================================================= */
 
 const albumDetailPage =
-    document.getElementById("album-detail-page");
+    document.getElementById(
+        "album-detail-page"
+    );
+
 
 if (
     albumDetailPage &&
     typeof albums !== "undefined"
 ) {
 
-    const albumParams =
+    const params =
         new URLSearchParams(
             window.location.search
         );
 
-    const selectedAlbumId =
-        Number(albumParams.get("id"));
+
+    const albumId =
+        Number(
+            params.get("id")
+        );
+
 
     const selectedAlbum =
         albums.find(
-            album => album.id === selectedAlbumId
+            album =>
+                album.id === albumId
         );
 
-    if (selectedAlbum) {
+
+    if (
+        selectedAlbum
+    ) {
 
         const albumImage =
             document.getElementById(
@@ -1566,60 +1551,93 @@ if (
             );
 
 
-        if (albumImage) {
+        if (
+            albumImage &&
+            selectedAlbum.cover
+        ) {
 
             albumImage.src =
-                "../" + selectedAlbum.cover;
+                assetPath(
+                    selectedAlbum.cover
+                );
 
             albumImage.alt =
-                selectedAlbum.title +
-                " – " +
-                selectedAlbum.artist;
+                `${selectedAlbum.title} – ${selectedAlbum.artist}`;
 
         }
 
 
-        if (albumTitle) {
+        if (
+            albumTitle
+        ) {
 
             albumTitle.textContent =
                 selectedAlbum.title;
 
         }
 
-        
 
-    if (albumArtist) {
+        if (
+            albumArtist
+        ) {
 
-    albumArtist.textContent =
-        selectedAlbum.artist;
+            albumArtist.textContent =
+                selectedAlbum.artist;
 
-    const selectedArtist =
-        artists.find(
-            artist =>
-                artist.name ===
-                selectedAlbum.artist
-        );
 
-    if (selectedArtist) {
+            if (
+                typeof artists !== "undefined"
+            ) {
 
-        albumArtist.href =
-            `artists.html?id=${selectedArtist.id}`;
+                const selectedArtist =
+                    artists.find(
+                        artist =>
+                            artist.name ===
+                            selectedAlbum.artist
+                    );
 
-    }
 
-}
+                if (
+                    selectedArtist
+                ) {
+
+                    albumArtist.href =
+                        `artist.html?id=${selectedArtist.id}`;
+
+                }
+
+            }
+
+        }
+
+
+        if (
+            albumMeta
+        ) {
 
             albumMeta.textContent =
-                selectedAlbum.year +
-                " • " +
-                selectedAlbum.genre;
-                        const albumSongs =
-            document.getElementById("album-songs");
+                `${selectedAlbum.year} • ${selectedAlbum.genre}`;
+
+        }
+
+
+        /*
+           ALBUM SONGS
+        */
+
+        const albumSongs =
+            document.getElementById(
+                "album-songs"
+            );
+
 
         if (
             albumSongs &&
             typeof songs !== "undefined"
         ) {
+
+            albumSongs.innerHTML = "";
+
 
             const matchingSongs =
                 songs.filter(
@@ -1628,543 +1646,334 @@ if (
                         selectedAlbum.title
                 );
 
-            albumSongs.innerHTML = "";
 
             matchingSongs.forEach(song => {
 
-                const songCard =
-                    document.createElement("div");
-
-                songCard.className =
-                    "music-card";
-
-                songCard.innerHTML = `
-    <div class="card-image"></div>
-
-    <div class="card-info">
-
-        <h3>${song.title}</h3>
-
-        <p>${song.artist}</p>
-
-        <span>
-            ${song.year} • ${song.genre}
-        </span>
-
-    </div>
-
-    <button
-        class="favorite-song-button"
-        data-song-id="${song.id}"
-    >
-        ♡
-    </button>
-`;
-const favoriteButton =
-    songCard.querySelector(
-        ".favorite-song-button"
-    );
-
-let savedFavorites =
-    JSON.parse(
-        localStorage.getItem("favorites")
-    ) || [];
-
-if (savedFavorites.includes(song.id)) {
-
-    favoriteButton.textContent = "♥";
-
-}
-
-favoriteButton.addEventListener(
-    "click",
-    (event) => {
-
-        event.stopPropagation();
-
-        let favorites =
-            JSON.parse(
-                localStorage.getItem("favorites")
-            ) || [];
-
-        if (favorites.includes(song.id)) {
-
-            favorites =
-                favorites.filter(
-                    id => id !== song.id
+                albumSongs.appendChild(
+                    createSongCard(song)
                 );
 
-            favoriteButton.textContent = "♡";
-
-        } else {
-
-            favorites.push(song.id);
-
-            favoriteButton.textContent = "♥";
+            });
 
         }
 
-        localStorage.setItem(
-            "favorites",
-            JSON.stringify(favorites)
-        );
-
     }
-);
-                songCard.addEventListener(
-                    "click",
-                    () => {
 
-                        selectSong(song);
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+const searchInput =
+    document.getElementById(
+        "search-input"
+    );
+
+
+const searchResults =
+    document.getElementById(
+        "search-results"
+    );
+
+
+if (
+    searchInput &&
+    searchResults
+) {
+
+    searchInput.addEventListener(
+        "input",
+        () => {
+
+            const query =
+                searchInput.value
+                    .trim()
+                    .toLowerCase();
+
+
+            searchResults.innerHTML = "";
+
+
+            if (
+                query.length < 1
+            ) {
+
+                searchResults.style.display =
+                    "none";
+
+                return;
+
+            }
+
+
+            const results = [];
+
+
+            /*
+               SONG RESULTS
+            */
+
+            if (
+                typeof songs !== "undefined"
+            ) {
+
+                songs.forEach(song => {
+
+                    const searchableText =
+                        `${song.title} ${song.artist} ${song.album || ""}`
+                            .toLowerCase();
+
+
+                    if (
+                        searchableText.includes(
+                            query
+                        )
+                    ) {
+
+                        results.push({
+                            type: "song",
+                            data: song
+                        });
 
                     }
-                );
 
-                albumSongs.appendChild(songCard);
+                });
 
-                           });
+            }
 
+
+            /*
+               ARTIST RESULTS
+            */
+
+            if (
+                typeof artists !== "undefined"
+            ) {
+
+                artists.forEach(artist => {
+
+                    const searchableText =
+                        `${artist.name} ${artist.genre || ""}`
+                            .toLowerCase();
+
+
+                    if (
+                        searchableText.includes(
+                            query
+                        )
+                    ) {
+
+                        results.push({
+                            type: "artist",
+                            data: artist
+                        });
+
+                    }
+
+                });
+
+            }
+
+
+            /*
+               ALBUM RESULTS
+            */
+
+            if (
+                typeof albums !== "undefined"
+            ) {
+
+                albums.forEach(album => {
+
+                    const searchableText =
+                        `${album.title} ${album.artist}`
+                            .toLowerCase();
+
+
+                    if (
+                        searchableText.includes(
+                            query
+                        )
+                    ) {
+
+                        results.push({
+                            type: "album",
+                            data: album
+                        });
+
+                    }
+
+                });
+
+            }
+
+
+            /*
+               MAX 10 RESULTATER
+            */
+
+            results
+                .slice(0, 10)
+                .forEach(result => {
+
+                    const resultItem =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    resultItem.className =
+                        "search-result-item";
+
+
+                    if (
+                        result.type === "song"
+                    ) {
+
+                        resultItem.innerHTML = `
+                            <strong>
+                                ${escapeHtml(
+                                    result.data.title
+                                )}
+                            </strong>
+
+                            <span>
+                                Sang •
+                                ${escapeHtml(
+                                    result.data.artist
+                                )}
+                            </span>
+                        `;
+
+
+                        resultItem.addEventListener(
+                            "click",
+                            () => {
+
+                                selectSong(
+                                    result.data
+                                );
+
+                                searchResults.style.display =
+                                    "none";
+
+                            }
+                        );
+
+                    }
+
+
+                    if (
+                        result.type === "artist"
+                    ) {
+
+                        resultItem.innerHTML = `
+                            <strong>
+                                ${escapeHtml(
+                                    result.data.name
+                                )}
+                            </strong>
+
+                            <span>
+                                Kunstner
+                            </span>
+                        `;
+
+
+                        resultItem.addEventListener(
+                            "click",
+                            () => {
+
+                                window.location.href =
+                                    pageUrl(
+                                        `artist.html?id=${result.data.id}`
+                                    );
+
+                            }
+                        );
+
+                    }
+
+
+                    if (
+                        result.type === "album"
+                    ) {
+
+                        resultItem.innerHTML = `
+                            <strong>
+                                ${escapeHtml(
+                                    result.data.title
+                                )}
+                            </strong>
+
+                            <span>
+                                Album •
+                                ${escapeHtml(
+                                    result.data.artist
+                                )}
+                            </span>
+                        `;
+
+
+                        resultItem.addEventListener(
+                            "click",
+                            () => {
+
+                                window.location.href =
+                                    pageUrl(
+                                        `album.html?id=${result.data.id}`
+                                    );
+
+                            }
+                        );
+
+                    }
+
+
+                    searchResults.appendChild(
+                        resultItem
+                    );
+
+                });
+
+
+            searchResults.style.display =
+                results.length > 0
+                    ? "block"
+                    : "none";
 
         }
-
-    }
+    );
 
 }
 
-/* ========================= */
-/* PROFILE FAVORITES */
-/* ========================= */
 
-const profileFavorites =
+/* =========================================================
+   FAVORITES BUTTON I HEADER
+========================================================= */
+
+const favoritesButton =
     document.getElementById(
-        "profile-favorites"
+        "favorites-button"
     );
+
 
 if (
-    profileFavorites &&
-    typeof songs !== "undefined"
+    favoritesButton
 ) {
 
-    const favorites =
-        JSON.parse(
-            localStorage.getItem("favorites")
-        ) || [];
-
-    profileFavorites.innerHTML = "";
-
-    const favoriteSongs =
-        songs.filter(
-            song =>
-                favorites.includes(song.id)
-        );
-
-    if (favoriteSongs.length === 0) {
-
-        profileFavorites.innerHTML = `
-            <p class="empty-message">
-                Du har ingen favoritsange endnu.
-            </p>
-        `;
-
-    } else {
-
-        favoriteSongs.forEach(song => {
-
-            const songCard =
-                document.createElement("div");
-
-            songCard.className =
-                "music-card";
-
-            songCard.innerHTML = `
-                <div class="card-image"></div>
-
-                <div class="card-info">
-
-                    <h3>${song.title}</h3>
-
-                    <p>${song.artist}</p>
-
-                    <span>
-                        ${song.album} •
-                        ${song.year}
-                    </span>
-
-                </div>
-            `;
-
-            songCard.addEventListener(
-                "click",
-                () => {
-
-                    selectSong(song);
-
-                }
-            );
-
-            profileFavorites.appendChild(
-                songCard
-            );
-
-        });
-
-    }
-
-}
-
-/* ========================= */
-/* PROFILE PLAY HISTORY */
-/* ========================= */
-
-const profileHistory =
-    document.getElementById(
-        "profile-history"
-    );
-
-if (
-    profileHistory &&
-    typeof songs !== "undefined"
-) {
-
-    const playHistory =
-        JSON.parse(
-            localStorage.getItem("playHistory")
-        ) || [];
-
-    profileHistory.innerHTML = "";
-
-    const historySongs =
-        playHistory
-            .map(songId =>
-                songs.find(
-                    song =>
-                        song.id === songId
-                )
-            )
-            .filter(song => song);
-
-    if (historySongs.length === 0) {
-
-        profileHistory.innerHTML = `
-            <p class="empty-message">
-                Du har ikke afspillet nogen sange endnu.
-            </p>
-        `;
-
-    } else {
-
-        historySongs.forEach(song => {
-
-            const songCard =
-                document.createElement("div");
-
-            songCard.className =
-                "music-card";
-
-            songCard.innerHTML = `
-                <div class="card-image"></div>
-
-                <div class="card-info">
-
-                    <h3>${song.title}</h3>
-
-                    <p>${song.artist}</p>
-
-                    <span>
-                        ${song.album} •
-                        ${song.year}
-                    </span>
-
-                </div>
-            `;
-
-            songCard.addEventListener(
-                "click",
-                () => {
-
-                    selectSong(song);
-
-                }
-            );
-
-            profileHistory.appendChild(
-                songCard
-            );
-
-        });
-
-    }
-
-}
-/* ========================= */
-/* PROFILE STATISTICS */
-/* ========================= */
-
-const statFavorites =
-    document.getElementById(
-        "stat-favorites"
-    );
-
-const statPlayed =
-    document.getElementById(
-        "stat-played"
-    );
-
-const statArtists =
-    document.getElementById(
-        "stat-artists"
-    );
-
-if (
-    statFavorites &&
-    statPlayed &&
-    statArtists &&
-    typeof songs !== "undefined"
-) {
-
-    const favorites =
-        JSON.parse(
-            localStorage.getItem("favorites")
-        ) || [];
-
-    const playHistory =
-        JSON.parse(
-            localStorage.getItem("playHistory")
-        ) || [];
-
-    const playedSongs =
-        playHistory
-            .map(songId =>
-                songs.find(
-                    song =>
-                        song.id === songId
-                )
-            )
-            .filter(song => song);
-
-    const uniqueArtists =
-        [
-            ...new Set(
-                playedSongs.map(
-                    song => song.artist
-                )
-            )
-        ];
-
-    statFavorites.textContent =
-        favorites.length;
-
-    statPlayed.textContent =
-        playHistory.length;
-
-    statArtists.textContent =
-        uniqueArtists.length;
-         }
-
- }
-/* ========================= */
-/* CREATE USER PLAYLIST */
-/* ========================= */
-
-const createPlaylistButton =
-    document.getElementById(
-        "create-playlist-button"
-    );
-
-if (createPlaylistButton) {
-
-    createPlaylistButton.addEventListener(
+    favoritesButton.addEventListener(
         "click",
         () => {
 
-            const playlistName =
-                prompt(
-                    "Hvad skal din playlist hedde?"
+            window.location.href =
+                pageUrl(
+                    "favorites.html"
                 );
-
-            if (
-                !playlistName ||
-                playlistName.trim() === ""
-            ) {
-                return;
-            }
-
-            const userPlaylists =
-                JSON.parse(
-                    localStorage.getItem(
-                        "userPlaylists"
-                    )
-                ) || [];
-
-            const newPlaylist = {
-
-                id: Date.now(),
-
-                name:
-                    playlistName.trim(),
-
-                description:
-                    "Din egen playlist",
-
-                creator:
-                    "Dig",
-
-                songs: []
-
-            };
-
-            userPlaylists.push(
-                newPlaylist
-            );
-
-            localStorage.setItem(
-                "userPlaylists",
-                JSON.stringify(
-                    userPlaylists
-                )
-            );
-
-            window.location.reload();
 
         }
     );
-
-}
-/* ========================= */
-/* PROFILE USER PLAYLISTS */
-/* ========================= */
-
-if (profilePlaylists) {
-
-    const userPlaylists =
-        JSON.parse(
-            localStorage.getItem(
-                "userPlaylists"
-            )
-        ) || [];
-
-    profilePlaylists.innerHTML = "";
-
-    if (userPlaylists.length === 0) {
-
-        profilePlaylists.innerHTML = `
-            <p class="empty-message">
-                Du har ikke oprettet nogen playlister endnu.
-            </p>
-        `;
-
-    } else {
-
-        userPlaylists.forEach(playlist => {
-
-            const playlistCard =
-                document.createElement("div");
-
-            playlistCard.className =
-                "playlist-card";
-
-            playlistCard.innerHTML = `
-                <div class="playlist-image">
-                    <span>▶</span>
-                </div>
-
-                <div class="playlist-info">
-
-                    <h3>${playlist.name}</h3>
-
-                    <p>${playlist.description}</p>
-
-                    <span>
-                        ${playlist.songs.length}
-                        sange • ${playlist.creator}
-                    </span>
-
-                </div>
-            `;
-            playlistCard.addEventListener(
-    "click",
-    () => {
-
-        window.location.href =
-            `playlist.html?id=${playlist.id}&user=true`;
-
-    }
-);
-            profilePlaylists.appendChild(
-                playlistCard
-            );
-
-        });
-
-    }
-
-}
-/* ========================= */
-/* USER PLAYLIST DETAIL */
-/* ========================= */
-
-const userPlaylistDetail =
-    document.getElementById(
-        "playlist-detail"
-    );
-
-if (userPlaylistDetail) {
-
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
-
-    const isUserPlaylist =
-        params.get("user") === "true";
-
-    if (isUserPlaylist) {
-
-        const playlistId =
-            Number(params.get("id"));
-
-        const userPlaylists =
-            JSON.parse(
-                localStorage.getItem(
-                    "userPlaylists"
-                )
-            ) || [];
-
-        const selectedPlaylist =
-            userPlaylists.find(
-                playlist =>
-                    playlist.id === playlistId
-            );
-
-        if (selectedPlaylist) {
-
-            const playlistList =
-                document.getElementById(
-                    "playlists"
-                );
-
-            if (playlistList) {
-
-                playlistList.style.display =
-                    "none";
-
-            }
-
-            userPlaylistDetail.style.display =
-                "block";
-
-            document.getElementById(
-                "playlist-name"
-            ).textContent =
-                selectedPlaylist.name;
-
-            document.getElementById(
-                "playlist-description"
-            ).textContent =
-                selectedPlaylist.description;
-
-        }
-
-    }
 
 }
