@@ -1977,3 +1977,4 @@ if (
     );
 
 }
+console.log("MusikBasen nye script.js er loaded");
