@@ -1154,7 +1154,7 @@ if (
             () => {
 
                 window.location.href =
-                    `artist.html?id=${artist.id}`;
+                    artists.html?id=${artist.id}
 
             }
         );
@@ -2870,7 +2870,7 @@ if (
 
                         window.location.href =
                             pageUrl(
-                                `artist.html?id=${artist.id}`
+                                artists.html?id=${artist.id}
                             );
 
                     }
