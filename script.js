@@ -1977,4 +1977,1512 @@ if (
     );
 
 }
-console.log("MusikBasen nye script.js er loaded");
+/* =========================================================
+   MUSIKBASEN
+   DEL 3/4
+   PLAYLISTER + BRUGER-PLAYLISTER
+========================================================= */
+
+
+/* =========================================================
+   OFFICIELLE MUSIKBASEN PLAYLISTER
+========================================================= */
+
+const playlistsGrid =
+    document.getElementById(
+        "playlists-grid"
+    );
+
+
+if (
+    playlistsGrid &&
+    typeof playlists !== "undefined"
+) {
+
+    playlistsGrid.innerHTML = "";
+
+
+    playlists.forEach(playlist => {
+
+        const playlistCard =
+            document.createElement("div");
+
+
+        playlistCard.className =
+            "playlist-card";
+
+
+        playlistCard.innerHTML = `
+
+            <div
+                class="playlist-image playlist-${escapeHtml(
+                    playlist.color || "default"
+                )}"
+            >
+
+                <span>▶</span>
+
+            </div>
+
+
+            <div class="playlist-info">
+
+                <h3>
+                    ${escapeHtml(
+                        playlist.name
+                    )}
+                </h3>
+
+                <p>
+                    ${escapeHtml(
+                        playlist.description
+                    )}
+                </p>
+
+                <span>
+                    ${
+                        Array.isArray(
+                            playlist.songs
+                        )
+                            ? playlist.songs.length
+                            : 0
+                    }
+                    sange
+                    •
+                    ${escapeHtml(
+                        playlist.creator ||
+                        "MusikBasen"
+                    )}
+                </span>
+
+            </div>
+
+        `;
+
+
+        playlistCard.addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    pageUrl(
+                        `playlists.html?id=${playlist.id}`
+                    );
+
+            }
+        );
+
+
+        playlistsGrid.appendChild(
+            playlistCard
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   USER PLAYLIST HELPERS
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   HENT BRUGERENS PLAYLISTER
+--------------------------------------------------------- */
+
+function getUserPlaylists() {
+
+    return JSON.parse(
+        localStorage.getItem(
+            "userPlaylists"
+        )
+    ) || [];
+
+}
+
+
+/* ---------------------------------------------------------
+   GEM BRUGERENS PLAYLISTER
+--------------------------------------------------------- */
+
+function saveUserPlaylists(
+    userPlaylists
+) {
+
+    localStorage.setItem(
+        "userPlaylists",
+        JSON.stringify(
+            userPlaylists
+        )
+    );
+
+}
+
+
+/* =========================================================
+   USER PLAYLISTS PÅ PROFIL
+========================================================= */
+
+const profilePlaylists =
+    document.getElementById(
+        "profile-playlists"
+    );
+
+
+if (
+    profilePlaylists
+) {
+
+    const userPlaylists =
+        getUserPlaylists();
+
+
+    profilePlaylists.innerHTML =
+        "";
+
+
+    if (
+        userPlaylists.length === 0
+    ) {
+
+        profilePlaylists.innerHTML = `
+
+            <p class="empty-message">
+                Du har ikke oprettet nogen
+                playlister endnu.
+            </p>
+
+        `;
+
+    } else {
+
+        userPlaylists.forEach(
+            playlist => {
+
+                const playlistCard =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                playlistCard.className =
+                    "playlist-card";
+
+
+                playlistCard.innerHTML = `
+
+                    <div
+                        class="playlist-image"
+                    >
+
+                        <span>▶</span>
+
+                    </div>
+
+
+                    <div
+                        class="playlist-info"
+                    >
+
+                        <h3>
+                            ${escapeHtml(
+                                playlist.name
+                            )}
+                        </h3>
+
+                        <p>
+                            ${escapeHtml(
+                                playlist.description ||
+                                ""
+                            )}
+                        </p>
+
+                        <span>
+                            ${
+                                Array.isArray(
+                                    playlist.songs
+                                )
+                                    ? playlist.songs.length
+                                    : 0
+                            }
+                            sange
+                            •
+                            Din playlist
+                        </span>
+
+                    </div>
+
+                `;
+
+
+                playlistCard.addEventListener(
+                    "click",
+                    () => {
+
+                        window.location.href =
+                            pageUrl(
+                                `playlists.html?id=${playlist.id}&user=true`
+                            );
+
+                    }
+                );
+
+
+                profilePlaylists.appendChild(
+                    playlistCard
+                );
+
+            }
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PLAYLIST DETAIL
+========================================================= */
+
+const playlistDetail =
+    document.getElementById(
+        "playlist-detail"
+    );
+
+
+const playlistList =
+    document.getElementById(
+        "playlists"
+    );
+
+
+if (
+    playlistDetail &&
+    playlistList
+) {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const selectedPlaylistId =
+        Number(
+            params.get("id")
+        );
+
+
+    const isUserPlaylist =
+        params.get("user") === "true";
+
+
+    /*
+       USER PLAYLIST
+    */
+
+    if (
+        isUserPlaylist &&
+        selectedPlaylistId
+    ) {
+
+        const userPlaylists =
+            getUserPlaylists();
+
+
+        const selectedPlaylist =
+            userPlaylists.find(
+                playlist =>
+                    playlist.id ===
+                    selectedPlaylistId
+            );
+
+
+        if (
+            selectedPlaylist
+        ) {
+
+            renderPlaylistDetail(
+                selectedPlaylist,
+                true
+            );
+
+        }
+
+    }
+
+
+    /*
+       OFFICIEL PLAYLIST
+    */
+
+    else if (
+        selectedPlaylistId &&
+        typeof playlists !== "undefined"
+    ) {
+
+        const selectedPlaylist =
+            playlists.find(
+                playlist =>
+                    playlist.id ===
+                    selectedPlaylistId
+            );
+
+
+        if (
+            selectedPlaylist
+        ) {
+
+            renderPlaylistDetail(
+                selectedPlaylist,
+                false
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER PLAYLIST DETAIL
+========================================================= */
+
+function renderPlaylistDetail(
+    playlist,
+    isUserPlaylist
+) {
+
+    if (
+        !playlist
+    ) {
+
+        return;
+
+    }
+
+
+    const playlistDetail =
+        document.getElementById(
+            "playlist-detail"
+        );
+
+
+    const playlistList =
+        document.getElementById(
+            "playlists"
+        );
+
+
+    if (
+        !playlistDetail
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        playlistList
+    ) {
+
+        playlistList.style.display =
+            "none";
+
+    }
+
+
+    playlistDetail.style.display =
+        "block";
+
+
+    const playlistName =
+        document.getElementById(
+            "playlist-name"
+        );
+
+
+    const playlistDescription =
+        document.getElementById(
+            "playlist-description"
+        );
+
+
+    if (
+        playlistName
+    ) {
+
+        playlistName.textContent =
+            playlist.name;
+
+    }
+
+
+    if (
+        playlistDescription
+    ) {
+
+        playlistDescription.textContent =
+            playlist.description ||
+            "";
+
+    }
+
+
+    const playlistSongs =
+        document.getElementById(
+            "playlist-songs"
+        );
+
+
+    if (
+        !playlistSongs
+    ) {
+
+        return;
+
+    }
+
+
+    playlistSongs.innerHTML =
+        "";
+
+
+    if (
+        !Array.isArray(
+            playlist.songs
+        ) ||
+        typeof songs === "undefined"
+    ) {
+
+        playlistSongs.innerHTML = `
+
+            <p class="empty-message">
+                Denne playlist har ingen sange endnu.
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    const playlistSongList =
+        playlist.songs
+            .map(
+                songId =>
+                    songs.find(
+                        song =>
+                            song.id ===
+                            songId
+                    )
+            )
+            .filter(
+                song => song
+            );
+
+
+    if (
+        playlistSongList.length === 0
+    ) {
+
+        playlistSongs.innerHTML = `
+
+            <p class="empty-message">
+                Denne playlist har ingen sange endnu.
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    playlistSongList.forEach(
+        song => {
+
+            const songCard =
+                createSongCard(song);
+
+
+            playlistSongs.appendChild(
+                songCard
+            );
+
+        }
+    );
+
+
+    /*
+       Hvis det er brugerens playlist,
+       tilføjer vi en lille markering.
+    */
+
+    if (
+        isUserPlaylist
+    ) {
+
+        playlistDetail.classList.add(
+            "user-playlist-detail"
+        );
+
+    } else {
+
+        playlistDetail.classList.remove(
+            "user-playlist-detail"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   OPRET NY BRUGER-PLAYLIST
+========================================================= */
+
+function createUserPlaylist(
+    name,
+    description = ""
+) {
+
+    const cleanName =
+        String(
+            name || ""
+        ).trim();
+
+
+    if (
+        !cleanName
+    ) {
+
+        return null;
+
+    }
+
+
+    const userPlaylists =
+        getUserPlaylists();
+
+
+    const newPlaylist = {
+
+        id:
+            Date.now(),
+
+        name:
+            cleanName,
+
+        description:
+            String(
+                description || ""
+            ).trim(),
+
+        creator:
+            "Dig",
+
+        songs:
+            [],
+
+        color:
+            "user"
+
+    };
+
+
+    userPlaylists.push(
+        newPlaylist
+    );
+
+
+    saveUserPlaylists(
+        userPlaylists
+    );
+
+
+    return newPlaylist;
+
+}
+
+
+/* =========================================================
+   TILFØJ SANG TIL BRUGER-PLAYLIST
+========================================================= */
+
+function addSongToUserPlaylist(
+    playlistId,
+    songId
+) {
+
+    const userPlaylists =
+        getUserPlaylists();
+
+
+    const playlist =
+        userPlaylists.find(
+            item =>
+                item.id ===
+                playlistId
+        );
+
+
+    if (
+        !playlist
+    ) {
+
+        return false;
+
+    }
+
+
+    if (
+        !Array.isArray(
+            playlist.songs
+        )
+    ) {
+
+        playlist.songs = [];
+
+    }
+
+
+    if (
+        playlist.songs.includes(
+            songId
+        )
+    ) {
+
+        return false;
+
+    }
+
+
+    playlist.songs.push(
+        songId
+    );
+
+
+    saveUserPlaylists(
+        userPlaylists
+    );
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   FJERN SANG FRA BRUGER-PLAYLIST
+========================================================= */
+
+function removeSongFromUserPlaylist(
+    playlistId,
+    songId
+) {
+
+    const userPlaylists =
+        getUserPlaylists();
+
+
+    const playlist =
+        userPlaylists.find(
+            item =>
+                item.id ===
+                playlistId
+        );
+
+
+    if (
+        !playlist ||
+        !Array.isArray(
+            playlist.songs
+        )
+    ) {
+
+        return false;
+
+    }
+
+
+    playlist.songs =
+        playlist.songs.filter(
+            id =>
+                id !== songId
+        );
+
+
+    saveUserPlaylists(
+        userPlaylists
+    );
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   SLET BRUGER-PLAYLIST
+========================================================= */
+
+function deleteUserPlaylist(
+    playlistId
+) {
+
+    let userPlaylists =
+        getUserPlaylists();
+
+
+    userPlaylists =
+        userPlaylists.filter(
+            playlist =>
+                playlist.id !==
+                playlistId
+        );
+
+
+    saveUserPlaylists(
+        userPlaylists
+    );
+
+}
+/* =========================================================
+   MUSIKBASEN
+   DEL 4/4
+   RANKINGS + PROFIL + PLAY HISTORY
+========================================================= */
+
+
+/* =========================================================
+   RANKINGS
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   TOP ARTISTS
+--------------------------------------------------------- */
+
+const topArtists =
+    document.getElementById(
+        "top-artists"
+    );
+
+
+if (
+    topArtists &&
+    typeof artists !== "undefined"
+) {
+
+    topArtists.innerHTML = "";
+
+
+    artists
+        .slice(0, 10)
+        .forEach(
+            (artist, index) => {
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "ranking-item";
+
+
+                item.innerHTML = `
+
+                    <div
+                        class="ranking-position"
+                    >
+                        ${
+                            index === 0
+                                ? "🥇"
+                                : index === 1
+                                ? "🥈"
+                                : index === 2
+                                ? "🥉"
+                                : `#${index + 1}`
+                        }
+                    </div>
+
+
+                    <div
+                        class="ranking-artist-image"
+                    >
+
+                        ${
+                            artist.image
+                                ? `
+                                    <img
+                                        src="${assetPath(
+                                            artist.image
+                                        )}"
+                                        alt="${escapeHtml(
+                                            artist.name
+                                        )}"
+                                    >
+                                `
+                                : ""
+                        }
+
+                    </div>
+
+
+                    <div
+                        class="ranking-info"
+                    >
+
+                        <h3>
+                            ${escapeHtml(
+                                artist.name
+                            )}
+                        </h3>
+
+                        <p>
+                            ${escapeHtml(
+                                artist.genre || ""
+                            )}
+                            ${
+                                artist.country
+                                    ? ` • ${escapeHtml(
+                                        artist.country
+                                    )}`
+                                    : ""
+                            }
+                        </p>
+
+                    </div>
+
+                `;
+
+
+                item.addEventListener(
+                    "click",
+                    () => {
+
+                        window.location.href =
+                            pageUrl(
+                                `artist.html?id=${artist.id}`
+                            );
+
+                    }
+                );
+
+
+                topArtists.appendChild(
+                    item
+                );
+
+            }
+        );
+
+}
+
+
+/* ---------------------------------------------------------
+   TOP SONGS
+--------------------------------------------------------- */
+
+const rankingsTopSongs =
+    document.getElementById(
+        "top-songs"
+    );
+
+
+if (
+    rankingsTopSongs &&
+    typeof songs !== "undefined"
+) {
+
+    rankingsTopSongs.innerHTML = "";
+
+
+    songs
+        .slice(0, 10)
+        .forEach(
+            (song, index) => {
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "ranking-item";
+
+
+                item.innerHTML = `
+
+                    <div
+                        class="ranking-position"
+                    >
+                        ${
+                            index === 0
+                                ? "🥇"
+                                : index === 1
+                                ? "🥈"
+                                : index === 2
+                                ? "🥉"
+                                : `#${index + 1}`
+                        }
+                    </div>
+
+
+                    <div
+                        class="ranking-info"
+                    >
+
+                        <h3>
+                            ${escapeHtml(
+                                song.title
+                            )}
+                        </h3>
+
+                        <p>
+                            ${escapeHtml(
+                                song.artist
+                            )}
+                            ${
+                                song.album
+                                    ? ` • ${escapeHtml(
+                                        song.album
+                                    )}`
+                                    : ""
+                            }
+                        </p>
+
+                    </div>
+
+                `;
+
+
+                item.addEventListener(
+                    "click",
+                    () => {
+
+                        selectSong(
+                            song
+                        );
+
+                    }
+                );
+
+
+                rankingsTopSongs.appendChild(
+                    item
+                );
+
+            }
+        );
+
+}
+
+
+/* ---------------------------------------------------------
+   TOP ALBUMS
+--------------------------------------------------------- */
+
+const topAlbums =
+    document.getElementById(
+        "top-albums"
+    );
+
+
+if (
+    topAlbums &&
+    typeof albums !== "undefined"
+) {
+
+    topAlbums.innerHTML = "";
+
+
+    albums
+        .slice(0, 10)
+        .forEach(
+            (album, index) => {
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "ranking-item";
+
+
+                item.innerHTML = `
+
+                    <div
+                        class="ranking-position"
+                    >
+                        ${
+                            index === 0
+                                ? "🥇"
+                                : index === 1
+                                ? "🥈"
+                                : index === 2
+                                ? "🥉"
+                                : `#${index + 1}`
+                        }
+                    </div>
+
+
+                    <div
+                        class="ranking-album-image"
+                    >
+
+                        ${
+                            album.cover
+                                ? `
+                                    <img
+                                        src="${assetPath(
+                                            album.cover
+                                        )}"
+                                        alt="${escapeHtml(
+                                            album.title
+                                        )}"
+                                    >
+                                `
+                                : ""
+                        }
+
+                    </div>
+
+
+                    <div
+                        class="ranking-info"
+                    >
+
+                        <h3>
+                            ${escapeHtml(
+                                album.title
+                            )}
+                        </h3>
+
+                        <p>
+                            ${escapeHtml(
+                                album.artist
+                            )}
+                            •
+                            ${escapeHtml(
+                                album.year || ""
+                            )}
+                        </p>
+
+                    </div>
+
+                `;
+
+
+                item.addEventListener(
+                    "click",
+                    () => {
+
+                        window.location.href =
+                            pageUrl(
+                                `album.html?id=${album.id}`
+                            );
+
+                    }
+                );
+
+
+                topAlbums.appendChild(
+                    item
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   PROFILE — FAVORITES
+========================================================= */
+
+const profileFavorites =
+    document.getElementById(
+        "profile-favorites"
+    );
+
+
+if (
+    profileFavorites &&
+    typeof songs !== "undefined"
+) {
+
+    profileFavorites.innerHTML = "";
+
+
+    const favorites =
+        getFavorites();
+
+
+    const favoriteSongs =
+        songs.filter(
+            song =>
+                favorites.includes(
+                    song.id
+                )
+        );
+
+
+    if (
+        favoriteSongs.length === 0
+    ) {
+
+        profileFavorites.innerHTML = `
+
+            <p class="empty-message">
+                Du har ingen favoritsange endnu.
+            </p>
+
+        `;
+
+    } else {
+
+        favoriteSongs.forEach(
+            song => {
+
+                profileFavorites.appendChild(
+                    createSongCard(song)
+                );
+
+            }
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE — PLAY HISTORY
+========================================================= */
+
+const profileHistory =
+    document.getElementById(
+        "profile-history"
+    );
+
+
+if (
+    profileHistory &&
+    typeof songs !== "undefined"
+) {
+
+    profileHistory.innerHTML = "";
+
+
+    const historyIds =
+        JSON.parse(
+            localStorage.getItem(
+                "playHistory"
+            )
+        ) || [];
+
+
+    const historySongs =
+        historyIds
+
+            .map(
+                songId =>
+                    songs.find(
+                        song =>
+                            song.id ===
+                            songId
+                    )
+            )
+
+            .filter(
+                song => song
+            );
+
+
+    if (
+        historySongs.length === 0
+    ) {
+
+        profileHistory.innerHTML = `
+
+            <p class="empty-message">
+                Du har ikke afspillet
+                nogen sange endnu.
+            </p>
+
+        `;
+
+    } else {
+
+        historySongs.forEach(
+            song => {
+
+                profileHistory.appendChild(
+                    createSongCard(song)
+                );
+
+            }
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE — STATISTIK
+========================================================= */
+
+const profileStats =
+    document.getElementById(
+        "profile-stats"
+    );
+
+
+if (
+    profileStats &&
+    typeof songs !== "undefined"
+) {
+
+    const favorites =
+        getFavorites();
+
+
+    const history =
+        JSON.parse(
+            localStorage.getItem(
+                "playHistory"
+            )
+        ) || [];
+
+
+    profileStats.innerHTML = `
+
+        <div class="profile-stat">
+
+            <strong>
+                ${favorites.length}
+            </strong>
+
+            <span>
+                Favoritsange
+            </span>
+
+        </div>
+
+
+        <div class="profile-stat">
+
+            <strong>
+                ${history.length}
+            </strong>
+
+            <span>
+                Afspillede sange
+            </span>
+
+        </div>
+
+
+        <div class="profile-stat">
+
+            <strong>
+                ${
+                    new Set(
+                        history
+                    ).size
+                }
+            </strong>
+
+            <span>
+                Forskellige sange
+            </span>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   PROFILE — MOST PLAYED ARTISTS
+========================================================= */
+
+const profileTopArtists =
+    document.getElementById(
+        "profile-top-artists"
+    );
+
+
+if (
+    profileTopArtists &&
+    typeof songs !== "undefined" &&
+    typeof artists !== "undefined"
+) {
+
+    const history =
+        JSON.parse(
+            localStorage.getItem(
+                "playHistory"
+            )
+        ) || [];
+
+
+    const artistCounts = {};
+
+
+    history.forEach(
+        songId => {
+
+            const song =
+                songs.find(
+                    item =>
+                        item.id ===
+                        songId
+                );
+
+
+            if (
+                !song
+            ) {
+
+                return;
+
+            }
+
+
+            artistCounts[
+                song.artist
+            ] =
+                (
+                    artistCounts[
+                        song.artist
+                    ] || 0
+                ) + 1;
+
+        }
+    );
+
+
+    const sortedArtists =
+        Object.entries(
+            artistCounts
+        )
+            .sort(
+                (
+                    [, a],
+                    [, b]
+                ) =>
+                    b - a
+            )
+            .slice(
+                0,
+                5
+            );
+
+
+    profileTopArtists.innerHTML =
+        "";
+
+
+    sortedArtists.forEach(
+        ([artistName, count]) => {
+
+            const artist =
+                artists.find(
+                    item =>
+                        item.name ===
+                        artistName
+                );
+
+
+            if (
+                !artist
+            ) {
+
+                return;
+
+            }
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "ranking-item";
+
+
+            item.innerHTML = `
+
+                <div
+                    class="ranking-artist-image"
+                >
+
+                    ${
+                        artist.image
+                            ? `
+                                <img
+                                    src="${assetPath(
+                                        artist.image
+                                    )}"
+                                    alt="${escapeHtml(
+                                        artist.name
+                                    )}"
+                                >
+                            `
+                            : ""
+                    }
+
+                </div>
+
+
+                <div
+                    class="ranking-info"
+                >
+
+                    <h3>
+                        ${escapeHtml(
+                            artist.name
+                        )}
+                    </h3>
+
+                    <p>
+                        ${count}
+                        afspilninger
+                    </p>
+
+                </div>
+
+            `;
+
+
+            profileTopArtists.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SIDSTE INITIALISERING
+========================================================= */
+
+updateFavoriteButtons();
