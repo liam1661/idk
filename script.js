@@ -1261,9 +1261,10 @@ if (
 ========================================================= */
 
 const artistDetailPage =
-    document.getElementById(
-        "artist-detail-page"
-    );
+    document.getElementById("artist-detail-page");
+
+const artistsListPage =
+    document.getElementById("artists-list-page");
 
 
 if (
@@ -1276,221 +1277,345 @@ if (
             window.location.search
         );
 
-
     const artistId =
-        Number(
-            params.get("id")
-        );
+        Number(params.get("id"));
 
+    /*
+       Hvis der er et artist-id,
+       viser vi kunstnersiden.
+    */
 
-    const selectedArtist =
-        artists.find(
-            artist =>
-                artist.id === artistId
-        );
+    if (artistId) {
 
-
-    if (
-        selectedArtist
-    ) {
-
-        const artistImage =
-            document.getElementById(
-                "artist-detail-image"
-            );
-
-        const artistName =
-            document.getElementById(
-                "artist-detail-name"
-            );
-
-        const artistGenre =
-            document.getElementById(
-                "artist-detail-genre"
-            );
-
-        const artistListeners =
-            document.getElementById(
-                "artist-detail-listeners"
+        const selectedArtist =
+            artists.find(
+                artist =>
+                    artist.id === artistId
             );
 
 
-        if (
-            artistImage &&
-            selectedArtist.image
-        ) {
+        if (selectedArtist) {
 
-            artistImage.src =
-                assetPath(
+            /* -----------------------------------------
+               VIS KUN KUNSTNERDETALJER
+            ----------------------------------------- */
+
+            if (artistsListPage) {
+
+                artistsListPage.style.display =
+                    "none";
+
+            }
+
+
+            artistDetailPage.style.display =
+                "block";
+
+
+            /* -----------------------------------------
+               ARTIST NAVN
+            ----------------------------------------- */
+
+            const artistName =
+                document.getElementById(
+                    "artist-name"
+                );
+
+
+            if (artistName) {
+
+                artistName.textContent =
+                    selectedArtist.name;
+
+            }
+
+
+            /* -----------------------------------------
+               ARTIST BESKRIVELSE
+            ----------------------------------------- */
+
+            const artistDescription =
+                document.getElementById(
+                    "artist-description"
+                );
+
+
+            if (artistDescription) {
+
+                artistDescription.textContent =
+                    `${selectedArtist.name} er en dansk kunstner på MusikBasen.`;
+
+            }
+
+
+            /* -----------------------------------------
+               GENRE
+            ----------------------------------------- */
+
+            const artistGenre =
+                document.getElementById(
+                    "artist-genre"
+                );
+
+
+            if (artistGenre) {
+
+                artistGenre.textContent =
+                    selectedArtist.genre || "";
+
+            }
+
+
+            /* -----------------------------------------
+               COUNTRY
+            ----------------------------------------- */
+
+            const artistCountry =
+                document.getElementById(
+                    "artist-country"
+                );
+
+
+            if (artistCountry) {
+
+                artistCountry.textContent =
+                    selectedArtist.country || "";
+
+            }
+
+
+            /* -----------------------------------------
+               ARTIST BILLEDE
+            ----------------------------------------- */
+
+            const artistHeroImage =
+                artistDetailPage.querySelector(
+                    ".artist-hero-image"
+                );
+
+
+            if (artistHeroImage) {
+
+                if (
                     selectedArtist.image
-                );
+                ) {
 
-            artistImage.alt =
-                selectedArtist.name;
+                    artistHeroImage.innerHTML = `
 
-        }
+                        <img
+                            src="${assetPath(
+                                selectedArtist.image
+                            )}"
+                            alt="${escapeHtml(
+                                selectedArtist.name
+                            )}"
+                        >
 
+                    `;
 
-        if (
-            artistName
-        ) {
+                } else {
 
-            artistName.textContent =
-                selectedArtist.name;
+                    artistHeroImage.innerHTML = `
 
-        }
+                        <div class="artist-placeholder-name">
 
+                            ${escapeHtml(
+                                selectedArtist.name
+                            )}
 
-        if (
-            artistGenre
-        ) {
+                        </div>
 
-            artistGenre.textContent =
-                selectedArtist.genre || "";
+                    `;
 
-        }
+                }
 
-
-        if (
-            artistListeners
-        ) {
-
-            artistListeners.textContent =
-                selectedArtist.listeners ||
-                "";
-
-        }
+            }
 
 
-        /*
-           ARTIST SONGS
-        */
+            /* -----------------------------------------
+               ARTIST SANGE
+            ----------------------------------------- */
 
-        const artistSongs =
-            document.getElementById(
-                "artist-songs"
-            );
-
-
-        if (
-            artistSongs &&
-            typeof songs !== "undefined"
-        ) {
-
-            artistSongs.innerHTML = "";
-
-
-            const matchingSongs =
-                songs.filter(
-                    song =>
-                        song.artist ===
-                        selectedArtist.name
+            const artistSongs =
+                document.getElementById(
+                    "artist-songs"
                 );
 
 
-            matchingSongs.forEach(song => {
+            if (
+                artistSongs &&
+                typeof songs !== "undefined"
+            ) {
 
-                artistSongs.appendChild(
-                    createSongCard(song)
-                );
-
-            });
-
-        }
+                artistSongs.innerHTML = "";
 
 
-        /*
-           ARTIST ALBUMS
-        */
-
-        const artistAlbums =
-            document.getElementById(
-                "artist-albums"
-            );
+                const matchingSongs =
+                    songs.filter(
+                        song =>
+                            song.artist ===
+                            selectedArtist.name
+                    );
 
 
-        if (
-            artistAlbums &&
-            typeof albums !== "undefined"
-        ) {
+                if (
+                    matchingSongs.length === 0
+                ) {
 
-            artistAlbums.innerHTML = "";
+                    artistSongs.innerHTML = `
 
-
-            const matchingAlbums =
-                albums.filter(
-                    album =>
-                        album.artist ===
-                        selectedArtist.name
-                );
-
-
-            matchingAlbums.forEach(album => {
-
-                const albumCard =
-                    document.createElement("div");
-
-
-                albumCard.className =
-                    "album-card";
-
-
-                albumCard.innerHTML = `
-
-                    <div class="album-image">
-
-                        ${
-                            album.cover
-                                ? `
-                                    <img
-                                        src="${assetPath(album.cover)}"
-                                        alt="${escapeHtml(album.title)}"
-                                    >
-                                `
-                                : ""
-                        }
-
-                    </div>
-
-
-                    <div class="album-info">
-
-                        <h3>
-                            ${escapeHtml(album.title)}
-                        </h3>
-
-                        <p>
-                            ${escapeHtml(album.year || "")}
+                        <p class="empty-message">
+                            Denne kunstner har ingen sange endnu.
                         </p>
 
-                    </div>
+                    `;
 
-                `;
+                } else {
+
+                    matchingSongs.forEach(
+                        song => {
+
+                            artistSongs.appendChild(
+                                createSongCard(song)
+                            );
+
+                        }
+                    );
+
+                }
+
+            }
 
 
-                albumCard.addEventListener(
-                    "click",
-                    () => {
+            /* -----------------------------------------
+               ARTIST ALBUMS
+            ----------------------------------------- */
 
-                        window.location.href =
-                            `album.html?id=${album.id}`;
-
-                    }
+            const artistAlbums =
+                document.getElementById(
+                    "artist-albums"
                 );
 
 
-                artistAlbums.appendChild(
-                    albumCard
-                );
+            if (
+                artistAlbums &&
+                typeof albums !== "undefined"
+            ) {
 
-            });
+                artistAlbums.innerHTML = "";
+
+
+                const matchingAlbums =
+                    albums.filter(
+                        album =>
+                            album.artist ===
+                            selectedArtist.name
+                    );
+
+
+                if (
+                    matchingAlbums.length === 0
+                ) {
+
+                    artistAlbums.innerHTML = `
+
+                        <p class="empty-message">
+                            Denne kunstner har ingen albums endnu.
+                        </p>
+
+                    `;
+
+                } else {
+
+                    matchingAlbums.forEach(
+                        album => {
+
+                            const albumCard =
+                                document.createElement(
+                                    "div"
+                                );
+
+
+                            albumCard.className =
+                                "album-card";
+
+
+                            albumCard.innerHTML = `
+
+                                <div class="album-image">
+
+                                    ${
+                                        album.cover
+                                            ? `
+                                                <img
+                                                    src="${assetPath(
+                                                        album.cover
+                                                    )}"
+                                                    alt="${escapeHtml(
+                                                        album.title
+                                                    )}"
+                                                >
+                                            `
+                                            : ""
+                                    }
+
+                                </div>
+
+
+                                <div class="album-info">
+
+                                    <h3>
+                                        ${escapeHtml(
+                                            album.title
+                                        )}
+                                    </h3>
+
+                                    <p>
+                                        ${escapeHtml(
+                                            album.artist
+                                        )}
+                                    </p>
+
+                                    <span>
+                                        ${escapeHtml(
+                                            album.year || ""
+                                        )}
+                                    </span>
+
+                                </div>
+
+                            `;
+
+
+                            albumCard.addEventListener(
+                                "click",
+                                () => {
+
+                                    window.location.href =
+                                        pageUrl(
+                                            `album.html?id=${album.id}`
+                                        );
+
+                                }
+                            );
+
+
+                            artistAlbums.appendChild(
+                                albumCard
+                            );
+
+                        }
+                    );
+
+                }
+
+            }
 
         }
 
     }
 
 }
-
 
 /* =========================================================
    ALBUM DETAIL PAGE
