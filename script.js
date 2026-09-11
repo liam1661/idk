@@ -2870,9 +2870,8 @@ if (
 
                         window.location.href =
                             pageUrl(
-                                artists.html?id=${artist.id}
-                            );
-
+    `artists.html?id=${artist.id}`
+);
                     }
                 );
 
